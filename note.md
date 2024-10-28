@@ -9,5 +9,5 @@ repository(repo)
 
 git pull
 git add .
-git commit -m "Tên Sửa nd"
-git push
+git commit -m 'Tên Sửa nd'
+git push nhom2 master
