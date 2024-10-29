@@ -226,6 +226,14 @@
       <button class="cancel-btn">
        Hủy
       </button>
+      &nbsp &nbsp &nbsp &nbsp &nbsp
+      <div class="search-bar">
+     <input placeholder="Nhập tên hoặc mã khoa..." type="text"/>
+     <button>
+      <i class="fas fa-search">
+      </i>
+     </button>
+    </div>
      </div>
      <hr/>
      <h2>

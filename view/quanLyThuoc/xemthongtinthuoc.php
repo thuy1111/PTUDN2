@@ -156,32 +156,26 @@
       </a>
       
      </li>
+     
      <li>
-      <a href="#">
-       <i class="fas fa-user">
-       </i >
-       Quản lý thông tin nhân viên
-      </a>
-     </li>
-     <li>
-      <a href="xemthongtinkhoa.php">
+      <a href="xemthongtinthuoc.php">
        <i class="fas fa-hospital">
        </i>
-       Quản lý khoa
+       Quản lý thuốc
       </a>
      </li>
      <li>
       <a href="#">
        <i class="fas fa-clinic-medical">
        </i>
-       Quản lý phòng khám
+       Xử lý đơn thuốc
       </a>
      </li>
      <li>
       <a href="#">
        <i class="fas fa-shield-alt">
        </i>
-       Quản lý bảo hiểm
+       Thống kê thuốc
       </a>
      </li>
     </ul>
@@ -189,26 +183,22 @@
    <div class="main-content">
     <div class="content">
      <h1 >
-      Quản Lý Khoa
+      Quản Lý Thuốc
      </h1>
      <hr/>
      <div class="buttons">
       <button class="add-btn" >
-        <a href="themthongtinkhoa.php">
        Thêm
-    </a>
       </button>
       <button class="update-btn">
-      <a href="capnhatthongtinkhoa.php" >
        Cập nhật
-    </a>
       </button>
       <button class="cancel-btn">
        Hủy
       </button>
       &nbsp &nbsp &nbsp &nbsp &nbsp
       <div class="search-bar">
-     <input placeholder="Nhập tên hoặc mã khoa..." type="text"/>
+     <input placeholder="Nhập tên hoặc mã thuốc..." type="text"/>
      <button>
       <i class="fas fa-search">
       </i>
@@ -219,50 +209,47 @@
            
      <hr/>
      <h2>
-      Thông tin khoa
+      Thông tin thuốc
      </h2>
      <div class="form-group">
-        <label>
-            Phòng khám thuộc khoa
-           </label>
-           <select>
-            <option value="">
-             Chọn phòng khám
-            </option>
-           </select>
-           <label>
-            SDT
-           </label>
-           <input type="text" placeholder="Nhập số điện thoại"/>
-     </div>
-     <div class="form-group">
-        <label>
-            Tên Khoa
+     <label>
+            Tên thuốc
            </label>
            <input type="text" placeholder="Nhập tên khoa"/>
-           <label for="email">
-            Nhập email:
+           <label>
+            NSX
            </label>
-           <input id="email" placeholder="Nhập email" type="text"/>
+           <input type="text" placeholder="Nhập nhà sản xuất"/>
+           
      </div>
      <div class="form-group">
-      <label for="chuc-nang">
-       Chức năng
-      </label>
-      <input id="chuc-nang" placeholder="Nhập chức năng" type="text"/>
-      <label>
-        Trưởng Khoa
-       </label>
-       <select>
+        <label>
+            Dạng bào chế
+           </label>
+           <select>
         <option value="">
-         Chọn trưởng khoa
+         Chọn dạng bào chế
         </option>
        </select>
+           <label >
+            Số lượng tồn
+           </label>
+           <input id="" placeholder="Nhập số lượng tồn" type="text"/>
+     </div>
+     <div class="form-group">
+      <label for="">
+       Đơn giá
+      </label>
+      <input id="" placeholder="Đơn giá" type="text"/>
+      <label>
+        Công dụng
+       </label>
+       <input id="" placeholder="Công dụng" type="text"/>
      </div>
      
      <hr/>
      <h2>
-      Danh sách khoa
+      Danh sách thuốc
      </h2>
      <div class="table-container">
       <table>
@@ -272,25 +259,25 @@
              STT
             </th>
             <th>
-             MÃ KHOA
+             MÃ THUỐC
             </th>
             <th>
-             TÊN KHOA
+             TÊN THUỐC
             </th>
             <th>
-             PHÒNG KHÁM THUỘC KHOA
+             SỐ LƯỢNG TỒN
             </th>
             <th>
-             CHỨC NĂNG
+             CÔNG DỤNG
             </th>
             <th>
-             TRƯỞNG KHOA
+             ĐƠN GIÁ
             </th>
             <th>
-             SDT
+             NHÀ SẢN XUẤT
             </th>
             <th>
-             EMAIL
+             DẠNG BÀO CHẾ
             </th>
             <th>
              TRẠNG THÁI
