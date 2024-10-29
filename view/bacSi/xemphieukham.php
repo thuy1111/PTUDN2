@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản Lý Phòng Khám</title>
+    <title>Xem phiếu khám bệnh</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <style>
         /* Reset default margin and padding */
@@ -226,10 +226,10 @@
             <h2>NAVIGATION</h2>
             <ul>
                 <li><a href="#"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
-                <li><a href="XPKB.php"><i class="fas fa-user"></i>Xem phiếu khám bệnh</a></li>
-                <li><a href="XLK.php"><i class="fas fa-hospital"></i>Xem lịch khám</a></li>
-                <li><a href="DKC.php"><i class="fas fa-clinic-medical"></i>Đăng ký ca</a></li>
-                <li><a href="XLLV.php"><i class="fas fa-shield-alt"></i>Xem lịch làm việc</a></li>
+                <li><a href="xemphieukham.php"><i class="fas fa-user"></i>Xem phiếu khám bệnh</a></li>
+                <li><a href="xemlichkham.php"><i class="fas fa-hospital"></i>Xem lịch khám</a></li>
+                <li><a href="dangkicalamviec.php"><i class="fas fa-clinic-medical"></i>Đăng ký ca</a></li>
+                <li><a href="xemlichlamviec.php"><i class="fas fa-shield-alt"></i>Xem lịch làm việc</a></li>
             </ul>
         </div>
 
