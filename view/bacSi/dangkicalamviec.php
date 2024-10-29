@@ -183,7 +183,7 @@
 <body>
     <div class="header">
         <div>
-            <img src="https://storage.googleapis.com/a1aa/image/JoQrqzQNtCaxJ529k6UDqXeneFDU9uZItxwLyM33ASQ6sfVnA.jpg" alt="Logo">
+            <img src="../../assets/images/logo/hospital.png" alt="Logo">
             
         </div>
         <div>
@@ -194,7 +194,7 @@
 
     <div class="container">
         <div class="sidebar">
-            <img src="https://storage.googleapis.com/a1aa/image/JoQrqzQNtCaxJ529k6UDqXeneFDU9uZItxwLyM33ASQ6sfVnA.jpg" alt="Logo">
+            
             <h2>NAVIGATION</h2>
             <ul>
                 <li><a href="#"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
