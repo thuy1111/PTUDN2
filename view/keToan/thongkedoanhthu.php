@@ -125,7 +125,12 @@
 
         <!-- App js-->
         <script src="../../assets/js/app.min.js"></script>
-        
+
+        <!--Chart js-->
+        <script src="../../assets/js/Chart.min.js"></script>
+
+        <!--Jquery js-->
+        <script src="../../assets/js/vendor/jquery-3.7.1.min.js"></script>
     </body>
 
 </html>

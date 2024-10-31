@@ -21,7 +21,7 @@
     </nav>
 
 <!--User account-->
-    <div class="user navbar-custom">
+    <div class="users navbar-custom">
         <ul class="list-unstyled topnav-menu float-right mb-0">
             <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" href="#" role="button" onclick="toggleDropdown()">

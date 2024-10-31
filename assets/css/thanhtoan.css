@@ -26,7 +26,7 @@ body {
     font-weight: bold;
 }
 
-.header .user {
+.header .users {
     display: flex;
     align-items: center;
     margin-left: 25px; /* Cách phần tài khoản ra khỏi menu */

@@ -104,7 +104,7 @@
 
                         <form class="mb-3">
                             <div class="row mb-3">
-                                <div class="col-md-2">
+                                <div class="col-md-2 text-start">
                                     <label for="khoaQuanLy" class="form-label">Khoa</label>
                                 </div>
                                     <div class="col-md-3">
@@ -120,12 +120,12 @@
                                 <!-- Start time -->
                                 <div class="col-md-6">
                                     <div class="row mb-3 align-items-center">
-                                        <div class="col-md-4 text-end">
+                                        <div class="col-md-4 text-start">
                                             <label for="thoiGianBatDau" class="form-label">Thời gian bắt đầu</label>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <input type="month" class="form-control" id="thoiGianBatDau">
+                                                <input type="date" class="form-control" id="thoiGianBatDau">
                                                 <!-- <span class="input-group-text" id="iconStart">
                                                     <i class="fas fa-calendar-alt"></i>
                                                 </span> -->
@@ -137,12 +137,12 @@
                                 <!-- End time -->
                                 <div class="col-md-6">
                                     <div class="row mb-3 align-items-center">
-                                        <div class="col-md-4 text-end">
+                                        <div class="col-md-4 text-start">
                                             <label for="thoiGianKetThuc" class="form-label">Thời gian kết thúc</label>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <input type="month" class="form-control" id="thoiGianKetThuc">
+                                                <input type="date" class="form-control" id="thoiGianKetThuc">
                                                 <!-- <span class="input-group-text" id="iconEnd">
                                                     <i class="fas fa-calendar-alt"></i>
                                                 </span> -->
@@ -151,6 +151,7 @@
                                     </div>
                                 </div>
                             </div>
+
 
                             <!-- Function buttons -->
                             <div class="row text-center">
@@ -296,6 +297,12 @@
 
         <!-- App js-->
         <script src="../../assets/js/app.min.js"></script>
+
+        <!--Chart js-->
+        <script src="../../assets/js/Chart.min.js"></script>
+
+        <!--Jquery js-->
+        <script src="../../assets/js/vendor/jquery-3.7.1.min.js"></script>
         
     </body>
 
