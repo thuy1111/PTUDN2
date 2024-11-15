@@ -21,6 +21,8 @@
 
        <!--Load Sweet Alert Javascript-->
        <script src="../../assets/js/swal.js"></script>
+
+       <link rel="stylesheet" href="../../assets/libs/YearPicker-master/docs/yearpicker.css">
        
         <!--Inject SWAL-->
         <?php if(isset($success)) {?>

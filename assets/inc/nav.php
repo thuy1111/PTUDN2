@@ -25,7 +25,7 @@
                         <i class="mdi mdi-chevron-down"></i> 
                     </span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                <div class="dropdown-menu dropdown-menu-right profile-dropdown">
                     <!-- item-->
                     <div class="dropdown-header noti-title">
                         <h6 class="text-overflow m-0">Welcome !</h6>

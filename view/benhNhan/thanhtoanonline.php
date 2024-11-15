@@ -6,9 +6,139 @@
     <title>Hệ thống quản lý khám chữa bệnh bệnh viện</title>
     <link rel="shortcut icon" href="../../assets/images/favicon.ico">
     <link href="../../assets/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/thanhtoan.css">
 </head>
 <body>
+
+<style>
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e9f8f8;
+}
+
+/* Header styling */
+.header {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 50px; /* Tăng khoảng cách với lề trái/phải */
+    border-bottom: 1px solid #ddd;
+}
+
+.header img {
+    height: 40px;
+    margin-right: 25px; /* Cách logo ra khỏi menu */
+}
+
+.header nav a {
+    margin: 0 15px; /* Giảm khoảng cách giữa các mục menu để cân đối */
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.header .users {
+    display: flex;
+    align-items: center;
+    margin-left: 25px; /* Cách phần tài khoản ra khỏi menu */
+}
+
+.header .user img {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -40px; /* Điều chỉnh để dropdown gần với phần tài khoản hơn */
+    z-index: 1000;
+    min-width: 160px;
+    padding: 0.5rem 0;
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.25rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Thêm đổ bóng nếu cần */
+}
+
+/* Hiển thị dropdown khi hover vào phần tài khoản */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Note section styling */
+.note {
+    width: 750px;
+    height: 100px;
+    background-color: #A9E6F0;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+/* Container custom styling */
+.container-custom {
+    max-width: 1300px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Section title styling */
+.section-title {
+    color: #333;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+/* Information sections styling */
+.transfer-info, .summary, .qr-section {
+    background-color: #f0f8ff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.transfer-info, .qr-section, .summary {
+    height: 100%;
+}
+
+.qr-section img {
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+/* Cancel button styling */
+.cancel-button {
+    width: 100px;
+    padding: 10px;
+    text-align: center;
+    color: #fff;
+    background-color: #5bc0de;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.cancel-button:hover {
+    background-color: #31b0d5;
+}
+
+</style>
 
 <div class="header">
     <img class="logo" src="../../assets/images/logo/hospital.png" alt="Hospital Logo">
@@ -21,7 +151,7 @@
     </nav>
 
 <!--User account-->
-    <div class="users navbar-custom">
+    <div class="navbar-custom">
         <ul class="list-unstyled topnav-menu float-right mb-0">
             <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" href="#" role="button" onclick="toggleDropdown()">
