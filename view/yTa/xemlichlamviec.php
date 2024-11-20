@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <?php include("../../assets/inc/head.php"); ?>
-    
+    <title>Lịch Làm Việc - Quản Lý Ca</title>
     <style>
         .shift-time {
             font-size: 0.8em;
@@ -26,97 +26,86 @@
 </head>
 <body>
     <div id="wrapper">
-        <!-- Topbar -->
         <?php include('../../assets/inc/nav.php'); ?>
 
-        <!-- Left Sidebar -->
         <div class="left-side-menu">
             <div class="slimscroll-menu">
                 <div id="sidebar-menu">
                     <ul class="metismenu" id="side-menu">
                         <li><a href="index.php"><i class="fe-airplay"></i><span>Dashboard</span></a></li>
                         <li><a href="xemphieukham.php"><i class="fas fa-user-tie"></i><span>Xem phiếu khám bệnh</span><span class="menu-arrow"></span></a></li>
-                        <li><a href="javascript: void(0);"><i class="mdi mdi-hospital-building"></i><span>Xem lịch khám</span><span class="menu-arrow"></span></a></li>
-                        <li><a href="dangkicalamviec.php"><i class="mdi mdi-hospital-building"></i><span>Đăng ký ca</span><span class="menu-arrow"></span></a></li>
-                        <li><a href="xemlichlamviec.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch làm việc</span><span class="menu-arrow"></span></a></li>
+                        <li><a href="dangkycalamviec.php"><i class="mdi mdi-hospital-building"></i><span>Đăng ký ca</span><span class="menu-arrow"></span></a></li>
+                        <li><a href="javascript: void(0);"><i class="mdi mdi-hospital-building"></i><span>Xem lịch làm việc</span><span class="menu-arrow"></span></a></li>
                     </ul>
                 </div>
                 <div class="clearfix"></div>
             </div>
         </div>
 
-        <!-- Main Content -->
         <div class="content-page">
             <div class="content">
                 <div class="container-fluid">
-                    <h2 class="mb-4">XEM LỊCH KHÁM</h2>
+                    <h2 class="mb-4">LỊCH LÀM VIỆC</h2>
                     
-                    <!-- Week Navigation -->
-                    <div class="week-navigation mb-4">
-                        <button class="btn btn-outline-primary" id="prevWeekBtn">Tuần Trước</button>
-                        <span id="weekDateRange" class="h5">Tuần từ: 01/12/2024 đến 07/12/2024</span>
-                        <button class="btn btn-outline-primary" id="nextWeekBtn">Tuần Sau</button>
+                    <div class="week-navigation">
+                        <button class="btn btn-secondary" id="prevWeekBtn">Tuần Trước</button>
+                        <span id="weekDateRange" class="h5">Tuần từ: 06/11/2024 đến 12/11/2024</span>
+                        <button class="btn btn-secondary" id="nextWeekBtn">Tuần Sau</button>
                     </div>
-                    
+
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered shift-table">
                                     <thead>
                                         <tr>
-                                            <th>Ngày khám</th>
-                                            <th>Giờ khám</th>
-                                            <th>Chuyên khoa khám</th>
-                                            <th>Bảo hiểm y tế</th>
-                                            <th>Vấn đề khám</th>
-                                            <th>Giá dịch vụ khám</th>
-                                            <th>Số lượng</th>
-                                            <th>Mã bệnh nhân</th>
+                                            <th>THỨ 2</th>
+                                            <th>THỨ 3</th>
+                                            <th>THỨ 4</th>
+                                            <th>THỨ 5</th>
+                                            <th>THỨ 6</th>
+                                            <th>THỨ 7</th>
+                                            <th>CN</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>01/12/2024</td>
-                                            <td>7:30 - 8:30</td>
-                                            <td>Nội khoa</td>
-                                            <td>Có</td>
-                                            <td>Đau dạ dày</td>
-                                            <td>200,000 VND</td>
-                                            <td>1</td>
-                                            <td>BN001</td>
+                                            <td><button class="btn btn-primary">Ca 1</button></td>
+                                            <td><button class="btn btn-primary">Ca 1</button></td>
+                                            <td><button class="btn btn-primary">Ca 1</button></td>
+                                            <td><button class="btn btn-secondary" aria-label="Không có ca"></button></td>
+                                            <td><button class="btn btn-primary">Ca 1</button></td>
+                                            <td><button class="btn btn-primary">Ca 1</button></td>
+                                            <td><button class="btn btn-primary">Ca 1</button></td>
                                         </tr>
                                         <tr>
-                                            <td>01/12/2024</td>
-                                            <td>8:30 - 9:30</td>
-                                            <td>Nhi khoa</td>
-                                            <td>Không</td>
-                                            <td>Cảm cúm</td>
-                                            <td>150,000 VND</td>
-                                            <td>1</td>
-                                            <td>BN002</td>
+                                            <td><button class="btn btn-primary">Ca 2</button></td>
+                                            <td><button class="btn btn-primary">Ca 2</button></td>
+                                            <td><button class="btn btn-secondary" aria-label="Không có ca"></button></td>
+                                            <td><button class="btn btn-primary">Ca 2</button></td>
+                                            <td><button class="btn btn-primary">Ca 2</button></td>
+                                            <td><button class="btn btn-primary">Ca 2</button></td>
+                                            <td><button class="btn btn-secondary" aria-label="Không có ca"></button></td>
                                         </tr>
                                         <tr>
-                                            <td>01/12/2024</td>
-                                            <td>9:30 - 10:30</td>
-                                            <td>Tiêu hóa</td>
-                                            <td>Có</td>
-                                            <td>Viêm họng</td>
-                                            <td>250,000 VND</td>
-                                            <td>1</td>
-                                            <td>BN003</td>
+                                            <td><button class="btn btn-secondary" aria-label="Không có ca"></button></td>
+                                            <td><button class="btn btn-primary">Ca 3</button></td>
+                                            <td><button class="btn btn-primary">Ca 3</button></td>
+                                            <td><button class="btn btn-primary">Ca 3</button></td>
+                                            <td><button class="btn btn-secondary" aria-label="Không có ca"></button></td>
+                                            <td><button class="btn btn-primary">Ca 3</button></td>
+                                            <td><button class="btn btn-primary">Ca 3</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
 
-                            <div class="text-end mt-4">
-                                <button type="button" class="btn btn-primary me-2" style="background-color: #6f42c1; border-color: #6f42c1;">
-                                    XEM CHI TIẾT
-                                </button>
-                                <button type="button" class="btn btn-danger">
-                                    HỦY
-                                </button>
+                            <div class="shift-notes mt-3">
+                                <span><strong>Ca 1:</strong> 7:30 - 11:30</span>
+                                <span><strong>Ca 2:</strong> 13:00 - 16:30</span>
+                                <span><strong>Ca 3:</strong> 17:00 - 19:00</span>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -124,7 +113,6 @@
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="../../assets/js/vendor.min.js"></script>
     <script src="../../assets/libs/flatpickr/flatpickr.min.js"></script>
     <script src="../../assets/libs/jquery-knob/jquery.knob.min.js"></script>

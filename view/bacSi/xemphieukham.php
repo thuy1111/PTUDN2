@@ -1,315 +1,183 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xem phiếu khám bệnh</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <title>Phiếu Khám Bệnh</title>
+    <?php include("../../assets/inc/head.php"); ?>
     <style>
-        /* Reset default margin and padding */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .shift-time {
+            font-size: 0.8em;
+            color: #6c757d;
         }
-
-        /* Body styling */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f4f8;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* Header styling */
-        .header {
-            background-color: #333;
-            color: #fff;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .header img {
-            height: 40px;
-            margin-right: 10px;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
+        .card-title {
+            font-size: 1.2em;
             font-weight: bold;
         }
-
-        .user-icon {
-            font-size: 28px;
-            margin-right: 8px;
-        }
-
-        .user-info span {
-            font-size: 20px;
-        }
-
-        /* Container and Sidebar styling */
-        .container {
-            display: flex;
-            height: calc(100% - 60px);
-        }
-
-        .sidebar {
-            width: 250px;
-            background-color: #fff;
-            border-right: 1px solid #ddd;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .sidebar img {
-            width: 50px;
-            margin-bottom: 20px;
-        }
-
-        .sidebar h2 {
-            font-size: 20px;
-            color: #333;
-            margin-bottom: 20px;
+        .form-label {
             font-weight: bold;
         }
-
-        .sidebar ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .sidebar ul li {
-            margin-bottom: 15px;
-        }
-
-        .sidebar ul li a {
-            text-decoration: none;
-            color: #333;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .sidebar ul li a:hover {
-            background-color: #e1f5fe;
-        }
-
-        .sidebar ul li a i {
-            margin-right: 10px;
-        }
-
-        /* Main Content Styling */
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            background-color: #f9f9f9;
-        }
-
-        .content {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .content h1 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #4a90e2;
-            padding-bottom: 10px;
-        }
-
-        /* Search and Form styling */
-        .search {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .search input[type="text"] {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-right: 10px;
-            flex: 1;
-        }
-
-        .search select {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #fff;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
-
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            resize: vertical; /* Cho phép điều chỉnh chiều cao cho textarea */
-        }
-
-        /* Buttons */
-        .buttons {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 20px;
-        }
-
-        .buttons button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            color: #fff;
-            cursor: pointer;
-            margin-left: 10px;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .buttons .register {
-            background-color: #4a90e2;
-        }
-
-        .buttons .register:hover {
-            background-color: #357ABD;
-        }
-
-        .buttons .cancel {
-            background-color: #dc3545;
-        }
-
-        .buttons .cancel:hover {
-            background-color: #c82333;
-        }
-
     </style>
 </head>
 <body>
-    <div class="header">
-        <div>
-            <img src="../../assets/images/logo/hospital.png" alt="Logo">
-        </div>
-        <div class="user-info">
-            <i class="fas fa-user-circle user-icon"></i>
-            <span>BÁC SĨ</span>
-        </div>
-    </div>
+    <div id="wrapper">
+        <!-- Topbar -->
+        <?php include('../../assets/inc/nav.php'); ?>
 
-    <div class="container">
-        <div class="sidebar">
-            
-            <h2>NAVIGATION</h2>
-            <ul>
-                <li><a href="#"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
-                <li><a href="xemphieukham.php"><i class="fas fa-user"></i>Xem phiếu khám bệnh</a></li>
-                <li><a href="xemlichkham.php"><i class="fas fa-hospital"></i>Xem lịch khám</a></li>
-                <li><a href="dangkicalamviec.php"><i class="fas fa-clinic-medical"></i>Đăng ký ca</a></li>
-                <li><a href="xemlichlamviec.php"><i class="fas fa-shield-alt"></i>Xem lịch làm việc</a></li>
-            </ul>
+        <!-- Sidebar -->
+        <div class="left-side-menu">
+            <div class="slimscroll-menu">
+                <div id="sidebar-menu">
+                    <ul class="metismenu" id="side-menu">
+                        <li><a href="index.php"><i class="fe-airplay"></i><span>Dashboard</span></a></li>
+                        <li><a href="javascript: void(0);"><i class="fas fa-user-tie"></i><span>Xem phiếu khám bệnh</span><span class="menu-arrow"></span></a></li>
+                        <li><a href="xemlichkham.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch khám</span><span class="menu-arrow"></span></a></li>
+                        <li><a href="dangkicalamviec.php"><i class="mdi mdi-hospital-building"></i><span>Đăng ký ca</span><span class="menu-arrow"></span></a></li>
+                        <li><a href="xemlichlamviec.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch làm việc</span><span class="menu-arrow"></span></a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-        <div class="main-content">
+        <!-- Main Content -->
+        <div class="content-page">
             <div class="content">
-                <h1>PHIẾU KHÁM BỆNH</h1>
-                <div class="search">
-                    <input placeholder="Tìm kiếm" type="text" />
-                    <select>
-                        <option>3231424 TRẦN ĐỨC TUẤN</option>
-                        <option>3131423 NGUYỄN TRỌNG CẨN</option>
-                        <option>3131443 LÊ VĂN LƯƠNG</option>
-                        <option>3233442 NGUYỄN NHẬT HIẾU</option>
-                        <option>3233132 NGUYỄN THỊ MAI</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>I. Hành chính</label>
-                    
-                    <label for="ma-bn">Mã bệnh nhân:</label>
-                    <input id="ma-bn" type="text"  />
-                    
-                    <label for="ho-ten">Họ tên:</label>
-                    <input id="ho-ten" type="text"  />
-                    
-                    <label for="ngay-sinh">Ngày sinh:</label>
-                    <input id="ngay-sinh" type="text"  />
-                    
-                    <label for="gioi-tinh">Giới tính:</label>
-                    <input id="gioi-tinh" type="text"  />
-                    
-                    <label for="dia-chi">Địa chỉ:</label>
-                    <input id="dia-chi" type="text"  />
-                    
-                    <label for="ngay-vao-vien">Ngày vào viện:</label>
-                    <input id="ngay-vao-vien" type="text" />
-                    
-                    <label for="so-the">Số thẻ:</label>
-                    <input id="so-the" type="text"  />
-                    
-                    <label for="phong">Phòng:</label>
-                    <input id="phong" type="text"  />
-                    
-                    <label for="giuong">Giường:</label>
-                    <input id="giuong" type="text"  />
-                    
-                    <label for="chan-doan">Chẩn đoán:</label>
-                    <input id="chan-doan" type="text"  />
-                </div>
+                <div class="container-fluid">
+                    <h2 class="mb-4">PHIẾU KHÁM BỆNH</h2>
 
-                <div class="form-group">
-                    <label>II. Lý do vào viện:</label>
-                    <textarea ></textarea>
-                </div>
-                <div class="form-group">
-                    <label>III. Hỏi bệnh</label>
-                    <textarea ></textarea>
-                </div>
-                <div class="form-group">
-                    <label>1. Quá trình bệnh lý</label>
-                    <textarea></textarea>
-                </div>
-                <div class="form-group">
-                    <label>2. Tiền sử bệnh</label>
-                    <textarea ></textarea>
-                </div>
-                <div class="form-group">
-                    <label>IV. Khám bệnh</label>
-                    <textarea ></textarea>
-                </div>
-                <div class="form-group">
-                    <label>V. Kết quả chẩn đoán</label>
-                    <textarea ></textarea>
-                </div>
-                <div class="form-group">
-                    <label>VI. Đơn thuốc</label>
-                    <textarea ></textarea>
+                    <!-- Search and Patient List Section -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Tìm Kiếm Bệnh Nhân</h5>
+                            <div class="row">
+                                <div class="col-md-8 mb-3">
+                                    <label for="searchPatient" class="form-label">Tìm kiếm tên bệnh nhân:</label>
+                                    <input type="text" class="form-control" id="searchPatient" placeholder="Nhập tên bệnh nhân">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="patientList" class="form-label">Danh Sách Bệnh Nhân:</label>
+                                    <select class="form-select" id="patientList">
+                                        <option selected>Chọn bệnh nhân...</option>
+                                        <option value="1">Nguyễn Văn A</option>
+                                        <option value="2">Trần Thị B</option>
+                                        <option value="3">Lê Hoàng C</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Medical Form -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Thông tin Phiếu Khám</h5>
+
+                            <!-- Medical Details -->
+                            <div class="row mb-3">
+                                <div class="col-md-6 mb-3">
+                                    <label for="examCode" class="form-label">Mã Phiếu Khám Bệnh:</label>
+                                    <input type="text" class="form-control" id="examCode" readonly>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="roomCode" class="form-label">Mã Phòng Khám:</label>
+                                    <input type="text" class="form-control" id="roomCode" readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6 mb-3">
+                                    <label for="examDate" class="form-label">Ngày Khám:</label>
+                                    <input type="date" class="form-control" id="examDate" readonly>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="examReason" class="form-label">Lý Do Khám:</label>
+                                    <textarea class="form-control" id="examReason" rows="2" readonly></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Medical History -->
+                            <h5 class="card-title mb-4">Tiền Sử Bệnh</h5>
+                            <div class="row mb-3">
+                                <div class="col-md-6 mb-3">
+                                    <label for="medicalHistory" class="form-label">Tiền Sử:</label>
+                                    <textarea class="form-control" id="medicalHistory" rows="4" readonly></textarea>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="diseaseHistory" class="form-label">Bệnh Sử:</label>
+                                    <textarea class="form-control" id="diseaseHistory" rows="4" readonly></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Medical Exam Results -->
+                            <h5 class="card-title mb-4">Kết Quả Khám</h5>
+                            <div class="row mb-3">
+                                <div class="col-md-4 mb-3">
+                                    <label for="pulse" class="form-label">Mạch:</label>
+                                    <input type="text" class="form-control" id="pulse" readonly>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="bloodPressure" class="form-label">Huyết Áp:</label>
+                                    <input type="text" class="form-control" id="bloodPressure" readonly>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="temperature" class="form-label">Nhiệt Độ:</label>
+                                    <input type="text" class="form-control" id="temperature" readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6 mb-3">
+                                    <label for="height" class="form-label">Chiều Cao:</label>
+                                    <input type="text" class="form-control" id="height" readonly>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="weight" class="form-label">Cân Nặng:</label>
+                                    <input type="text" class="form-control" id="weight" readonly>
+                                </div>
+                            </div>
+
+                            <!-- Diagnosis and Symptoms -->
+                            <h5 class="card-title mb-4">Kết Luận</h5>
+                            <div class="row mb-3">
+                                <div class="col-12 mb-3">
+                                    <label for="diagnosis" class="form-label">Chẩn Đoán:</label>
+                                    <textarea class="form-control" id="diagnosis" rows="4" readonly></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-12 mb-3">
+                                    <label for="symptoms" class="form-label">Triệu Chứng:</label>
+                                    <textarea class="form-control" id="symptoms" rows="4" readonly></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Prescription -->
+                            <h5 class="card-title mb-4">Đơn Thuốc</h5>
+                            <div class="row mb-3">
+                                <div class="col-12 mb-3">
+                                    <label for="prescriptionCode" class="form-label">Mã Đơn Thuốc:</label>
+                                    <input type="text" class="form-control" id="prescriptionCode" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/vendor.min.js"></script>
+    <script src="../../assets/libs/flatpickr/flatpickr.min.js"></script>
+    <script src="../../assets/libs/jquery-knob/jquery.knob.min.js"></script>
+    <script src="../../assets/libs/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <script src="../../assets/libs/flot-charts/jquery.flot.js"></script>
+    <script src="../../assets/libs/flot-charts/jquery.flot.time.js"></script>
+    <script src="../../assets/libs/flot-charts/jquery.flot.tooltip.min.js"></script>
+    <script src="../../assets/libs/flot-charts/jquery.flot.selection.js"></script>
+    <script src="../../assets/libs/flot-charts/jquery.flot.crosshair.js"></script>
+    <script src="../../assets/js/pages/dashboard-1.init.js"></script>
+    <script src="../../assets/js/app.min.js"></script>
 </body>
 </html>
