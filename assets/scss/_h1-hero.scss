@@ -31,7 +31,12 @@
 .slider-area2{
     background-image: url(../images/hero/hero2.png);
     background-repeat:no-repeat;
+<<<<<<< HEAD
     background-size: cover;
+=======
+    background-size:cover;
+    background-position: center;
+>>>>>>> 4d1f846c6b2b132ee354b9563bd52e6b983c6cb1
 }
 
 .slider-area{
@@ -39,7 +44,12 @@
     background-image: url(../images/hero/h1_hero.png);
     background-repeat:no-repeat;
     background-position: center;
+<<<<<<< HEAD
     background-size: cover;
+=======
+    background-size:cover;
+    position: relative;
+>>>>>>> 4d1f846c6b2b132ee354b9563bd52e6b983c6cb1
     .hero__caption{
         overflow: hidden;
         span{

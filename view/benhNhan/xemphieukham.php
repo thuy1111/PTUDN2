@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu Khám Bệnh</title>
     <?php include("../../assets/inc/head.php"); ?>
     <style>
         .shift-time {
@@ -30,8 +31,7 @@
                     <ul class="metismenu" id="side-menu">
                         <li><a href="index.php"><i class="fe-airplay"></i><span>Dashboard</span></a></li>
                         <li><a href="javascript: void(0);"><i class="fas fa-user-tie"></i><span>Xem phiếu khám bệnh</span><span class="menu-arrow"></span></a></li>
-                        <li><a href="dangkycalamviec.php"><i class="mdi mdi-hospital-building"></i><span>Đăng ký ca</span><span class="menu-arrow"></span></a></li>
-                        <li><a href="xemlichlamviec.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch làm việc</span><span class="menu-arrow"></span></a></li>
+                        <li><a href="xemlichkham.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch khám</span><span class="menu-arrow"></span></a></li>
                     </ul>
                 </div>
             </div>
@@ -42,29 +42,7 @@
             <div class="content">
                 <div class="container-fluid">
                     <h2 class="mb-4">PHIẾU KHÁM BỆNH</h2>
-
-                    <!-- Search and Patient List Section -->
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title mb-4">Tìm Kiếm Bệnh Nhân</h5>
-                            <div class="row">
-                                <div class="col-md-8 mb-3">
-                                    <label for="searchPatient" class="form-label">Tìm kiếm tên bệnh nhân:</label>
-                                    <input type="text" class="form-control" id="searchPatient" placeholder="Nhập tên bệnh nhân">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="patientList" class="form-label">Danh Sách Bệnh Nhân:</label>
-                                    <select class="form-select" id="patientList">
-                                        <option selected>Chọn bệnh nhân...</option>
-                                        <option value="1">Nguyễn Văn A</option>
-                                        <option value="2">Trần Thị B</option>
-                                        <option value="3">Lê Hoàng C</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    
                     <!-- Medical Form -->
                     <div class="card mb-4">
                         <div class="card-body">
