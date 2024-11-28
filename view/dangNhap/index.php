@@ -33,7 +33,7 @@ if (isset($_POST["btndk"])) {
             while ($row = $result->fetch_assoc()) {
                 if ($userName == $row["tenDangNhap"] && $pass == $row["matKhau"]) {
                     $_SESSION["loginNV"] = true;
-                    switch ($row["maChucVu"]) {
+                    switch ($row["maNhanVien"]) {
                         case 1:
                             echo "<script>window.location.href = '../bacSi/';</script>";
                             break;
