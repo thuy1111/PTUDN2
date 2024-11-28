@@ -60,11 +60,14 @@
 
 <div class="w-screen h-screen flex justify-center items-center">
     <form action="" method="POST" class="w-2/6 h-1/3 bg-white border-gray-300 px-8 py-auto border rounded-lg shadow-md">
-        <h2 class="font-bold text-3xl mb-8 mt-3 text-center text-[#f37c7c]">Quên mật khẩu</h2>
+        <h2 class="font-bold text-3xl mb-8 mt-3 text-center text-[#68665b]">QUÊN MẬT KHẨU</h2>
         <div class="">
-            <label for="email" class="font-bold">Nhập email đã đăng ký</label>
+            <label for="email" class="font-bold">Nhập email đã đăng ký:</label>
             <input type="email" id="email" name="email" class="w-full mt-2 px-4 py-2 bg-blue-100 border border-gray-300 rounded-md outline-blue-300 mb-4" placeholder="Email của bạn">
-            <button type="submit" name="submit" class="w-full bg-[#f37c7c] mt-2 py-2 px-auto rounded-lg text-white text-lg opacity-90 hover:opacity-100 transition-all ease">Xác nhận</button>
+            <button type="submit" name="submit" class="w-full bg-[#1C69F3] mt-2 py-2 px-auto rounded-lg text-white text-lg opacity-90 hover:opacity-100 transition-all ease">Xác nhận</button>
         </div>
+        <div class="mt-6 text-center">
+                <span>Đã có tài khoản? </span><a class="text-md text-[#68665b] italic hover:underline" href="../dangNhap/index.php">Đăng nhập</a>
+            </div>
     </form>
 </div>

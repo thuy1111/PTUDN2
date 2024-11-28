@@ -42,13 +42,13 @@ if (isset($_POST["btndk"])) {
     <form action="" method="POST" class="my-20 w-full">
         <div class="absolute top-4 left-4 flex flex-col items-center">
             <a href="../../index.php" class="flex flex-col items-center">
-                <img src="../../assets/images/logo/logo1.png" alt="Hospital logo" class="w-48 h-20 mb-2" />
+                <img src="../../assets/images/logo/logo_main.png" alt="" width="100" />
             </a>
         </div>
         <div class="bg-white px-8 py-10 border border-gray-300 rounded-lg shadow-md h-fit w-2/6 mx-auto">
             <div class="flex flex-col justify-center items-center mb-10">
                 <i class="fas fa-user-circle text-7xl text-white bg-gray-500 rounded-full"> </i>
-                <h2 class="font-bold text-3xl mt-3 text-[#f37c7c]">ĐĂNG KÝ</h2>
+                <h2 class="font-bold text-3xl mt-3 text-[#68665b]">ĐĂNG KÝ</h2>
             </div>
             <div class="space-y-4 mb-4">
                 <table class="w-full">
@@ -122,7 +122,7 @@ if (isset($_POST["btndk"])) {
                 <span>Đã có tài khoản? </span><a class="text-md text-[#68665b] italic hover:underline" href="../dangNhap/index.php">Đăng nhập</a>
             </div>
             <div class="mt-4 w-full">
-                <button type="submit" name="btndk" class="w-full bg-[#f37c7c] py-2 px-auto rounded-lg text-white text-lg opacity-90 hover:opacity-100 transition-all ease">Đăng ký</button>
+                <button type="submit" name="btndk" class="w-full bg-[#1C69F3] py-2 px-auto rounded-lg text-white text-lg opacity-90 hover:opacity-100 transition-all ease">Đăng ký</button>
             </div>
         </div>
     </form>
