@@ -8,19 +8,12 @@
         font-size: 16px;
     }
 
-    .schedule-table th,
-    .schedule-table td {
-        padding: 15px;
-        border: 1px solid #ddd;
-        text-align: center;
-        vertical-align: middle;
-    }
+// Khởi tạo controller
+$controller = new controllerLichKham();
 
-    .schedule-table th {
-        background-color: #e3f2fd;
-        color: #333;
-        font-weight: bold;
-    }
+// Lấy danh sách lịch khám
+$dsLichKham = $controller->hienThiLichKham();
+?>
 
     /* Schedule List styling */
     .schedule-list {

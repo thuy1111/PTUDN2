@@ -1,3 +1,71 @@
+<?php
+include_once("controller/cBenhNhan.php");
+$p = new cBenhNhan();
+if (isset($_SESSION['maBenhNhan']) && isset($_GET['maLichKham'])) {
+    $maBenhNhan = $_SESSION['maBenhNhan'];
+    $maLichKham = $_GET['maLichKham'];
+    $tbl = $p->layThongTinLichKham($maBenhNhan, $maLichKham);
+    if ($tbl) {
+        if ($tbl->num_rows > 0) {
+            $row = $tbl->fetch_assoc();
+            $ngayKham = $row['ngayKham'];
+            $tienKham = $row['giaDichVuKham'];
+            $tenBenhNhan = $row['tenBenhNhan'];
+            $sdt = $row['sdt'];
+            $vanDe = $row['vanDeKham'];
+        } else {
+            echo '<script>alert("Không có dữ liệu trong bảng");</script>';
+        }
+    } else {
+        echo '<script>alert("Lỗi truy vấn");</script>';
+    }
+}
+
+?>
+
+<?php
+    if (isset($_POST['cancel'])) {
+        header('Location: index.php');
+        exit();
+    }    
+?>
+
+<?php
+    include_once("controller/cUpload.php");
+    $p = new myfile();
+
+    if (isset($_FILES['hoadon']) && $_FILES['hoadon']['error'] == 0) {
+        $file_name = $_FILES['hoadon']['name'];
+        $tmp_name = $_FILES['hoadon']['tmp_name'];
+        $file_size = $_FILES['hoadon']['size'];
+        $des = "upload";
+        $allow = true;
+        // Kiểm tra đuôi tệp hợp lệ
+        $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
+        $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+
+        if (!in_array(strtolower($file_extension), $allowed_extensions)) {
+            echo "<script>alert('Chỉ chấp nhận các file hình ảnh: jpg, jpeg, png, gif');</script>";
+            $allow = false;
+        }
+
+        // Kiểm tra kích thước tệp (giới hạn 5MB)
+        if ($file_size > 5 * 1024 * 1024) {
+            echo "<script>alert('Dung lượng file vượt quá 5MB');</script>";
+            $allow = false;
+        }
+
+        // Tiến hành upload nếu hợp lệ
+        if ($allow) {
+            if ($p->upload($file_name, $tmp_name, $des) == 1) {
+                echo "<script>alert('Upload hóa đơn thành công!');</script>";
+            } else {
+                echo "<script>alert('Upload thất bại, vui lòng thử lại.');</script>";
+            }
+        }
+    }
+?>
+
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
@@ -30,9 +98,9 @@
     <div class="header-area">
         <div class="main-header header-sticky">
             <div class="container-fluid">
-                <div class="row align-items-center">
+            <div class="row align-items-center">
                     <!-- Logo -->
-                    <div class="col-xl-2 col-lg-2 col-md-1">
+                    <div class="col-xl-2 col-lg-2 col-md-1 mt-3">
                         <div class="logo">
                             <a href="index.php"><img src="assets/images/logo/logo1.png" alt=""></a>
                         </div>
@@ -49,20 +117,12 @@
                                         <li><a href="tintuc.php">Tin Tức</a></li>
                                         <li><a href="lienhe.php">Liên Hệ</a></li>
                                         <li><a href="dangkykham.php">Đăng Ký Khám</a></li>
-<<<<<<< HEAD
-                                        <li><a href="dangkykham.php">Thanh toán</a></li>
-=======
                                         <li><a href="thanhtoan.php">Thanh toán</a></li>
->>>>>>> 4d1f846c6b2b132ee354b9563bd52e6b983c6cb1
                                     </ul>
                                 </nav>
                             </div>
                             <div class="header-right-btn f-right d-none d-lg-block ml-30">
-<<<<<<< HEAD
                                 <a href="view/dangNhap/" class="btn header-btn">Đăng Nhập</a>
-=======
-                                <a href="#" class="btn header-btn">Đăng Nhập</a>
->>>>>>> 4d1f846c6b2b132ee354b9563bd52e6b983c6cb1
                             </div>
                         </div>
                     </div>   
@@ -78,58 +138,105 @@
 </header>
 <main>
     <div class="container-custom">
-        <h2 class="section-title">THANH TOÁN</h2>
-        <div class="instructions">
-            <p><strong>CHUYỂN KHOẢN BẰNG MÃ QR</strong></p>
-            <div class="note">
-                <p>1. Mở ứng dụng ngân hàng/ví điện tử</p>
-                <p>2. Quét mã QR hoặc nhập thông tin bên dưới để chuyển khoản</p>
+        <form action ="" method="post" enctype="multipart/form-data">
+            <h2 class="section-title">THANH TOÁN</h2>
+            <div class="instructions">
+                <p><strong>CHUYỂN KHOẢN BẰNG MÃ QR</strong></p>
+                <div class="note">
+                    <p>1. Mở ứng dụng ngân hàng/ví điện tử</p>
+                    <p>2. Quét mã QR hoặc nhập thông tin bên dưới để chuyển khoản</p>
+                </div>
             </div>
-        </div>
 
-        <div class="row mt-4 justify-content-between">
-            <!-- Transfer Information and QR Code -->
-            <div class="col-md-7 d-flex">
-                <div class="transfer-info flex-grow-1">
-                    <h5 class="text-center"><strong>THÔNG TIN CHUYỂN KHOẢN</strong></h5>
-                    <p><strong>Tài khoản:</strong> NGUYEN ANH</p>
-                    <p><strong>Ngân hàng:</strong> TECHCOMBANK</p>
-                    <p><strong>Số tài khoản:</strong> 1231234567</p>
-                    <p><strong>Nội dung:</strong> LK.05.2023</p>
-                    <p><strong>Số tiền:</strong> 550.000 VND</p>
-                    <div class="d-flex justify-content-between">
-                        <p style="width: 350px; height:60px; padding: 5px; background-color: #F5F5F5;"><em style="font-size: 14px;">Lưu ý: Vui lòng kiểm tra nội dung chuyển khoản trước khi thực hiện thanh toán</em></p>
-                        <div class="text-center" style="width: 100px; height: 100px;">
-                            <img src="assets/images/patient/cloud-upload_5206589.png" alt="iconUpload" style="width:50px; height:50px;">
-                            <p><em style="font-size: 12px;">Upload hóa đơn</em></p>
+            <div class="row mt-4 justify-content-between">
+                <!-- Transfer Information and QR Code -->
+                <div class="col-md-7 d-flex">
+                    <div class="transfer-info flex-grow-1 mr-3">
+                        <h3 class="text-center"><strong>THÔNG TIN CHUYỂN KHOẢN</strong></h3>
+                        <p><strong>Tài khoản:</strong> NGUYEN ANH</p>
+                        <p><strong>Ngân hàng:</strong> TECHCOMBANK</p>
+                        <p><strong>Số tài khoản:</strong> 1231234567</p>
+                        <p><strong>Nội dung:</strong>
+                            <?php 
+                                echo !empty($ngayKham) 
+                                    ? 'LK' . rand(1000, 9999) . $ngayKham 
+                                    : 'Chưa có thông tin'; 
+                            ?>
+                        </p>
+                        <p><strong>Số tiền:</strong><?php echo !empty($tienKham) ? $tienKham : ' Chưa có thông tin'; ?></p>
+                        <div class="d-flex justify-content-between">
+                            <p style="width: 350px; height:60px; padding: 5px; background-color: #F5F5F5;"><em style="font-size: 14px;">Lưu ý: Vui lòng kiểm tra nội dung chuyển khoản trước khi thực hiện thanh toán</em></p>
+                            <div class="text-center" style="width: 110px; height: 110px; position: relative;">
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    <img src="assets/images/patient/cloud-upload_5206589.png" alt="iconUpload" style="width:50px; height:50px; display: block; margin: 0 auto;">
+                                    <p><em style="font-size: 12px; color: #555;">Upload hóa đơn</em></p>
+                                    <input name="hoadon" id="hoadon" type="file" style="opacity: 0; position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer;">
+                                    <button type="submit" style="width: 70px; height: 30px; background-color:#31b0d5; border: none; border-radius: 10px; font-size: 15px;">Upload</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
+                    <div class="qr-section ms-3">
+                        <img id="qr-code" src="assets/images/patient/barcode_14021414.png" alt="QR Code">
+                        <p class="text-center">Mã QR thanh toán tự động</p>
+                        <p class="text-center">
+                            <strong>Thời gian còn lại: <span id="countdown"></span></strong>
+                        </p>
+                        <p class="text-center" id="status"><strong>Đang chờ thanh toán</strong></p>
+
+                    </div>
+
+                    <script>
+                        function startCountdown(duration, display) {
+                            let timer = duration, minutes, seconds;
+
+                            const countdownInterval = setInterval(function () {
+                                minutes = Math.floor(timer / 60);
+                                seconds = timer % 60;
+
+                                display.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+                                if (--timer < 0) {
+                                    clearInterval(countdownInterval);
+
+                                    // Xử lý khi hết thời gian: Tạo mã QR mới
+                                    document.getElementById("status").textContent = "Đã hết thời gian, đang tạo mã QR mới...";
+                                    
+                                    // Mô phỏng tạo lại mã QR
+                                    setTimeout(() => {
+                                        document.getElementById("qr-code").src = `assets/images/patient/barcode_14021414.png`;
+                                        document.getElementById("status").textContent = "Đang chờ thanh toán";
+                                        startCountdown(5, display); // Bắt đầu đếm ngược lại
+                                    }, 2000); // Giả lập chờ 2 giây để tạo mã QR mới
+                                }
+                            }, 1000);
+                        }
+
+                        // Khởi tạo đếm ngược 10 phút
+                        window.onload = function () {
+                            const countdownDisplay = document.getElementById("countdown");
+                            startCountdown(5, countdownDisplay); // 10 phút = 600 giây
+                        };
+                    </script>
                 </div>
-                <div class="qr-section ms-3">
-                    <img src="assets/images/patient/barcode_14021414.png" alt="QR Code">
-                    <p class="text-center">Mã QR thanh toán tự động</p>
-                    <p class="text-center"><strong>Đang chờ thanh toán</strong></p>
+
+                <!-- Summary Information -->
+                <div class="col-md-4">
+                    <div class="summary">
+                        <h3 class="text-center"><strong>THÔNG TIN THANH TOÁN LỊCH KHÁM</strong></h3>
+                        <p><strong>Họ tên bệnh nhân:</strong><?php echo !empty($tenBenhNhan) ? $tenBenhNhan : ' Chưa có thông tin'; ?></p>
+                        <p><strong>Số điện thoại:</strong><?php echo !empty($sdt) ? $sdt : ' Chưa có thông tin'; ?></p>
+                        <p><strong>Vấn đề khám:</strong><?php echo !empty($vanDe) ? $vanDe : ' Chưa có thông tin'; ?></p>
+                        <p><strong>Đơn giá:</strong><?php echo !empty($tienKham) ? $tienKham : ' Chưa có thông tin'; ?></p>
+
+                    </div>
                 </div>
             </div>
 
-            <!-- Summary Information -->
-            <div class="col-md-4">
-                <div class="summary">
-                    <h6 class="text-center"><strong>THÔNG TIN THANH TOÁN LỊCH KHÁM</strong></h6>
-                    <p><strong>Họ tên khách hàng:</strong> Nguyễn Văn A</p>
-                    <p><strong>Số điện thoại:</strong> 0355615214</p>
-                    <p><strong>Dịch vụ khám:</strong> Tai mũi họng</p>
-                    <p><strong>Số lượng:</strong> 1</p>
-                    <p><strong>Đơn giá:</strong> 550.000 VND</p>
-                    <hr></hr>
-                    <p><strong>Tổng tiền:</strong> 550.000 VND</p>
-                </div>
+            <div class="d-flex justify-content-center">
+                <input name="cancel" type="submit" class="cancel-button" id="cancel" value="Hủy"></input>
             </div>
-        </div>
-
-        <div class="d-flex justify-content-center">
-            <button class="cancel-button">HỦY</button>
-        </div>
+        </form>
     </div>
 </main>
     

@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/payment.css">
 </head>
 <body>
     <header>
@@ -35,7 +36,8 @@
                                 <a href="index.php"><img src="assets/images/logo/logo1.png" alt=""></a>
                             </div>
                         </div>
-                        <div class="col-xl-10 col-lg-10 col-md-10">
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-10">
                         <div class="menu-main d-flex align-items-center justify-content-end">
                             <!-- Main-menu -->
                             <div class="main-menu f-right d-none d-lg-block">
@@ -56,6 +58,11 @@
                             </div>
                         </div>
                     </div>   
+                    <!-- Mobile Menu -->
+                    <div class="col-12">
+                        <div class="mobile_menu d-block d-lg-none"></div>
+                    </div>
+                </div>  
                         <!-- Mobile Menu -->
                         <div class="col-12">
                             <div class="mobile_menu d-block d-lg-none"></div>

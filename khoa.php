@@ -22,6 +22,7 @@
 	<link rel="stylesheet" href="assets/css/slick.css">
 	<link rel="stylesheet" href="assets/css/nice-select.css">
 	<link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/payment.css">
 </head>
 <body>
 <header>
@@ -31,9 +32,13 @@
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <!-- Logo -->
-                    <div class="col-xl-2 col-lg-2 col-md-1">
+                    <div class="col-xl-2 col-lg-2 col-md-1 mt-3">
                         <div class="logo">
+<<<<<<< HEAD
                             <a href="index.php"><img src="assets/images/logo/logo1.png" alt=""></a>
+=======
+                            <a href="index.php"><img src="assets/images/logo/logo_main.png" alt="" style="width:150px; height: 150px;;"></a>
+>>>>>>> 91d303f9ced041cc812bcc8817cb9e3eb361951e
                         </div>
                     </div>
                     <div class="col-xl-10 col-lg-10 col-md-10">

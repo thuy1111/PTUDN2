@@ -1,3 +1,14 @@
+<?php
+include_once("../../controller/cPhieuKham.php");
+$controller = new cPhieuKhamBenh();
+
+// Lấy từ khóa tìm kiếm từ URL
+$keyword = isset($_GET['search']) ? $_GET['search'] : "";
+
+// Lấy danh sách phiếu khám bệnh (có tìm kiếm nếu có từ khóa)
+$dsPKB = $controller->hienThiDanhSachPKB($keyword);
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <?php
@@ -253,11 +264,12 @@
         <!-- End Main Content -->
     </div>
 
+    <!-- Scroll to Top Button -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const navlinks = document.querySelectorAll(".navbar a");
-            let idActive = "trangchu";
-
+        document.addEventListener("DOMContentLoaded", ()=> {
             navlinks.forEach(function(item) {
                 item.addEventListener("click", () => {
                     navlinks.forEach((i) => i.classList.remove("bg-sky-300"));
