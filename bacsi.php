@@ -28,13 +28,13 @@
 <header>
     <!--? Header Start -->
     <div class="header-area">
-        <div class="main-header header-sticky">
+    <div class="main-header header-sticky">
             <div class="container-fluid">
-            <div class="row align-items-center">
+                <div class="row align-items-center">
                     <!-- Logo -->
                     <div class="col-xl-2 col-lg-2 col-md-1 mt-3">
                         <div class="logo">
-                            <a href="index.php"><img src="assets/images/logo/logo_main.png" alt="" style="width:150px; height: 150px;;"></a>
+                            <a href="index.php"><img src="assets/images/logo/logo1.png" alt=""></a>
                         </div>
                     </div>
                     <div class="col-xl-10 col-lg-10 col-md-10">
@@ -49,7 +49,7 @@
                                         <li><a href="tintuc.php">Tin Tức</a></li>
                                         <li><a href="lienhe.php">Liên Hệ</a></li>
                                         <li><a href="dangkykham.php">Đăng Ký Khám</a></li>
-                                        <li><a href="thanhtoan.php">Thanh toán</a></li>
+                                        <li><a href="dangkykham.php">Thanh toán</a></li>
                                     </ul>
                                 </nav>
                             </div>

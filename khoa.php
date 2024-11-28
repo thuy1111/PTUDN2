@@ -28,17 +28,13 @@
 <header>
     <!--? Header Start -->
     <div class="header-area">
-        <div class="main-header header-sticky">
+    <div class="main-header header-sticky">
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <!-- Logo -->
                     <div class="col-xl-2 col-lg-2 col-md-1 mt-3">
                         <div class="logo">
-<<<<<<< HEAD
                             <a href="index.php"><img src="assets/images/logo/logo1.png" alt=""></a>
-=======
-                            <a href="index.php"><img src="assets/images/logo/logo_main.png" alt="" style="width:150px; height: 150px;;"></a>
->>>>>>> 91d303f9ced041cc812bcc8817cb9e3eb361951e
                         </div>
                     </div>
                     <div class="col-xl-10 col-lg-10 col-md-10">
