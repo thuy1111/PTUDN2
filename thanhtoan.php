@@ -102,7 +102,7 @@ if (isset($_SESSION['maBenhNhan']) && isset($_GET['maLichKham'])) {
                     <!-- Logo -->
                     <div class="col-xl-2 col-lg-2 col-md-1 mt-3">
                         <div class="logo">
-                            <a href="index.php"><img src="assets/images/logo/logo1.png" alt=""></a>
+                            <a href="index.php"><img src="assets/images/logo/logo_main.png" alt="" width="100"></a>
                         </div>
                     </div>
                     <div class="col-xl-10 col-lg-10 col-md-10">
