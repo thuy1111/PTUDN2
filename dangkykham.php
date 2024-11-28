@@ -29,18 +29,14 @@
         <div class="header-area">
             <div class="main-header header-sticky">
                 <div class="container-fluid">
-                    <div class="row align-items-center">
-                        <!-- Logo -->
-                        <div class="col-xl-2 col-lg-2 col-md-1 mt-3">
-                            <div class="logo">
-<<<<<<< HEAD
-                                <a href="index.php"><img src="assets/images/logo/logo1.png" alt=""></a>
-=======
-                                <a href="index.php"><img src="assets/images/logo/logo_main.png" alt="" style="width:150px; height: 150px;;"></a>
->>>>>>> 4d1f846c6b2b132ee354b9563bd52e6b983c6cb1
-                            </div>
+                <div class="row align-items-center">
+                    <!-- Logo -->
+                    <div class="col-xl-2 col-lg-2 col-md-1 mt-3">
+                        <div class="logo">
+                            <a href="index.php"><img src="assets/images/logo/logo_main.png" alt="" style="width:150px; height: 150px;;"></a>
                         </div>
-                        <div class="col-xl-10 col-lg-10 col-md-10">
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-10">
                         <div class="menu-main d-flex align-items-center justify-content-end">
                             <!-- Main-menu -->
                             <div class="main-menu f-right d-none d-lg-block">
@@ -52,23 +48,20 @@
                                         <li><a href="tintuc.php">Tin Tức</a></li>
                                         <li><a href="lienhe.php">Liên Hệ</a></li>
                                         <li><a href="dangkykham.php">Đăng Ký Khám</a></li>
-<<<<<<< HEAD
-                                        <li><a href="dangkykham.php">Thanh toán</a></li>
-=======
                                         <li><a href="thanhtoan.php">Thanh toán</a></li>
->>>>>>> 4d1f846c6b2b132ee354b9563bd52e6b983c6cb1
                                     </ul>
                                 </nav>
                             </div>
                             <div class="header-right-btn f-right d-none d-lg-block ml-30">
-<<<<<<< HEAD
                                 <a href="view/dangNhap/" class="btn header-btn">Đăng Nhập</a>
-=======
-                                <a href="#" class="btn header-btn">Đăng Nhập</a>
->>>>>>> 4d1f846c6b2b132ee354b9563bd52e6b983c6cb1
                             </div>
                         </div>
                     </div>   
+                    <!-- Mobile Menu -->
+                    <div class="col-12">
+                        <div class="mobile_menu d-block d-lg-none"></div>
+                    </div>
+                </div>   
                         <!-- Mobile Menu -->
                         <div class="col-12">
                             <div class="mobile_menu d-block d-lg-none"></div>

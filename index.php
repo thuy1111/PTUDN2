@@ -3,17 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-<<<<<<< HEAD
     <title> Smiles Hospital | Trang chủ</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo/hospital.png">
-=======
     <title> Medical HTML-5 Template </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico">
->>>>>>> 4d1f846c6b2b132ee354b9563bd52e6b983c6cb1
 
 	<!-- CSS here -->
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -41,11 +38,7 @@
                     <!-- Logo -->
                     <div class="col-xl-2 col-lg-2 col-md-1 mt-3">
                         <div class="logo">
-<<<<<<< HEAD
-                            <a href="index.php"><img src="assets/images/logo/logo1.png" alt=""></a>
-=======
                             <a href="index.php"><img src="assets/images/logo/logo_main.png" alt="" style="width:150px; height: 150px;;"></a>
->>>>>>> 4d1f846c6b2b132ee354b9563bd52e6b983c6cb1
                         </div>
                     </div>
                     <div class="col-xl-10 col-lg-10 col-md-10">
@@ -60,20 +53,12 @@
                                         <li><a href="tintuc.php">Tin Tức</a></li>
                                         <li><a href="lienhe.php">Liên Hệ</a></li>
                                         <li><a href="dangkykham.php">Đăng Ký Khám</a></li>
-<<<<<<< HEAD
-                                        <li><a href="dangkykham.php">Thanh toán</a></li>
-=======
                                         <li><a href="thanhtoan.php">Thanh toán</a></li>
->>>>>>> 4d1f846c6b2b132ee354b9563bd52e6b983c6cb1
                                     </ul>
                                 </nav>
                             </div>
                             <div class="header-right-btn f-right d-none d-lg-block ml-30">
-<<<<<<< HEAD
                                 <a href="view/dangNhap/" class="btn header-btn">Đăng Nhập</a>
-=======
-                                <a href="#" class="btn header-btn">Đăng Nhập</a>
->>>>>>> 4d1f846c6b2b132ee354b9563bd52e6b983c6cb1
                             </div>
                         </div>
                     </div>   
