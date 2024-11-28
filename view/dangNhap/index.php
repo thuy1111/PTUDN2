@@ -33,6 +33,8 @@ if (isset($_POST["btndk"])) {
             while ($row = $result->fetch_assoc()) {
                 if ($userName == $row["tenDangNhap"] && $pass == $row["matKhau"]) {
                     $_SESSION["loginNV"] = true;
+                    $_SESSION["user"] = [$row["maNhanVien"], $row["hoTen"]];
+
                     switch ($row["maChucVu"]) {
                         case 1:
                             echo "<script>window.location.href = '../bacSi/';</script>";
@@ -65,6 +67,7 @@ if (isset($_POST["btndk"])) {
             while ($row = $result->fetch_assoc()) {
                 if ($userName == $row["tenDangNhap"] && $pass == $row["matKhau"]) {
                     $_SESSION["loginBN"] = true;
+                    $_SESSION["customer"] = [$row["maBenhNhan"], $row["hoTen"]];
                     echo "<script>window.location.href = '../benhNhan/';</script>";
                 }
                 

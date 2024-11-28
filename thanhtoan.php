@@ -34,11 +34,7 @@
                     <!-- Logo -->
                     <div class="col-xl-2 col-lg-2 col-md-1">
                         <div class="logo">
-<<<<<<< HEAD
                             <a href="index.php"><img src="assets/images/logo/logo1.png" alt=""></a>
-=======
-                            <a href="index.php"><img src="assets/images/logo/logo_main.png" alt="" style="width:150px; height: 150px;;"></a>
->>>>>>> 4d1f846c6b2b132ee354b9563bd52e6b983c6cb1
                         </div>
                     </div>
                     <div class="col-xl-10 col-lg-10 col-md-10">

@@ -1,5 +1,8 @@
 <html lang="en">
-
+<?php
+error_reporting(1);
+session_start();
+?>
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -26,8 +29,8 @@
                     <i class="fa-solid fa-clipboard-user text-2xl mr-1"></i>
                 </div>
                 <div class="flex items-center ml-8">
-                    <span class="mr-1"> CHOUMENDEN </span>
-                    <i class="fas fa-user-circle text-4xl ml-1"></i>
+                    <i class="fas fa-user-circle text-4xl ml-1"></i> 
+                    <span class="mr-1 ml-1 font-bold text-2xl"> <?php echo end(explode(" ", $_SESSION["customer"][1])); ?> </span>
                 </div>
             </div>
         </div>
