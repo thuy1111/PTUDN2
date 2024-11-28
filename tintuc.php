@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/payment.css">
 </head>
 <body>
     <header>
@@ -30,7 +31,7 @@
                 <div class="container-fluid">
                     <div class="row align-items-center">
                         <!-- Logo -->
-                        <div class="col-xl-2 col-lg-2 col-md-1">
+                        <div class="col-xl-2 col-lg-2 col-md-1 mt-3">
                             <div class="logo">
                                 <a href="index.php"><img src="assets/images/logo/logo_main.png" alt="" style="width:150px; height: 150px;;"></a>
                             </div>

@@ -198,13 +198,12 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                 <!-- Submit Button -->
-                                <div class="row text-center mt-3">
-                                        <div class="col-md-12">
-                                            <button type="submit" class="btn btn-primary mx-2" id="submit" name="submit">Xác nhận</button>
-                                        </div>
-                                    </div>
+                            <div class="row text-center">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary mx-2" id="submit" name="submit">Xác nhận</button>
+                                </div>
                             </div>
                         </form>
 
