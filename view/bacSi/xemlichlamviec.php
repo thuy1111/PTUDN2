@@ -22,6 +22,37 @@
             align-items: center;
             margin-bottom: 1rem;
         }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -29,17 +60,17 @@
         <?php include('../../assets/inc/nav.php'); ?>
 
         <div class="left-side-menu">
-            <div class="slimscroll-menu">
+        <div class="slimscroll-menu">
                 <div id="sidebar-menu">
                     <ul class="metismenu" id="side-menu">
-                        <li><a href="index.php"><i class="fe-airplay"></i><span>Dashboard</span></a></li>
+                        <li><a href=".php"><i class="fe-airplay"></i><span>Dashboard</span></a></li>
                         <li><a href="xemphieukham.php"><i class="fas fa-user-tie"></i><span>Xem phiếu khám bệnh</span><span class="menu-arrow"></span></a></li>
                         <li><a href="xemlichkham.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch khám</span><span class="menu-arrow"></span></a></li>
                         <li><a href="dangkicalamviec.php"><i class="mdi mdi-hospital-building"></i><span>Đăng ký ca</span><span class="menu-arrow"></span></a></li>
-                        <li><a href="javascript: void(0);"><i class="mdi mdi-hospital-building"></i><span>Xem lịch làm việc</span><span class="menu-arrow"></span></a></li>
+                        <li><a href="xemlichlamviec.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch làm việc</span><span class="menu-arrow"></span></a></li>
+                        
                     </ul>
                 </div>
-                <div class="clearfix"></div>
             </div>
         </div>
 
@@ -47,10 +78,10 @@
             <div class="content">
                 <div class="container-fluid">
                     <h2 class="mb-4">LỊCH LÀM VIỆC</h2>
-                    
+
                     <div class="week-navigation">
                         <button class="btn btn-secondary" id="prevWeekBtn">Tuần Trước</button>
-                        <span id="weekDateRange" class="h5">Tuần từ: 06/11/2024 đến 12/11/2024</span>
+                        <span id="weekDateRange" class="h5"></span>
                         <button class="btn btn-secondary" id="nextWeekBtn">Tuần Sau</button>
                     </div>
 
@@ -69,34 +100,8 @@
                                             <th>CN</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><button class="btn btn-primary">Ca 1</button></td>
-                                            <td><button class="btn btn-primary">Ca 1</button></td>
-                                            <td><button class="btn btn-primary">Ca 1</button></td>
-                                            <td><button class="btn btn-secondary" aria-label="Không có ca"></button></td>
-                                            <td><button class="btn btn-primary">Ca 1</button></td>
-                                            <td><button class="btn btn-primary">Ca 1</button></td>
-                                            <td><button class="btn btn-primary">Ca 1</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><button class="btn btn-primary">Ca 2</button></td>
-                                            <td><button class="btn btn-primary">Ca 2</button></td>
-                                            <td><button class="btn btn-secondary" aria-label="Không có ca"></button></td>
-                                            <td><button class="btn btn-primary">Ca 2</button></td>
-                                            <td><button class="btn btn-primary">Ca 2</button></td>
-                                            <td><button class="btn btn-primary">Ca 2</button></td>
-                                            <td><button class="btn btn-secondary" aria-label="Không có ca"></button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><button class="btn btn-secondary" aria-label="Không có ca"></button></td>
-                                            <td><button class="btn btn-primary">Ca 3</button></td>
-                                            <td><button class="btn btn-primary">Ca 3</button></td>
-                                            <td><button class="btn btn-primary">Ca 3</button></td>
-                                            <td><button class="btn btn-secondary" aria-label="Không có ca"></button></td>
-                                            <td><button class="btn btn-primary">Ca 3</button></td>
-                                            <td><button class="btn btn-primary">Ca 3</button></td>
-                                        </tr>
+                                    <tbody id="scheduleBody">
+                                        <!-- Schedule data will be inserted here -->
                                     </tbody>
                                 </table>
                             </div>
@@ -106,7 +111,6 @@
                                 <span><strong>Ca 2:</strong> 13:00 - 16:30</span>
                                 <span><strong>Ca 3:</strong> 17:00 - 19:00</span>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -114,18 +118,17 @@
         </div>
     </div>
 
-    <script src="../../assets/js/vendor.min.js"></script>
-    <script src="../../assets/libs/flatpickr/flatpickr.min.js"></script>
-    <script src="../../assets/libs/jquery-knob/jquery.knob.min.js"></script>
-    <script src="../../assets/libs/jquery-sparkline/jquery.sparkline.min.js"></script>
-    <script src="../../assets/libs/flot-charts/jquery.flot.js"></script>
-    <script src="../../assets/libs/flot-charts/jquery.flot.time.js"></script>
-    <script src="../../assets/libs/flot-charts/jquery.flot.tooltip.min.js"></script>
-    <script src="../../assets/libs/flot-charts/jquery.flot.selection.js"></script>
-    <script src="../../assets/libs/flot-charts/jquery.flot.crosshair.js"></script>
-    <script src="../../assets/js/pages/dashboard-1.init.js"></script>
-    <script src="../../assets/js/app.min.js"></script>
+    <!-- Modal for shift details -->
+    <div id="shiftModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Chi tiết ca làm việc</h2>
+            <div id="shiftDetails"></div>
+        </div>
+    </div>
 
+    <script src="../../assets/js/vendor.min.js"></script>
+    <script src="../../assets/js/app.min.js"></script>
     <script>
         let currentDate = new Date();
 
@@ -133,7 +136,7 @@
             const dd = String(date.getDate()).padStart(2, '0');
             const mm = String(date.getMonth() + 1).padStart(2, '0');
             const yyyy = date.getFullYear();
-            return `${dd}/${mm}/${yyyy}`;
+            return `${yyyy}-${mm}-${dd}`;
         }
 
         function updateWeekDisplay() {
@@ -147,6 +150,42 @@
 
             const weekRange = `Tuần từ: ${formatDate(startOfWeek)} đến ${formatDate(endOfWeek)}`;
             document.getElementById('weekDateRange').textContent = weekRange;
+
+            // Update the displayed work schedule
+            loadSchedule(formatDate(startOfWeek), formatDate(endOfWeek));
+        }
+
+        function loadSchedule(startDate, endDate) {
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", "getLich.php?start=" + startDate + "&end=" + endDate, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Update the schedule table
+                    document.getElementById("scheduleBody").innerHTML = xhr.responseText;
+                    
+                    // Add click event listeners to shift buttons
+                    const shiftButtons = document.querySelectorAll('.shift-button');
+                    shiftButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const shiftId = this.getAttribute('data-shift-id');
+                            showShiftDetails(shiftId);
+                        });
+                    });
+                }
+            };
+            xhr.send();
+        }
+
+        function showShiftDetails(shiftId) {
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", "chitietCLV.php?id=" + shiftId, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    document.getElementById("shiftDetails").innerHTML = xhr.responseText;
+                    document.getElementById("shiftModal").style.display = "block";
+                }
+            };
+            xhr.send();
         }
 
         document.getElementById('prevWeekBtn').addEventListener('click', function() {
@@ -159,7 +198,20 @@
             updateWeekDisplay();
         });
 
+        // Close modal when clicking on <span> (x)
+        document.querySelector('.close').addEventListener('click', function() {
+            document.getElementById('shiftModal').style.display = "none";
+        });
+
+        // Close modal when clicking outside of it
+        window.addEventListener('click', function(event) {
+            if (event.target == document.getElementById('shiftModal')) {
+                document.getElementById('shiftModal').style.display = "none";
+            }
+        });
+
         updateWeekDisplay(); // Initial call
     </script>
 </body>
 </html>
+
