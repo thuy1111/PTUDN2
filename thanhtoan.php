@@ -117,7 +117,6 @@ if (isset($_SESSION['maBenhNhan']) && isset($_GET['maLichKham'])) {
                                         <li><a href="tintuc.php">Tin Tức</a></li>
                                         <li><a href="lienhe.php">Liên Hệ</a></li>
                                         <li><a href="dangkykham.php">Đăng Ký Khám</a></li>
-                                        <li><a href="thanhtoan.php">Thanh toán</a></li>
                                     </ul>
                                 </nav>
                             </div>

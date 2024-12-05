@@ -3,6 +3,9 @@
     $p = new cThongKe();
 
     $alert = ""; // Variable to store the alert message
+    $hasData = false; // Check if there's data
+    $doanhThu = [];
+    $jsonDoanhThu = "";
 
     if (isset($_REQUEST['submit'])) {
         $startDate = $_REQUEST['thoiGianBatDau'];
@@ -14,21 +17,14 @@
         if (empty($loaiTG) || ($loaiTG == "1" && (empty($startDate) || empty($endDate))) || (($loaiTG == "2" || $loaiTG == "3") && empty($year))) {
             $alert = "Vui lòng chọn đầy đủ thông tin thống kê.";
         } else {
-            // Call the function based on selected `loaiTG`
-            $result = $p->thongKeDoanhThuTheoLoaiThoiGian($loaiTG,$khoangTG, $startDate, $endDate, $year);
-            $doanhThu= $result['result'];
+            $result = $p->thongKeDoanhThuTheoLoaiThoiGian($loaiTG, $khoangTG, $startDate, $endDate, $year);
+            $doanhThu = $result['result'];
             $jsonDoanhThu = $result['json']; // JSON for chart
+            $hasData = !empty($doanhThu); // Check if data exists
         }
-
-        // echo "Loại thời gian: $loaiTG";
-        // echo "Khoảng thời gian: $khoangTG";
-        // echo "Ngày bắt đầu: $startDate";
-        // echo "Ngày kết thúc: $endDate";
-        // echo "Năm: $year";
-        // echo "Thông tin doanh thu: ". $doanhThu;
-        // echo "Thông tin doanh thu (JSON): $jsonDoanhThu";
     }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,9 +65,9 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li>
+                                    <!-- <li>
                                         <a href="thongketongdoanhthu.php">Tổng doanh thu</a>
-                                    </li>
+                                    </li> -->
                                     <li>
                                         <a href="thongkedoanhthutheoloaithoigian.php">Theo loại thời gian</a>
                                     </li>
@@ -211,48 +207,55 @@
 
                     <h4 class="header-title mb-3">DOANH THU BỆNH VIỆN</h4>
                     <div class="row">
-                        <div class="col-6">
-                            <div class="card-box">
-                                <div class="table-responsive">
-                                    <?php if (!empty($doanhThu)): ?>
+                        <!-- Thông báo -->
+                        <?php if (isset($_REQUEST['submit']) && !$hasData): ?>
+                            <div class="alert alert-warning text-center" role="alert">
+                                Chưa có doanh thu cho khoảng thời gian này.
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Hiển thị bảng doanh thu -->
+                        <?php if ($hasData): ?>
+                            <div class="col-6">
+                                <div class="card-box">
+                                    <div class="table-responsive">
                                         <table class='table table-borderless table-hover table-centered m-0'>
                                             <thead class='thead-light'>
-                                                <?php if ($loaiTG == "1"): ?>
-                                                    <tr><th>Thời gian</th><th>Doanh thu</th></tr>
-                                                <?php elseif ($loaiTG == "2"): ?>
-                                                    <tr><th>Thời gian</th><th>Doanh thu</th></tr>
-                                                <?php else: ?>
-                                                    <tr><th>Thời gian</th><th>Doanh thu</th></tr>
-                                                <?php endif; ?>
+                                                <tr>
+                                                    <th>Thời gian</th>
+                                                    <th>Doanh thu</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
                                                 <?php foreach ($doanhThu as $row): ?>
                                                     <tr>
-                                                        <?php if ($loaiTG == "1" && $khoangTG): ?>
-                                                            <td><?= $row['ngayKham'] ?></td>
-                                                        <?php elseif ($loaiTG == "2"): ?>
-                                                            <td>T<?= $row['thang'] .'/'. $row['nam'] ?></td>
-                                                        <?php else: ?>
-                                                            <td>Q<?= $row['quy'] .'/'. $row['nam'] ?></td>
-                                                        <?php endif; ?>
+                                                        <td>
+                                                            <?php if ($loaiTG == "1"): ?>
+                                                                <?= $row['ngayKham'] ?>
+                                                            <?php elseif ($loaiTG == "2"): ?>
+                                                                T<?= $row['thang'] . '/' . $row['nam'] ?>
+                                                            <?php else: ?>
+                                                                Q<?= $row['quy'] . '/' . $row['nam'] ?>
+                                                            <?php endif; ?>
+                                                        </td>
                                                         <td><?= number_format($row['totalRevenue'], 0) ?> VND</td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
                                         </table>
-                                    <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-6">
-                            <div class="card-box">
-                                <div class="table-responsive">
+                            <!-- Hiển thị biểu đồ -->
+                            <div class="col-6">
+                                <div class="card-box">
                                     <canvas id="revenueChart" width="500" height="500"></canvas>
                                 </div>
                             </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
+
 
                     <!-- jQuery Library -->
                     <script src="../../assets/js/vendor/jquery-3.7.1.min.js"></script>

@@ -38,9 +38,9 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li>
+                                    <!-- <li>
                                         <a href="thongketongdoanhthu.php">Tổng doanh thu</a>
-                                    </li>
+                                    </li> -->
                                     <li>
                                         <a href="thongkedoanhthutheoloaithoigian.php">Theo loại thời gian</a>
                                     </li>

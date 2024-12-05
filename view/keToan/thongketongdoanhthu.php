@@ -148,6 +148,8 @@ if (isset($_REQUEST['submit'])) {
                                             <td id="displayEndDate">'.$endDate.'</td>
                                             <td id="displayRevenue">'.$formattedRevenue.'</td>
                                         </tr>';
+                                    }else{
+                                        echo '<script type="text/javascript">alert("Không có dữ liệu thống kê");</script>';
                                     }
                                 ?>
                                 </tbody>

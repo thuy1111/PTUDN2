@@ -2,7 +2,10 @@
     include_once('../../controller/cThongKe.php');
     $p = new cThongKe();
 
-    $alert = ""; // Biến để lưu thông báo
+    $alert = ""; // Variable to store the alert message
+    $hasData = false; // Check if there's data
+    $doanhThu = [];
+    $jsonDoanhThu = "";
 
     if (isset($_REQUEST['submit'])) {
         $startDate = $_REQUEST['thoiGianBatDau'];
@@ -19,6 +22,8 @@
             $result = $p->thongKeDoanhThuTheoKhoa($khoa, $loaiTG, $khoangTG, $startDate, $endDate, $year);
             $doanhThu = $result['result'];
             $jsonDoanhThu = $result['json'];
+            $hasData = !empty($doanhThu);
+
         }
     }
 ?>
@@ -64,9 +69,9 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li>
+                                    <!-- <li>
                                         <a href="thongketongdoanhthu.php">Tổng doanh thu</a>
-                                    </li>
+                                    </li> -->
                                     <li>
                                         <a href="thongkedoanhthutheoloaithoigian.php">Theo loại thời gian</a>
                                     </li>
@@ -132,6 +137,7 @@
 
                         <form class="mb-3" method="POST" action="">
                             <div class="row">
+                                
                                 <div class="col-md-6">
                                     <div class="row mb-3 align-items-center">
                                         <div class="col-md-4 text-start">
@@ -243,6 +249,11 @@
 
                         <h4 class="header-title mb-3">DOANH THU BỆNH VIỆN</h4>
                         <div class="row">
+                            <?php if (isset($_REQUEST['submit']) && !$hasData): ?>
+                                <div class="alert alert-warning text-center" role="alert">
+                                    Chưa có doanh thu cho khoảng thời gian này.
+                                </div>
+                            <?php endif; ?>
                             <!-- Bảng doanh thu -->
                             <div class="card-box">
                                 <div class="table-responsive">
