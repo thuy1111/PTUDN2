@@ -61,7 +61,7 @@ if (isset($_POST["btndk"])) {
             }
         }
         
-        if (!$found && $ctrlCustomer->cGetAllCustomer() != 0) {
+        if (!$foundNV && $ctrlCustomer->cGetAllCustomer() != 0) {
             $result = $ctrlCustomer->cGetAllCustomer();
 
             while ($row = $result->fetch_assoc()) {
