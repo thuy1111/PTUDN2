@@ -2,6 +2,11 @@
 include_once("../../controller/cPhieuKham.php");
 $controller = new cPhieuKhamBenh();
 
+if (!isset($_SESSION["loginNV"]) || $_SESSION["user"][2] != 1)
+    echo "<script>
+        if (alert('Bạn không có quyền truy cập!') != false)
+            window.location.href = '../dangNhap';
+    </script>";
 ?>
 
 <!DOCTYPE html>

@@ -2,6 +2,12 @@
 <?php
 error_reporting(1);
 session_start();
+
+if (!isset($_SESSION["loginBN"]))
+    echo "<script>
+        if (alert('Bạn không có quyền truy cập!') != false)
+            window.location.href = '../dangNhap';
+    </script>";
 ?>
 <head>
     <meta charset="utf-8" />
