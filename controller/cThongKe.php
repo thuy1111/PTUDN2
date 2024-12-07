@@ -46,7 +46,7 @@
         public function thongKeDoanhThuTheoKhoa($khoa, $loaiTG, $khoangTG, $startDate, $endDate, $year) {
             $p = new mThongKeDoanhThu();
             $result = $p->thongKeDoanhThuTheoKhoa($khoa, $loaiTG, $khoangTG, $startDate, $endDate, $year);
-        
+
             if ($result !== false) {
                 $jsonResult = json_encode($result);
                 return [

@@ -1,34 +1,51 @@
 <?php
-    include_once('../../controller/cThongKe.php');
-    $p = new cThongKe();
+include_once('../../controller/cThongKe.php');
+$p = new cThongKe();
 
-    $alert = ""; // Variable to store the alert message
+$alert = ""; 
+$hasData = false; // Check if data exists
+$doanhThu = [];
+$jsonDoanhThu = "";
 
-    if (isset($_REQUEST['submit'])) {
-        $startDate = $_REQUEST['thoiGianBatDau'];
-        $endDate = $_REQUEST['thoiGianKetThuc'];
-        $loaiTG = $_REQUEST['loaiTG'];
-        $khoangTG = $_REQUEST['timeRange'];
-        $year = $_REQUEST['year'];
+if (isset($_REQUEST['submit'])) {
+    $startDate = $_REQUEST['startDate'] ?? null;
+    $endDate = $_REQUEST['endDate'] ?? null;
+    $loaiTG = $_REQUEST['loaiTG'] ?? "0";
+    $khoangTG = $_REQUEST['timeRange'] ?? null;
+    $year = $_REQUEST['year'] ?? null;
 
-        if (empty($loaiTG) || ($loaiTG == "1" && (empty($startDate) || empty($endDate))) || (($loaiTG == "2" || $loaiTG == "3") && empty($year))) {
-            $alert = "Vui lòng chọn đầy đủ thông tin thống kê.";
-        } else {
-            // Call the function based on selected `loaiTG`
-            $result = $p->thongKeDoanhThuTheoLoaiThoiGian($loaiTG,$khoangTG, $startDate, $endDate, $year);
-            $doanhThu= $result['result'];
-            $jsonDoanhThu = $result['json']; // JSON for chart
+    // Validate input
+    if ($loaiTG == "0") {
+        $alert = 'Vui lòng chọn loại thời gian.';
+    } elseif ($loaiTG == "1" && $khoangTG == "4") {
+        if (empty($startDate) || empty($endDate)) {
+            $alert = 'Vui lòng chọn đầy đủ thời gian bắt đầu và kết thúc.';
+        } elseif ($startDate > $endDate) {
+            $alert = 'Thời gian bắt đầu không thể lớn hơn thời gian kết thúc.';
         }
-
-        // echo "Loại thời gian: $loaiTG";
-        // echo "Khoảng thời gian: $khoangTG";
-        // echo "Ngày bắt đầu: $startDate";
-        // echo "Ngày kết thúc: $endDate";
-        // echo "Năm: $year";
-        // echo "Thông tin doanh thu: ". $doanhThu;
-        // echo "Thông tin doanh thu (JSON): $jsonDoanhThu";
+    } elseif (($loaiTG == "2" || $loaiTG == "3") && empty($year)) {
+        $alert = 'Vui lòng chọn năm.';
     }
+
+    if (!empty($alert)) {
+        echo "<script>alert('$alert'); window.location.href='thongkedoanhthutheoloaithoigian.php';</script>";
+        return;
+    }
+
+    // Call revenue statistics function
+    $result = $p->thongKeDoanhThuTheoLoaiThoiGian($loaiTG, $khoangTG, $startDate, $endDate, $year);
+    $doanhThu = $result['result'] ?? [];
+    $jsonDoanhThu = $result['json'] ?? "";
+    $hasData = !empty($doanhThu);
+
+    if (!$hasData) {
+        $alert = "Chưa có dữ liệu thống kê trong khoảng thời gian này.";
+    }
+}
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,15 +80,15 @@
                             </li>
 
                             <li>
-                                <a href="javascript: void(0);">
-                                    <i class="fas fa-user-tie"></i>
+                                <a href="thongkedoanhthu.php">
+                                    <i class="fas fa-chart-line"></i>
                                     <span>Thống kê doanh thu</span>
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li>
+                                    <!-- <li>
                                         <a href="thongketongdoanhthu.php">Tổng doanh thu</a>
-                                    </li>
+                                    </li> -->
                                     <li>
                                         <a href="thongkedoanhthutheoloaithoigian.php">Theo loại thời gian</a>
                                     </li>
@@ -82,7 +99,7 @@
                             </li>
 
                             <li>
-                                <a href="javascript: void(0);">
+                                <a href="phanphongkham.php">
                                     <i class="mdi mdi-hospital-building"></i>
                                     <span>Phân số thứ tự, phòng khám</span>
                                     <span class="menu-arrow"></span>
@@ -127,9 +144,8 @@
 
                         <div class="row mb-2">
                             <div class="col-12 text-center">
-                                <a href="thongketongdoanhthu.php" class="btn btn-primary mx-2">Thống kê tổng doanh thu</a>
-                                <a href="thongkedoanhthutheoloaithoigian.php" class="btn btn-success mx-2">Theo loại thời gian</a>
-                                <a href="thongkedoanhthutheokhoa.php" class="btn btn-danger mx-2">Theo khoa</a>
+                                <a href="thongkedoanhthutheoloaithoigian.php" class="btn btn-success mx-2">THEO LOẠI THỜI GIAN</a>
+                                <a href="thongkedoanhthutheokhoa.php" class="btn btn-danger mx-2">THEO KHOA</a>
                             </div>
                         </div>
 
@@ -138,7 +154,7 @@
                         <form class="mb-3" method="POST">
                             <div class="row mb-3">
                                 <div class="col-md-2 text-start">
-                                    <label for="loaiTG" class="form-label">Loại thời gian</label>
+                                    <label for="loaiTG" class="form-label">LOẠI THỜI GIAN</label>
                                 </div>
                                 <div class="col-md-3">
                                     <select class="form-select form-control" id="loaiTG" name="loaiTG">
@@ -155,7 +171,7 @@
                                     <div class="form-group time-range d-none">
                                         <div class="row">
                                             <div class="col-md-4 text-start">
-                                                <label for="timeRange">Khoảng thời gian</label>
+                                                <label for="timeRange">KHOẢNG THỜI GIAN</label>
                                             </div>
                                             <div class="col-md-4">
                                                 <select class="form-control timeRange" id="timeRange" name="timeRange">
@@ -171,7 +187,7 @@
                                     <div class="form-group year d-none">
                                         <div class="row">
                                             <div class="col-md-4 text-start">
-                                                <label for="year">Năm</label>
+                                                <label for="year">NĂM</label>
                                             </div>
                                             <div class="col-md-4">
                                                 <input type="text" class="yearpicker" name="year" value="" />
@@ -184,27 +200,26 @@
                                     <div class="custom-date-range d-none mt-3">
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <label for="startDate">Ngày bắt đầu</label>
+                                                <label for="startDate">NGÀY BẮT ĐẦU</label>
                                             </div>
                                             <div class="col-md-3">
-                                                <input type="date" id="startDate" name="thoiGianBatDau" class="form-control" placeholder="YYYY-MM-DD">
+                                                <input type="date" id="startDate" name="startDate" class="form-control" value="<?php echo date('Y-m-d'); ?>" min="2023-03-08" max="<?php echo date('Y-m-d'); ?>">
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="endDate">Ngày kết thúc</label>
+                                                <label for="endDate">NGÀY KẾT THÚC</label>
                                             </div>
                                             <div class="col-md-3">
-                                                <input type="date" id="endDate" name="thoiGianKetThuc" class="form-control" placeholder="YYYY-MM-DD">
+                                                <input type="date" id="endDate" name="endDate" class="form-control" value="<?php echo date('Y-m-d'); ?>" min="2023-03-08" max="<?php echo date('Y-m-d'); ?>">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                 <!-- Submit Button -->
-                                <div class="row text-center mt-3">
-                                        <div class="col-md-12">
-                                            <button type="submit" class="btn btn-primary mx-2" id="submit" name="submit">Xác nhận</button>
-                                        </div>
-                                    </div>
+                            <div class="row text-center">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary mx-2" id="submit" name="submit">XÁC NHẬN</button>
+                                </div>
                             </div>
                         </form>
 
@@ -212,48 +227,55 @@
 
                     <h4 class="header-title mb-3">DOANH THU BỆNH VIỆN</h4>
                     <div class="row">
-                        <div class="col-6">
-                            <div class="card-box">
-                                <div class="table-responsive">
-                                    <?php if (!empty($doanhThu)): ?>
+                        <!-- Thông báo -->
+                        <?php if (!empty($alert)): ?>
+                            <div class="alert alert-warning text-center" role="alert">
+                                <?php echo htmlspecialchars($alert); ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Hiển thị bảng doanh thu -->
+                        <?php if ($hasData): ?>
+                            <div class="col-6">
+                                <div class="card-box">
+                                    <div class="table-responsive">
                                         <table class='table table-borderless table-hover table-centered m-0'>
                                             <thead class='thead-light'>
-                                                <?php if ($loaiTG == "1"): ?>
-                                                    <tr><th>Thời gian</th><th>Doanh thu</th></tr>
-                                                <?php elseif ($loaiTG == "2"): ?>
-                                                    <tr><th>Thời gian</th><th>Doanh thu</th></tr>
-                                                <?php else: ?>
-                                                    <tr><th>Thời gian</th><th>Doanh thu</th></tr>
-                                                <?php endif; ?>
+                                                <tr>
+                                                    <th>Thời gian</th>
+                                                    <th>Doanh thu</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
                                                 <?php foreach ($doanhThu as $row): ?>
                                                     <tr>
-                                                        <?php if ($loaiTG == "1" && $khoangTG): ?>
-                                                            <td><?= $row['ngayKham'] ?></td>
-                                                        <?php elseif ($loaiTG == "2"): ?>
-                                                            <td>T<?= $row['thang'] .'/'. $row['nam'] ?></td>
-                                                        <?php else: ?>
-                                                            <td>Q<?= $row['quy'] .'/'. $row['nam'] ?></td>
-                                                        <?php endif; ?>
+                                                        <td>
+                                                            <?php if ($loaiTG == "1"): ?>
+                                                                <?= $row['ngayKham'] ?>
+                                                            <?php elseif ($loaiTG == "2"): ?>
+                                                                T<?= $row['thang'] . '/' . $row['nam'] ?>
+                                                            <?php else: ?>
+                                                                Q<?= $row['quy'] . '/' . $row['nam'] ?>
+                                                            <?php endif; ?>
+                                                        </td>
                                                         <td><?= number_format($row['totalRevenue'], 0) ?> VND</td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
                                         </table>
-                                    <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-6">
-                            <div class="card-box">
-                                <div class="table-responsive">
+                            <!-- Hiển thị biểu đồ -->
+                            <div class="col-6">
+                                <div class="card-box">
                                     <canvas id="revenueChart" width="500" height="500"></canvas>
                                 </div>
                             </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
+
 
                     <!-- jQuery Library -->
                     <script src="../../assets/js/vendor/jquery-3.7.1.min.js"></script>

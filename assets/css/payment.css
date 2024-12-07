@@ -1,16 +1,5 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #e9f8f8;
-}
-
-/* Header styling */
-.header {
-    background-color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 50px; /* Tăng khoảng cách với lề trái/phải */
-    border-bottom: 1px solid #ddd;
 }
 
 .header img {
@@ -23,43 +12,6 @@ body {
     color: #333;
     text-decoration: none;
     font-weight: bold;
-}
-
-.header .users {
-    display: flex;
-    align-items: center;
-    margin-left: 25px; /* Cách phần tài khoản ra khỏi menu */
-}
-
-.header .user img {
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-}
-
-/* Dropdown menu styling */
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: -40px; /* Điều chỉnh để dropdown gần với phần tài khoản hơn */
-    z-index: 1000;
-    min-width: 160px;
-    padding: 0.5rem 0;
-    margin: 0;
-    font-size: 1rem;
-    color: #333;
-    text-align: left;
-    list-style: none;
-    background-color: #fff;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: 0.25rem;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Thêm đổ bóng nếu cần */
-}
-
-/* Hiển thị dropdown khi hover vào phần tài khoản */
-.dropdown:hover .dropdown-menu {
-    display: block;
 }
 
 /* Note section styling */

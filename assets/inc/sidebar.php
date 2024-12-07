@@ -18,7 +18,7 @@
                             </li>
 
                             <li>
-                                <a href="javascript: void(0);">
+                                <a href="../../view/quanLyNhanSu/quanlythongtinnhanvien.php">
                                     <i class="fas fa-user-tie"></i>
                                     <span>Quản lý thông tin nhân viên</span>
                                     <span class="menu-arrow"></span>
@@ -27,7 +27,7 @@
                             </li>
 
                             <li>
-                                <a href="javascript: void(0);">
+                                <a href="../../view/quanLyNhanSu/quanlykhoa.php">
                                     <i class="mdi mdi-hospital-building"></i>
                                     <span>Quản lý khoa</span>
                                     <span class="menu-arrow"></span>
@@ -45,7 +45,7 @@
                             </li>
                 
                             <li>
-                                <a href="javascript: void(0);">
+                                <a href="../../view/quanLyNhanSu/quanlybaohiem.php">
                                     <i class="mdi mdi-shield-check"></i>
                                     <span>Quản lý bảo hiểm</span>
                                     <span class="menu-arrow"></span>

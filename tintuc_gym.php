@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
     <link rel="stylesheet" href="assets/css/blog.css">
+    <link rel="stylesheet" href="assets/css/payment.css">
 </head>
 <body>
     <header>
@@ -31,9 +32,9 @@
                 <div class="container-fluid">
                     <div class="row align-items-center">
                         <!-- Logo -->
-                        <div class="col-xl-2 col-lg-2 col-md-1">
+                        <div class="col-xl-2 col-lg-2 col-md-1 mt-3">
                             <div class="logo">
-                                <a href="index.php"><img src="assets/images/logo/logo_main.png" alt="" style="width:150px; height: 150px;;"></a>
+                                <a href="index.php"><img src="assets/images/logo/logo_main.png" alt="" width="100"></a>
                             </div>
                         </div>
                         <div class="col-xl-10 col-lg-10 col-md-10">
@@ -48,12 +49,11 @@
                                         <li><a href="tintuc.php">Tin Tức</a></li>
                                         <li><a href="lienhe.php">Liên Hệ</a></li>
                                         <li><a href="dangkykham.php">Đăng Ký Khám</a></li>
-                                        <li><a href="thanhtoan.php">Thanh toán</a></li>
                                     </ul>
                                 </nav>
                             </div>
                             <div class="header-right-btn f-right d-none d-lg-block ml-30">
-                                <a href="#" class="btn header-btn">Đăng Nhập</a>
+                                <a href="view/dangNhap/" class="btn header-btn">Đăng Nhập</a>
                             </div>
                         </div>
                     </div>   
@@ -92,7 +92,7 @@
                 <span class="author">Tác giả: Bệnh viện Đa khoa Tâm Anh</span>
             </div>
             <p class="text">Tập thể dục cường độ cao, tập luyện quá sức trong tình trạng sức khỏe tim mạch không ổn định có thể dẫn tới ngưng tim, đột tử nếu không cấp cứu kịp thời.</p>
-            <img src="assets/img/post/cac-bac-si-cap-cuu-benh-nhan-nhoi-mau-co-tim.jpg" alt="Hospital News Image">
+            <img src="assets/images/post/cac-bac-si-cap-cuu-benh-nhan-nhoi-mau-co-tim.jpg" alt="Hospital News Image">
             <p class="caption">Các bác sĩ cấp cứu cho một bệnh nhân nhồi máu cơ tim cấp</p>
             <p class="text">Ngày 25/10, PGS.TS.BS Phạm Nguyễn Vinh, Giám đốc Trung tâm Tim mạch, Bệnh viện Đa khoa Tâm Anh TP HCM, cho biết thông tin trên, thêm rằng nhiều nghiên cứu cho thấy tập thể dục quá sức dễ dẫn đến ngừng tim đột ngột hoặc đột tử do tim ở những người mắc bệnh tim tiềm ẩn. Ngoài ra, gắng sức cũng làm tăng nguy cơ rối loạn nhịp tim, đặc biệt là đối với bệnh nhân cơ tim phì đại hoặc bệnh mạch vành.</p>
             <p class="text">Ngoài ra, luyện tập đều đặn còn làm tăng cholesterol tốt (HDL-C), góp phần cải thiện chức năng nội mô động mạch vành, hạn chế xơ vữa mạch máu. Hiệp hội Tim mạch Hoa Kỳ khuyến nghị mỗi người nên dành 150 phút tập thể dục cường độ vừa phải, chẳng hạn như đi bộ nhanh, đạp xe, bơi lội…, hoặc 75 phút tập luyện cường độ mạnh như chạy bộ, nâng tạ, tennis… mỗi tuần.</p>

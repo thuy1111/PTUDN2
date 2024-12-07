@@ -1,3 +1,14 @@
+<?php
+    if(isset($_SESSION['maBenhNhan'])){
+        $maBenhNhan = $_SESSION['maBenhNhan'];
+        include_once('../../controller/cBenhNhan.php');
+        $p = new cBenhNhan();
+    }
+    else{
+        header('Location: /QuanLyBenhVien/login');
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -187,27 +198,6 @@ body {
     </div>
 </div>
 
-<script>
-    function toggleDropdown() {
-        const dropdownMenu = document.querySelector('.profile-dropdown');
-        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
-    }
-
-    // Close Dropdown when clicking out
-    window.onclick = function(event) {
-        if (!event.target.matches('.nav-user')) {
-            const dropdowns = document.getElementsByClassName("profile-dropdown");
-            for (let i = 0; i < dropdowns.length; i++) {
-                const openDropdown = dropdowns[i];
-                if (openDropdown.style.display === 'block') {
-                    openDropdown.style.display = 'none';
-                }
-            }
-        }
-    }
-</script>
-
-
 <div class="container-custom">
     <h2 class="section-title">THANH TOÁN</h2>
     <div class="instructions">
@@ -252,7 +242,7 @@ body {
                 <p><strong>Dịch vụ khám:</strong> Tai mũi họng</p>
                 <p><strong>Số lượng:</strong> 1</p>
                 <p><strong>Đơn giá:</strong> 550.000 VND</p>
-                <hr></hr>
+                <hr style="height: 5px; background: teal;"/>
                 <p><strong>Tổng tiền:</strong> 550.000 VND</p>
             </div>
         </div>
@@ -265,3 +255,34 @@ body {
 <?php include("../../assets/inc/footer.php");?>
 </body>
 </html>
+
+
+<?php
+if(isset($_SESSION['maBenhNhan']) && $_SESSION['btnPayment'] ){
+    include_once('thanhtoanonline.php');
+}
+?>
+
+<?php
+    if(isset($_SESSION['maBenhNhan']) && $_SESSION['maLichKham']){
+        $maBenhNhan = $_SESSION['maBenhNhan'];
+        $maLichKham = $_SESSION['maLichKham'];
+        $p->layThongTinLichKham($maBenhNhan, $maLichKham);
+        if($tbl){
+            if($tbl->num_rows > 0){
+                $row = $tbl->fetch_assoc();
+                $ngayKham = $row['ngayKham'];
+                $tienKham = $row['tienKham'];
+            }
+            else{
+                echo '<script>alert("Không có dữ liệu trong bảng");</script>';
+            }
+        }
+        else{
+            echo '<script>alert("Lỗi truy vấn");</script>';
+        }
+    }
+    else{
+        header('Location: /QuanLyBenhVien/login');
+    }
+?>

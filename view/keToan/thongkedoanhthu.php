@@ -32,15 +32,15 @@
                             </li>
 
                             <li>
-                                <a href="javascript: void(0);">
+                                <a href="thongkedoanhthu.php">
                                     <i class="fas fa-user-tie"></i>
                                     <span>Thống kê doanh thu</span>
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li>
+                                    <!-- <li>
                                         <a href="thongketongdoanhthu.php">Tổng doanh thu</a>
-                                    </li>
+                                    </li> -->
                                     <li>
                                         <a href="thongkedoanhthutheoloaithoigian.php">Theo loại thời gian</a>
                                     </li>
@@ -51,7 +51,7 @@
                             </li>
 
                             <li>
-                                <a href="javascript: void(0);">
+                                <a href="phanphongkham.php">
                                     <i class="mdi mdi-hospital-building"></i>
                                     <span>Phân số thứ tự, phòng khám</span>
                                     <span class="menu-arrow"></span>

@@ -1,29 +1,53 @@
 <?php
-    include_once('../../controller/cThongKe.php');
-    $p = new cThongKe();
+include_once('../../controller/cThongKe.php');
+$p = new cThongKe();
 
-    $alert = ""; // Biến để lưu thông báo
+$alert = "";
+$hasData = false; // Check if data exists
+$doanhThu = [];
+$jsonDoanhThu = "";
 
-    if (isset($_REQUEST['submit'])) {
-        $startDate = $_REQUEST['thoiGianBatDau'];
-        $endDate = $_REQUEST['thoiGianKetThuc'];
-        $khoa = $_REQUEST['khoa'];
-        $loaiTG = $_REQUEST['loaiTG'];
-        $khoangTG = $_REQUEST['timeRange'];
-        $year = $_REQUEST['year'];
+if (isset($_REQUEST['submit'])) {
+    $startDate = $_REQUEST['startDate'] ?? null;
+    $endDate = $_REQUEST['endDate'] ?? null;
+    $khoa = $_REQUEST['khoa'] ?? "0";
+    $loaiTG = $_REQUEST['loaiTG'] ?? "0";
+    $khoangTG = $_REQUEST['timeRange'] ?? null;
+    $year = $_REQUEST['year'] ?? null;
 
-        if (empty($loaiTG) || ($loaiTG == "1" && (empty($startDate) || empty($endDate))) || (($loaiTG == "2" || $loaiTG == "3") && empty($year))) {
-            $alert = "Vui lòng chọn đầy đủ các thông tin bắt buộc.";
-        } else {
-            // Gọi hàm thống kê
-            $result = $p->thongKeDoanhThuTheoKhoa($khoa, $loaiTG, $khoangTG, $startDate, $endDate, $year);
-            $doanhThu = $result['result'];
-            $jsonDoanhThu = $result['json'];
+    // Validate input
+    if ($loaiTG == "0") {
+        $alert = 'Vui lòng chọn loại thời gian.';
+    } elseif ($loaiTG == "1" && $khoangTG == "4") {
+        if (empty($startDate) || empty($endDate)) {
+            $alert = 'Vui lòng chọn đầy đủ thời gian bắt đầu và kết thúc.';
+        } elseif ($startDate > $endDate) {
+            $alert = 'Thời gian bắt đầu không thể lớn hơn thời gian kết thúc.';
         }
+    } elseif (($loaiTG == "2" || $loaiTG == "3") && empty($year)) {
+        $alert = 'Vui lòng chọn năm.';
     }
+
+    if (!empty($alert)) {
+        echo "<script>alert('$alert'); window.location.href='thongkedoanhthutheokhoa.php';</script>";
+        return;
+    }
+
+    // Call revenue statistics function
+    $result = $p->thongKeDoanhThuTheoKhoa($khoa, $loaiTG, $khoangTG, $startDate, $endDate, $year);
+    $doanhThu = $result['result'] ?? [];
+    $jsonDoanhThu = $result['json'] ?? "";
+    $hasData = !empty($doanhThu);
+
+    if (!$hasData) {
+        $alert = "Chưa có dữ liệu thống kê trong khoảng thời gian này.";
+        echo "<script>alert('$alert'); window.location.href='thongkedoanhthutheokhoa.php';</script>";
+        return;
+    }
+
+}
+
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,15 +82,15 @@
                             </li>
 
                             <li>
-                                <a href="javascript: void(0);">
-                                    <i class="fas fa-user-tie"></i>
+                                <a href="thongkedoanhthu.php">
+                                    <i class="fas fa-chart-line"></i>
                                     <span>Thống kê doanh thu</span>
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li>
+                                    <!-- <li>
                                         <a href="thongketongdoanhthu.php">Tổng doanh thu</a>
-                                    </li>
+                                    </li> -->
                                     <li>
                                         <a href="thongkedoanhthutheoloaithoigian.php">Theo loại thời gian</a>
                                     </li>
@@ -77,7 +101,7 @@
                             </li>
 
                             <li>
-                                <a href="javascript: void(0);">
+                                <a href="phanphongkham.php">
                                     <i class="mdi mdi-hospital-building"></i>
                                     <span>Phân số thứ tự, phòng khám</span>
                                     <span class="menu-arrow"></span>
@@ -122,9 +146,8 @@
                         
                         <div class="row mb-2">
                             <div class="col-12 text-center">
-                                <a href="thongketongdoanhthu.php" class="btn btn-primary mx-2">Thống kê tổng doanh thu</a>
-                                <a href="thongkedoanhthutheoloaithoigian.php" class="btn btn-success mx-2">Theo loại thời gian</a>
-                                <a href="thongkedoanhthutheokhoa.php" class="btn btn-danger mx-2">Theo khoa</a>
+                                <a href="thongkedoanhthutheoloaithoigian.php" class="btn btn-success mx-2">THEO LOẠI THỜI GIAN</a>
+                                <a href="thongkedoanhthutheokhoa.php" class="btn btn-danger mx-2">THEO KHOA</a>
                             </div>
                         </div>
 
@@ -132,10 +155,11 @@
 
                         <form class="mb-3" method="POST" action="">
                             <div class="row">
+                                
                                 <div class="col-md-6">
                                     <div class="row mb-3 align-items-center">
                                         <div class="col-md-4 text-start">
-                                            <label for="khoa" class="form-label">Khoa</label>
+                                            <label for="khoa" class="form-label">KHOA</label>
                                         </div>
                                         <div class="col-md-6">
                                             <select class="form-select form-control" id="khoa" name="khoa">
@@ -167,7 +191,7 @@
                                 <div class="col-md-6">
                                     <div class="row mb-3 align-items-center">
                                         <div class="col-md-4 text-start">
-                                            <label for="loaiTG" class="form-label">Loại thời gian</label>
+                                            <label for="loaiTG" class="form-label">LOẠI THỜI GIAN</label>
                                         </div>
                                         <div class="col-md-6">
                                             <select class="form-select form-control" id="loaiTG" name="loaiTG">
@@ -185,11 +209,10 @@
                                     <div class="form-group time-range d-none">
                                         <div class="row">
                                             <div class="col-md-4 text-start">
-                                                <label for="timeRange" class="form-label">Khoảng thời gian</label>
+                                                <label for="timeRange" class="form-label">KHOẢNG THỜI GIAN</label>
                                             </div>
                                             <div class="col-md-4">
                                                 <select class="form-select form-control" id="timeRange" name="timeRange">
-                                                    <option value='0'>Chọn khoảng thời gian</option>
                                                     <option value='1'>Hôm nay</option>
                                                     <option value='2'>Trong 7 ngày</option>
                                                     <option value='3'>Trong tháng</option>
@@ -202,7 +225,7 @@
                                     <div class="form-group year d-none">
                                         <div class="row">
                                             <div class="col-md-4 text-start">
-                                                <label for="year">Năm</label>
+                                                <label for="year">NĂM</label>
                                             </div>
                                             <div class="col-md-4">
                                                 <input type="text" class="yearpicker" name="year" value="" />
@@ -215,16 +238,16 @@
                                     <div class="form-group custom-date-range d-none mt-3">
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <label for="startDate">Ngày bắt đầu</label>
+                                                <label for="startDate">NGÀY BẮT ĐẦU</label>
                                             </div>
                                             <div class="col-md-3">
-                                                <input type="date" id="startDate" name="thoiGianBatDau" class="form-control" placeholder="YYYY-MM-DD">
+                                                <input type="date" id="startDate" name="startDate" class="form-control" value="<?php echo date('Y-m-d'); ?>" min="2023-03-08" max="<?php echo date('Y-m-d'); ?>">
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="endDate">Ngày kết thúc</label>
+                                                <label for="endDate">NGÀY KẾT THÚC</label>
                                             </div>
                                             <div class="col-md-3">
-                                                <input type="date" id="endDate" name="thoiGianKetThuc" class="form-control" placeholder="YYYY-MM-DD">
+                                                <input type="date" id="endDate" name="endDate" class="form-control" value="<?php echo date('Y-m-d'); ?>" min="2023-03-08" max="<?php echo date('Y-m-d'); ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -234,7 +257,7 @@
                             <!-- Submit Button -->
                             <div class="row text-center mt-3">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary mx-2" id="submit" name="submit">Xác nhận</button>
+                                    <button type="submit" class="btn btn-primary mx-2" id="submit" name="submit">XÁC NHẬN</button>
                                 </div>
                             </div>
                         </form>
@@ -243,6 +266,12 @@
 
                         <h4 class="header-title mb-3">DOANH THU BỆNH VIỆN</h4>
                         <div class="row">
+                            <!--Thông báo-->
+                            <?php if (!empty($alert)): ?>
+                                <div class="alert alert-warning text-center" role="alert">
+                                    <?php echo htmlspecialchars($alert); ?>
+                                </div>
+                            <?php endif; ?>
                             <!-- Bảng doanh thu -->
                             <div class="card-box">
                                 <div class="table-responsive">
@@ -267,41 +296,39 @@
                                                 <?php foreach ($doanhThu as $row): ?>
                                                     <tr>
                                                         <?php
-                                                        // Display time based on selected period type
-                                                        if ($loaiTG == "1") { // By day
-                                                            echo "<td>" . htmlspecialchars($row['ngayKham']) . "</td>";
-                                                        } elseif ($loaiTG == "2") { // By month
-                                                            echo "<td>Tháng " . htmlspecialchars($row['thang']) . " / " . htmlspecialchars($row['nam']) . "</td>";
-                                                        } elseif ($loaiTG == "3") { // By quarter
-                                                            echo "<td>Quý " . htmlspecialchars($row['quy']) . " / " . htmlspecialchars($row['nam']) . "</td>";
-                                                        }
+                                                            // Display time based on selected period type
+                                                            if ($loaiTG == "1") { // By day
+                                                                echo "<td>" . htmlspecialchars($row['ngayKham']) . "</td>";
+                                                            } elseif ($loaiTG == "2") { // By month
+                                                                echo "<td>Tháng " . htmlspecialchars($row['thang']) . " / " . htmlspecialchars($row['nam']) . "</td>";
+                                                            } elseif ($loaiTG == "3") { // By quarter
+                                                                echo "<td>Quý " . htmlspecialchars($row['quy']) . " / " . htmlspecialchars($row['nam']) . "</td>";
+                                                            }
 
-                                                        // Initialize the total revenue for this row (for all departments)
-                                                        $totalRevenue = 0;
+                                                            // Initialize the total revenue for this row (for all departments)
+                                                            $totalRevenue = 0;
 
-                                                        // Display revenue by department
-                                                        if ($khoa == "0") { // All departments
-                                                            foreach ($tbl as $department) {
-                                                                $deptName = $department['tenKhoa'];
-                                                                // If revenue for this department exists, show it; otherwise, show 0
-                                                                $departmentRevenue = isset($row['doanhThu'][$deptName]) ? $row['doanhThu'][$deptName] : 0;
+                                                            // Display revenue by department
+                                                            if ($khoa == "0") { // All departments
+                                                                foreach ($tbl as $department) {
+                                                                    $deptName = $department['tenKhoa'];
+                                                                    // If revenue for this department exists, show it; otherwise, show 0
+                                                                    $departmentRevenue = isset($row['doanhThu'][$deptName]) ? $row['doanhThu'][$deptName] : 0;
+                                                                    echo "<td>" . number_format($departmentRevenue, 0) . " VND</td>";
+
+                                                                    // Add to the total revenue for this row (for "Tổng cộng" column)
+                                                                    $totalRevenue += $departmentRevenue;
+                                                                }
+                                                            } else { // Specific department
+                                                                $departmentRevenue = $row['doanhThu']; // Only one department's revenue
                                                                 echo "<td>" . number_format($departmentRevenue, 0) . " VND</td>";
 
-                                                                // Add to the total revenue for this row (for "Tổng cộng" column)
+                                                                // Add the department's revenue to the total
                                                                 $totalRevenue += $departmentRevenue;
-                                                                echo $deptName;
-                                                                echo $departmentRevenue;
                                                             }
-                                                        } else { // Specific department
-                                                            $departmentRevenue = $row['doanhThu']; // Only one department's revenue
-                                                            echo "<td>" . number_format($departmentRevenue, 0) . " VND</td>";
 
-                                                            // Add the department's revenue to the total
-                                                            $totalRevenue += $departmentRevenue;
-                                                        }
-
-                                                        // Display the total revenue for all departments in this time period
-                                                        echo "<td>" . number_format($totalRevenue, 0) . " VND</td>";
+                                                            // Display the total revenue for all departments in this time period
+                                                            echo "<td>" . number_format($totalRevenue, 0) . " VND</td>";
                                                         ?>
                                                     </tr>
                                                 <?php endforeach; ?>
@@ -390,30 +417,52 @@
                             const doanhThu = <?php echo $jsonDoanhThu ?? '[]'; ?>;
 
                             if (doanhThu.length > 0) {
-                                // Labels are the list of dates or periods
+                                // Tạo danh sách nhãn (labels) tùy theo loại thời gian (loaiTG)
                                 const labels = [];
-                                if ("<?= $loaiTG ?>" === "1") {
-                                    doanhThu.forEach(item => labels.push(item.ngayKham));
-                                }else if ("<?= $loaiTG ?>" === "2") {
-                                    doanhThu.forEach(item => labels.push(`Tháng ${item.thang} / ${item.nam}`));
-                                }else if ("<?= $loaiTG ?>" === "3") {
-                                    doanhThu.forEach(item => labels.push(`Quý ${item.quy} / ${item.nam}`));
-                                }
-                                //const labels = doanhThu.map(item => item.ngayKham); // Update this line to match your date or time format
+                                const seenLabels = new Set(); // Set để lưu trữ các nhãn đã được thêm
 
-                                // Initialize the departments object
+                                if ("<?= $loaiTG ?>" === "1") { // Loại TG = Ngày
+                                    doanhThu.forEach(item => {
+                                        if (!seenLabels.has(item.ngayKham)) {
+                                            labels.push(item.ngayKham);
+                                            seenLabels.add(item.ngayKham);
+                                        }
+                                    });
+                                } else if ("<?= $loaiTG ?>" === "2") { // Loại TG = Tháng
+                                    doanhThu.forEach(item => {
+                                        const label = `Tháng ${item.thang} / ${item.nam}`;
+                                        if (!seenLabels.has(label)) {
+                                            labels.push(label);
+                                            seenLabels.add(label);
+                                        }
+                                    });
+                                } else if ("<?= $loaiTG ?>" === "3") { // Loại TG = Quý
+                                    doanhThu.forEach(item => {
+                                        const label = `Quý ${item.quy} / ${item.nam}`;
+                                        if (!seenLabels.has(label)) {
+                                            labels.push(label);
+                                            seenLabels.add(label);
+                                        }
+                                    });
+                                }
+
+                                // Khởi tạo đối tượng departments
                                 const departments = {};
                                 doanhThu.forEach(item => {
                                     if (!departments[item.tenKhoa]) {
-                                        departments[item.tenKhoa] = { label: item.tenKhoa, data: [], backgroundColor: getRandomColor() };
+                                        departments[item.tenKhoa] = { 
+                                            label: item.tenKhoa, 
+                                            data: [], 
+                                            backgroundColor: getRandomColor() 
+                                        };
                                     }
                                     departments[item.tenKhoa].data.push(item.doanhThu);
                                 });
 
-                                // Convert departments object to an array of datasets
+                                // Chuyển departments thành mảng datasets
                                 const datasets = Object.values(departments);
 
-                                // Chart.js initialization
+                                // Khởi tạo biểu đồ với Chart.js
                                 new Chart(ctx, {
                                     type: 'bar',
                                     data: {
@@ -436,13 +485,13 @@
                                                 title: { display: true, text: 'Doanh thu (VND)' }
                                             },
                                             x: {
-                                                title: { display: true, text: 'Ngày' }
+                                                title: { display: true, text: 'Thời gian' } // Nhãn thời gian phù hợp cho cả ngày, tháng, quý
                                             }
                                         }
                                     }
                                 });
 
-                                // Function to generate a random color for each department
+                                // Hàm tạo màu ngẫu nhiên cho từng khoa
                                 function getRandomColor() {
                                     const hue = Math.floor(Math.random() * 360);
                                     return `hsl(${hue}, 70%, 60%)`;
@@ -451,6 +500,7 @@
                                 console.log("No revenue data available");
                             }
                         });
+
                         </script>
 
                     </div> <!-- container -->

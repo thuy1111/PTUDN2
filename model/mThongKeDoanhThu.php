@@ -102,7 +102,7 @@
                     if ($loaiTG == "2") {
                         // Truy vấn theo tháng
                         $sql = "SELECT k.maKhoa, k.tenKhoa, MONTH(h.ngayKham) AS thang, YEAR(h.ngayKham) AS nam, 
-                                SUM(tongTienKham + tongTienThuoc + tongTienXetNghiem) AS doanhThu 
+                                SUM(h.tongTienKham + h.tongTienThuoc + h.tongTienXetNghiem) AS doanhThu 
                                 FROM hoadon h 
                                 JOIN hoadon_phieukhambenh hp ON h.maHoaDon = hp.maHoaDon
                                 JOIN phieukhambenh p ON hp.maPKB = p.maPhieuKhamBenh
@@ -113,7 +113,7 @@
                     } elseif ($loaiTG == "3") {
                         // Truy vấn theo quý
                         $sql = "SELECT k.maKhoa, k.tenKhoa, QUARTER(h.ngayKham) AS quy, YEAR(h.ngayKham) AS nam, 
-                                SUM(tongTienKham + tongTienThuoc + tongTienXetNghiem) AS doanhThu
+                                SUM(h.tongTienKham + h.tongTienThuoc + h.tongTienXetNghiem) AS doanhThu
                                 FROM hoadon h 
                                 JOIN hoadon_phieukhambenh hp ON h.maHoaDon = hp.maHoaDon
                                 JOIN phieukhambenh p ON hp.maPKB = p.maPhieuKhamBenh
@@ -125,7 +125,7 @@
                         // Truy vấn theo ngày dựa trên khoảng thời gian
                         if ($khoangTG == "1") {
                             $sql = "SELECT k.maKhoa, k.tenKhoa, h.ngayKham, 
-                                    SUM(tongTienKham + tongTienThuoc + tongTienXetNghiem) AS doanhThu
+                                    SUM(h.tongTienKham + h.tongTienThuoc + h.tongTienXetNghiem) AS doanhThu
                                     FROM hoadon h 
                                     JOIN hoadon_phieukhambenh hp ON h.maHoaDon = hp.maHoaDon
                                     JOIN phieukhambenh p ON hp.maPKB = p.maPhieuKhamBenh
@@ -135,7 +135,7 @@
                                     GROUP BY k.maKhoa, k.tenKhoa, h.ngayKham";
                         } elseif ($khoangTG == "2") {
                             $sql = "SELECT k.maKhoa, k.tenKhoa, h.ngayKham, 
-                                    SUM(tongTienKham + tongTienThuoc + tongTienXetNghiem) AS doanhThu
+                                    SUM(h.tongTienKham + h.tongTienThuoc + h.tongTienXetNghiem) AS doanhThu
                                     FROM hoadon h 
                                     JOIN hoadon_phieukhambenh hp ON h.maHoaDon = hp.maHoaDon
                                     JOIN phieukhambenh p ON hp.maPKB = p.maPhieuKhamBenh
@@ -145,7 +145,7 @@
                                     GROUP BY k.maKhoa, k.tenKhoa, h.ngayKham";
                         } elseif ($khoangTG == "3") {
                             $sql = "SELECT k.maKhoa, k.tenKhoa, h.ngayKham, 
-                                    SUM(tongTienKham + tongTienThuoc + tongTienXetNghiem) AS doanhThu
+                                    SUM(h.tongTienKham + h.tongTienThuoc + h.tongTienXetNghiem) AS doanhThu
                                     FROM hoadon h 
                                     JOIN hoadon_phieukhambenh hp ON h.maHoaDon = hp.maHoaDon
                                     JOIN phieukhambenh p ON hp.maPKB = p.maPhieuKhamBenh
@@ -155,7 +155,7 @@
                                     GROUP BY k.maKhoa, k.tenKhoa, h.ngayKham";
                         } elseif ($khoangTG == "4") {
                             $sql = "SELECT k.maKhoa, k.tenKhoa, h.ngayKham, 
-                                    SUM(tongTienKham + tongTienThuoc + tongTienXetNghiem) AS doanhThu
+                                    SUM(h.tongTienKham + h.tongTienThuoc + h.tongTienXetNghiem) AS doanhThu
                                     FROM hoadon h 
                                     JOIN hoadon_phieukhambenh hp ON h.maHoaDon = hp.maHoaDon
                                     JOIN phieukhambenh p ON hp.maPKB = p.maPhieuKhamBenh
@@ -169,7 +169,7 @@
                     if ($loaiTG == "2") {
                         // Truy vấn theo tháng
                         $sql = "SELECT k.maKhoa, k.tenKhoa, MONTH(h.ngayKham) AS thang, YEAR(h.ngayKham) AS nam, 
-                                SUM(tongTienKham + tongTienThuoc + tongTienXetNghiem) AS doanhThu 
+                                SUM(h.tongTienKham + h.tongTienThuoc + h.tongTienXetNghiem) AS doanhThu 
                                 FROM hoadon h 
                                 JOIN hoadon_phieukhambenh hp ON h.maHoaDon = hp.maHoaDon
                                 JOIN phieukhambenh p ON hp.maPKB = p.maPhieuKhamBenh
@@ -180,7 +180,7 @@
                     } elseif ($loaiTG == "3") {
                         // Truy vấn theo quý
                         $sql = "SELECT k.maKhoa, k.tenKhoa, QUARTER(h.ngayKham) AS quy, YEAR(h.ngayKham) AS nam, 
-                                SUM(tongTienKham + tongTienThuoc + tongTienXetNghiem) AS doanhThu
+                                SUM(h.tongTienKham + h.tongTienThuoc + h.tongTienXetNghiem) AS doanhThu
                                 FROM hoadon h 
                                 JOIN hoadon_phieukhambenh hp ON h.maHoaDon = hp.maHoaDon
                                 JOIN phieukhambenh p ON hp.maPKB = p.maPhieuKhamBenh
@@ -192,7 +192,7 @@
                         // Truy vấn theo ngày dựa trên khoảng thời gian
                         if ($khoangTG == "1") {
                             $sql = "SELECT k.maKhoa, k.tenKhoa, h.ngayKham, 
-                                    SUM(tongTienKham + tongTienThuoc + tongTienXetNghiem) AS doanhThu
+                                    SUM(h.tongTienKham + h.tongTienThuoc + h.tongTienXetNghiem) AS doanhThu
                                     FROM hoadon h 
                                     JOIN hoadon_phieukhambenh hp ON h.maHoaDon = hp.maHoaDon
                                     JOIN phieukhambenh p ON hp.maPKB = p.maPhieuKhamBenh
@@ -202,7 +202,7 @@
                                     GROUP BY k.maKhoa, k.tenKhoa, h.ngayKham";
                         } elseif ($khoangTG == "2") {
                             $sql = "SELECT k.maKhoa, k.tenKhoa, h.ngayKham, 
-                                    SUM(tongTienKham + tongTienThuoc + tongTienXetNghiem) AS doanhThu
+                                    SUM(h.tongTienKham + h.tongTienThuoc + h.tongTienXetNghiem) AS doanhThu
                                     FROM hoadon h 
                                     JOIN hoadon_phieukhambenh hp ON h.maHoaDon = hp.maHoaDon
                                     JOIN phieukhambenh p ON hp.maPKB = p.maPhieuKhamBenh
@@ -212,7 +212,7 @@
                                     GROUP BY k.maKhoa, k.tenKhoa, h.ngayKham";
                         } elseif ($khoangTG == "3") {
                             $sql = "SELECT k.maKhoa, k.tenKhoa, h.ngayKham, 
-                                    SUM(tongTienKham + tongTienThuoc + tongTienXetNghiem) AS doanhThu
+                                    SUM(h.tongTienKham + h.tongTienThuoc + h.tongTienXetNghiem) AS doanhThu
                                     FROM hoadon h 
                                     JOIN hoadon_phieukhambenh hp ON h.maHoaDon = hp.maHoaDon
                                     JOIN phieukhambenh p ON hp.maPKB = p.maPhieuKhamBenh
@@ -222,7 +222,7 @@
                                     GROUP BY k.maKhoa, k.tenKhoa, h.ngayKham";
                         } elseif ($khoangTG == "4") {
                             $sql = "SELECT k.maKhoa, k.tenKhoa, h.ngayKham, 
-                                    SUM(tongTienKham + tongTienThuoc + tongTienXetNghiem) AS doanhThu
+                                    SUM(h.tongTienKham + h.tongTienThuoc + h.tongTienXetNghiem) AS doanhThu
                                     FROM hoadon h 
                                     JOIN hoadon_phieukhambenh hp ON h.maHoaDon = hp.maHoaDon
                                     JOIN phieukhambenh p ON hp.maPKB = p.maPhieuKhamBenh

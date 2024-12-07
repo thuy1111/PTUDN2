@@ -1,11 +1,12 @@
-
 <!DOCTYPE html>
+
 <html lang="en">
     
     <!--Head Code-->
     <?php include("../../assets/inc/head.php");?>
 
     <body>
+    
 
         <!-- Begin page -->
         <div id="wrapper">
@@ -65,7 +66,7 @@
                                                 <option selected>Chọn khoa quản lý</option>
                                                 <option value="1">Khoa 1</option>
                                                 <option value="2">Khoa 2</option>
-                                            </select>
+                                                </select>
                                         </div>
                                     </div>
 
@@ -89,6 +90,11 @@
                                         </div>
                                     </div>
 
+                                    
+                                </div>
+
+                                <!-- Right column -->
+                                <div class="col-md-6">
                                     <!-- Position -->
                                     <div class="row mb-1">
                                         <div class="col-md-3">
@@ -98,10 +104,6 @@
                                             <input type="text" class="form-control" id="viTri" placeholder="Nhập vị trí">
                                         </div>
                                     </div>
-                                </div>
-
-                                <!-- Right column -->
-                                <div class="col-md-6">
                                     <!-- Doctors -->
                                     <div class="row mb-1">
                                         <div class="col-md-3">
@@ -114,7 +116,7 @@
                                                 <option value="2">Bác sĩ 2</option>
                                             </select>
                                         </div>
-                                    </div>
+                                        </div>
 
                                     <!-- Nurses -->
                                     <div class="row mb-1">
@@ -130,19 +132,7 @@
                                         </div>
                                     </div>    
 
-                                    <!-- Operating status -->
-                                    <div class="row mb-1">
-                                        <div class="col-md-3">
-                                            <label for="trangThaiHoatDong" class="form-label">Trạng thái hoạt động</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <select class="form-select form-control" id="trangThaiHoatDong">
-                                                <option selected>Chọn trạng thái</option>
-                                                <option value="1">Hoạt động</option>
-                                                <option value="0">Không hoạt động</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </form>
@@ -154,7 +144,16 @@
                             <div class="col-xl-12">
                                 <div class="card-box">
                                     <h4 class="header-title mb-3">Danh sách phòng khám</h4>
-
+                                    <div class="row mb-3">
+    <div class="col-md-6">
+    <form method="GET" action="controller/PhongKhamController.php">
+    <div class="input-group">
+        <input type="text" class="form-control" name="search" placeholder="Tìm kiếm theo tên hoặc mã phòng khám" value="<?= isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+        <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+    </div>
+</form>
+    </div>
+</div>
                                     <div class="table-responsive">
                                         <table class="table table-borderless table-hover table-centered m-0">
 
@@ -172,8 +171,48 @@
                                                 </tr>
                                             </thead>
                                            
-                                            <tbody>
-                                                <tr>
+                                            <tbody><tr>
+
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>    
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                                                </tr>
+                                            </tbody>
+                                            
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->                                                                                                                                                                                                                                         
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+            </div>
+
+        <!-- Vendor js -->
+        <script src="../../assets/js/vendor.min.js"></script>
+        <!-- Plugins js-->
+        <script src="../../assets/libs/flatpickr/flatpickr.min.js"></script>
+        <tr>
 
                                                     <td>
                                                     </td>

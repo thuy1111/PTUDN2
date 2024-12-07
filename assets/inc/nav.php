@@ -59,10 +59,10 @@
         <div class="logo-box">
             <a href="#" class="logo text-center">
                 <span class="logo-lg">
-                    <img src="../../assets/images/logo/logo_4320350.png" alt="" height="50">
+                    <img src="../../assets/images/logo/logo_main.png" alt="" height="50">
                     <!-- <span class="logo-lg-text-light">UBold</span> -->
                 </span>
-                <!-- <span class="logo-sm">
+                <!-- <span class="logo-sm"> -->
                     <!-- <span class="logo-sm-text-dark">U</span> -->
                     <!-- <img src="assets/images/logo-sm-white.png" alt="" height="24"> -->
                 <!--</span> -->
