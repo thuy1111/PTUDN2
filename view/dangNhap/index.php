@@ -33,7 +33,7 @@ if (isset($_POST["btndk"])) {
             while ($row = $result->fetch_assoc()) {
                 if ($userName == $row["tenDangNhap"] && $pass == $row["matKhau"]) {
                     $_SESSION["loginNV"] = true;
-                    $_SESSION["user"] = [$row["maNhanVien"], $row["hoTen"]];
+                    $_SESSION["user"] = [$row["maNhanVien"], $row["hoTen"], $row["maChucVu"]];
 
                     switch ($row["maChucVu"]) {
                         case 1:
@@ -61,7 +61,7 @@ if (isset($_POST["btndk"])) {
             }
         }
         
-        if (!$found && $ctrlCustomer->cGetAllCustomer() != 0) {
+        if (!$foundNV && $ctrlCustomer->cGetAllCustomer() != 0) {
             $result = $ctrlCustomer->cGetAllCustomer();
 
             while ($row = $result->fetch_assoc()) {

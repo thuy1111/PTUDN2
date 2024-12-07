@@ -46,7 +46,7 @@
                     <div class="dropdown-divider"></div>
 
                     <!-- item-->
-                    <a href="#" class="dropdown-item notify-item">
+                    <a href="../dangXuat/" class="dropdown-item notify-item">
                         <i class="fe-log-out"></i>
                         <span>Đăng xuất</span>
                     </a>
@@ -62,7 +62,7 @@
                     <img src="../../assets/images/logo/logo_main.png" alt="" height="50">
                     <!-- <span class="logo-lg-text-light">UBold</span> -->
                 </span>
-                <!-- <span class="logo-sm">
+                <!-- <span class="logo-sm"> -->
                     <!-- <span class="logo-sm-text-dark">U</span> -->
                     <!-- <img src="assets/images/logo-sm-white.png" alt="" height="24"> -->
                 <!--</span> -->
