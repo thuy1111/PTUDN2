@@ -37,13 +37,12 @@ if (isset($_REQUEST['submit'])) {
                         </a>
                     </li>
                     <li>
-                        <a href="javascript: void(0);" style="text-decoration:none;">
-                            <i class="fas fa-user-tie"></i>
+                        <a href="thongkedoanhthu.php" style="text-decoration:none;">
+                            <i class="fas fa-chart-line"></i>
                             <span>Thống kê doanh thu</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <ul class="nav-second-level" aria-expanded="false">
-                            <li><a href="thongketongdoanhthu.php" style="text-decoration:none;">Tổng doanh thu</a></li>
                             <li><a href="thongkedoanhthutheoloaithoigian.php" style="text-decoration:none;">Theo loại thời gian</a></li>
                             <li><a href="thongkedoanhthutheokhoa.php" style="text-decoration:none;">Theo khoa</a></li>
                         </ul>

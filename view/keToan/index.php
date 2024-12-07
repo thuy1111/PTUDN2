@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,11 +36,11 @@
                             </li>
 
                             <li>
-                                <a href="thongkedoanhthu.php">
-                                    <i class="fas fa-user-tie"></i>
-                                    <span>Thống kê doanh thu</span>
-                                    <span class="menu-arrow"></span>
-                                </a>
+                            <a href="thongkedoanhthu.php" style="text-decoration:none;">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Thống kê doanh thu</span>
+                                <span class="menu-arrow"></span>
+                            </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <!-- <li>
                                         <a href="thongketongdoanhthu.php">Tổng doanh thu</a>
@@ -91,12 +95,12 @@
                             </div>
                         </div>     
                         <!-- end page title --> 
+                        <hr style="border-color: black;">
 
                         <div class="row">
                             <div class="col-12 text-center">
-                                <a href="thongketongdoanhthu.php" class="btn btn-primary mx-2">Thống kê tổng doanh thu</a>
-                                <a href="#" class="btn btn-success mx-2">Theo loại thời gian</a>
-                                <a href="#" class="btn btn-danger mx-2">Theo khoa</a>
+                                <a href="thongkedoanhthutheoloaithoigian.php" class="btn btn-success mx-2">Theo loại thời gian</a>
+                                <a href="thongkedoanhthutheokhoa.php" class="btn btn-danger mx-2">Theo khoa</a>
                             </div>
                         </div>
 
