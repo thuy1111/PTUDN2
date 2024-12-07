@@ -46,7 +46,7 @@
                     <div class="dropdown-divider"></div>
 
                     <!-- item-->
-                    <a href="#" class="dropdown-item notify-item">
+                    <a href="../dangXuat/" class="dropdown-item notify-item">
                         <i class="fe-log-out"></i>
                         <span>Đăng xuất</span>
                     </a>
