@@ -1,10 +1,10 @@
 <?php
-include_once("../../controller/cLichLamViecBS.php");
+include_once("../../controller/cBacSi.php");
 
 $shiftId = $_GET['id'] ?? null;
 
 if ($shiftId) {
-    $controller = new cLichLamViec();
+    $controller = new cBacSi();
     $shiftDetails = $controller->chiTietLichLamViec($shiftId);
 
     if ($shiftDetails) {

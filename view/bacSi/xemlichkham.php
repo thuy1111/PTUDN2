@@ -1,9 +1,9 @@
 <?php
 // Kết nối controller
-require_once("../../controller/cLichKham.php");
+require_once("../../controller/cBacSi.php");
 
 // Khởi tạo controller
-$controller = new controllerLichKham();
+$controller = new cBacSi();
 
 // Lấy danh sách lịch khám
 $dsLichKham = $controller->hienThiLichKham();

@@ -1,9 +1,9 @@
 <?php
 // Gọi Controller
-include_once("../../controller/cLichKham.php");
+include_once("../../controller/cBacSi.php");
 
 // Khởi tạo Controller
-$controller = new controllerLichKham();
+$controller = new cBacSi();
 
 // Lấy mã lịch khám từ URL
 $maLichKham = isset($_GET['id']) ? $_GET['id'] : null;

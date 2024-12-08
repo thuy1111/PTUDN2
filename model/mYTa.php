@@ -1,7 +1,7 @@
 <?php
 include_once("connect.php");
 
-class mLichLamViec {
+class mYTa {
     private $conn;
 
     public function __construct() {
@@ -71,6 +71,19 @@ class mLichLamViec {
             $p = new clsKetNoi();
             $p->dongketnoi($this->conn);
         }
+    }
+    public function DKCa($manv,$date,$ca){
+        $p = new clsKetNoi();
+			$conn = $p->moketnoi();
+			$conn ->set_charset("utf8");
+			if ($conn) {
+				$str = "INSERT INTO `lichlamviec` (`maLichLamViec`, `ngayLamViec`, `caLamViec`, `maNhanVien`) VALUES (NULL, '$date', '$ca', '$manv')";
+				$tbl = $conn->query($str);
+				$p->dongketnoi($conn);
+				return $tbl;
+			} else {
+				return false;
+			}
     }
 }
 ?>
