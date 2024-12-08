@@ -12,7 +12,7 @@ class mYTa {
         }
     }
 
-    public function layDSLichLamViec($start, $end)
+    public function layDSLichLamViec($start, $end, $maNhanVien)
     {
         if (!$this->conn) {
             return false;
@@ -21,9 +21,9 @@ class mYTa {
         try {
             $str = "SELECT llv.*, nv.hoTen FROM lichlamviec llv 
                     INNER JOIN nhanvien nv ON llv.maNhanVien = nv.maNhanVien 
-                    WHERE llv.ngayLamViec BETWEEN ? AND ? AND nv.maChucVu = 2";
+                    WHERE llv.ngayLamViec BETWEEN ? AND ? AND nv.maChucVu = 2 AND llv.maNhanVien = ?";
             $stmt = $this->conn->prepare($str);
-            $stmt->bind_param("ss", $start, $end);  
+            $stmt->bind_param("ssi", $start, $end, $maNhanVien);  
             $stmt->execute();
             $result = $stmt->get_result();
 
@@ -40,7 +40,7 @@ class mYTa {
         }
     }
 
-    public function layChiTietLichLamViec($maLichLamViec)
+    public function layChiTietLichLamViec($maLichLamViec, $maNhanVien)
     {
         if (!$this->conn) {
             return false;
@@ -50,9 +50,9 @@ class mYTa {
             $str = "SELECT llv.*, nv.hoTen, nv.maChucVu 
                     FROM lichlamviec llv
                     INNER JOIN nhanvien nv ON llv.maNhanVien = nv.maNhanVien
-                    WHERE llv.maLichLamViec = ? AND nv.maChucVu = 2";
+                    WHERE llv.maLichLamViec = ? AND nv.maChucVu = 2 AND llv.maNhanVien = ?";
             $stmt = $this->conn->prepare($str);
-            $stmt->bind_param("i", $maLichLamViec);
+            $stmt->bind_param("ii", $maLichLamViec, $maNhanVien);
             $stmt->execute();
             $result = $stmt->get_result();
 
@@ -72,18 +72,22 @@ class mYTa {
             $p->dongketnoi($this->conn);
         }
     }
-    public function DKCa($manv,$date,$ca){
+
+    public function DKCa($manv, $date, $ca) {
         $p = new clsKetNoi();
-			$conn = $p->moketnoi();
-			$conn ->set_charset("utf8");
-			if ($conn) {
-				$str = "INSERT INTO `lichlamviec` (`maLichLamViec`, `ngayLamViec`, `caLamViec`, `maNhanVien`) VALUES (NULL, '$date', '$ca', '$manv')";
-				$tbl = $conn->query($str);
-				$p->dongketnoi($conn);
-				return $tbl;
-			} else {
-				return false;
-			}
+        $conn = $p->moketnoi();
+        $conn->set_charset("utf8");
+        if ($conn) {
+            $str = "INSERT INTO `lichlamviec` (`maLichLamViec`, `ngayLamViec`, `caLamViec`, `maNhanVien`) VALUES (NULL, ?, ?, ?)";
+            $stmt = $conn->prepare($str);
+            $stmt->bind_param("ssi", $date, $ca, $manv);
+            $result = $stmt->execute();
+            $stmt->close();
+            $p->dongketnoi($conn);
+            return $result;
+        } else {
+            return false;
+        }
     }
 }
 ?>

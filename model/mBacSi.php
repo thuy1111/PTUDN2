@@ -11,7 +11,7 @@ class mBacsi{
         }
     }
 
-    public function layDSLichLamViec($start, $end)
+    public function layDSLichLamViec($start, $end, $maNhanVien)
     {
         if (!$this->conn) {
             return false;
@@ -20,9 +20,9 @@ class mBacsi{
         try {
             $str = "SELECT llv.*, nv.hoTen FROM lichlamviec llv 
                     INNER JOIN nhanvien nv ON llv.maNhanVien = nv.maNhanVien 
-                    WHERE llv.ngayLamViec BETWEEN ? AND ? AND nv.maChucVu = 1";
+                    WHERE llv.ngayLamViec BETWEEN ? AND ? AND llv.maNhanVien = ?";
             $stmt = $this->conn->prepare($str);
-            $stmt->bind_param("ss", $start, $end);  
+            $stmt->bind_param("ssi", $start, $end, $maNhanVien);  
             $stmt->execute();
             $result = $stmt->get_result();
 
@@ -35,6 +35,32 @@ class mBacsi{
             return $lichLamViec;
         } catch (Exception $e) {
             error_log("Error in layDSLichLamViec: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function layChiTietLichLamViec($maLichLamViec, $maNhanVien)
+    {
+        if (!$this->conn) {
+            return false;
+        }
+
+        try {
+            $str = "SELECT llv.*, nv.hoTen, nv.maChucVu 
+                    FROM lichlamviec llv
+                    INNER JOIN nhanvien nv ON llv.maNhanVien = nv.maNhanVien
+                    WHERE llv.maLichLamViec = ? AND nv.maChucVu = 1 AND llv.maNhanVien = ?";
+            $stmt = $this->conn->prepare($str);
+            $stmt->bind_param("ii", $maLichLamViec, $maNhanVien);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            $chiTiet = $result->fetch_assoc();
+
+            $stmt->close();
+            return $chiTiet;
+        } catch (Exception $e) {
+            error_log("Error in layChiTietLichLamViec: " . $e->getMessage());
             return false;
         }
     }
@@ -63,12 +89,7 @@ class mBacsi{
 	}
 	
 
-    public function __destruct() {
-        if ($this->conn) {
-            $p = new clsKetNoi();
-            $p->dongketnoi($this->conn);
-        }
-    }
+    
 
     public function DKCa($manv,$date,$ca){
         $p = new clsKetNoi();
@@ -84,18 +105,28 @@ class mBacsi{
 			}
     }
 
-	public function layDSLichKham()
+	public function layDSLichKham($maNhanVien)
     {
-        $p = new clsKetNoi();
-        $conn = $p->moketnoi();
-        $conn->set_charset("utf8");
+        if (!$this->conn) {
+            return false;
+        }
 
-        if ($conn) {
-            $str = "SELECT * FROM lichkham";
-            $tbl = $conn->query($str);
-            $p->dongketnoi($conn);
-            return $tbl;
-        } else {
+        try {
+            $str = "SELECT * FROM lichkham WHERE maNhanVien = ?";
+            $stmt = $this->conn->prepare($str);
+            $stmt->bind_param("i", $maNhanVien);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            $lichKham = [];
+            while ($row = $result->fetch_assoc()) {
+                $lichKham[] = $row;
+            }
+
+            $stmt->close();
+            return $lichKham;
+        } catch (Exception $e) {
+            error_log("Error in layDSLichKham: " . $e->getMessage());
             return false;
         }
     }
@@ -130,5 +161,10 @@ class mBacsi{
             return false;
         }
     }
-	
+	public function __destruct() {
+        if ($this->conn) {
+            $p = new clsKetNoi();
+            $p->dongketnoi($this->conn);
+        }
+    }
 } 

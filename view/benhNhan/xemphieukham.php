@@ -1,11 +1,19 @@
 <?php
-include_once("../../controller/cPhieuKham.php");
+session_start(); // Khởi tạo phiên làm việc (Session)
 
-$controller = new cPhieuKhamBenh();
+// Kết nối controller
+require_once("../../controller/cPhieuKham.php");
 
-$maBenhNhan = isset($_GET['maBenhNhan']) ? $_GET['maBenhNhan'] : "";
-$dsPKB = $controller->hienThiDanhSachPKB("", $maBenhNhan);
+if (isset($_SESSION['customer'][0])) {
+    $maBenhNhan = $_SESSION['customer'][0];  // Lấy mã bệnh nhân từ session
+    $controller = new cPhieuKhamBenh();  // Khởi tạo controller cPhieuKhamBenh
+    $dsPKB = $controller->hienThiDanhSachPKB("", $maBenhNhan);  // Lấy danh sách phiếu khám bệnh
+} else {
+    echo "<script>alert('Vui lòng đăng nhập!'); window.location.href = '../dangNhap/';</script>";
+    exit();
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -41,9 +49,8 @@ $dsPKB = $controller->hienThiDanhSachPKB("", $maBenhNhan);
                                 <li><a href="index.php"><i class="fe-airplay"></i><span>Dashboard</span></a></li>
                                 <li><a href="javascript: void(0);"><i class="fas fa-user-tie"></i><span>Xem phiếu khám bệnh</span><span class="menu-arrow"></span></a></li>
                                 <li><a href="xemlichkham.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch khám</span><span class="menu-arrow"></span></a></li>
-                                <li><a href="dangkicalamviec.php"><i class="mdi mdi-hospital-building"></i><span>Đăng ký ca</span><span class="menu-arrow"></span></a></li>
-                                <li><a href="xemlichlamviec.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch làm việc</span><span class="menu-arrow"></span></a></li>
-                            </ul>
+                                <li><a href="dangkylichkhambenh.php"><i class="mdi mdi-hospital-building"></i><span>Đăng ký ca</span><span class="menu-arrow"></span></a></li>
+                                
                         </div>
                     </div>
                 </div>

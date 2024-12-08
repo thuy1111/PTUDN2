@@ -14,10 +14,11 @@
 				return false;
 			}
         }
-		public function hienThiDSLichLamViec($startDate, $endDate)
+
+		public function hienThiDSLichLamViec($startDate, $endDate, $maNhanVien)
     {
         $model = new mBacsi();
-        $dsLichLamViec = $model->layDSLichLamViec($startDate, $endDate);
+        $dsLichLamViec = $model->layDSLichLamViec($startDate, $endDate, $maNhanVien);
 
         if ($dsLichLamViec) {
             return $dsLichLamViec;
@@ -26,17 +27,18 @@
         }
     }
 
-    public function chiTietLichLamViec($maLichLamViec)
+    public function chiTietLichLamViec($maLichLamViec, $maNhanVien)
     {
-        $model = new mBacsi();
-        $chiTiet = $model->layChiTietLichLamViec($maLichLamViec);
+        $model = new mBacSi();
+        $chiTiet = $model->layChiTietLichLamViec($maLichLamViec, $maNhanVien);
 
         return $chiTiet ? $chiTiet : null;
     }
-	public function hienThiLichKham()
+    
+	public function hienThiLichKham($maNhanVien)
     {
         $lichKhamModel = new mBacsi();
-        $dsLichKham = $lichKhamModel->layDSLichKham();
+        $dsLichKham = $lichKhamModel->layDSLichKham($maNhanVien);
         if ($dsLichKham) {
             return $dsLichKham;
         } else {

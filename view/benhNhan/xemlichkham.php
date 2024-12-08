@@ -1,12 +1,18 @@
 <?php
+session_start(); // Khởi tạo phiên làm việc (Session)
 // Kết nối controller
 require_once("../../controller/cBenhNhan.php");
 
-if (isset($_SESSION['maBenhNhan'])) {
-    $maBenhNhan = $_SESSION['maBenhNhan'];
+// Kiểm tra bệnh nhân đăng nhập
+if (isset($_SESSION['customer'][0])) {
+    $maBenhNhan = $_SESSION['customer'][0];
     $controller = new cBenhNhan();
     $dsLichKham = $controller->hienThiLichKhamTheoBenhNhan($maBenhNhan);
+} else {
+    echo "<script>alert('Vui lòng đăng nhập!'); window.location.href = '../dangNhap/';</script>";
+    exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +44,7 @@ if (isset($_SESSION['maBenhNhan'])) {
                         <li><a href=".php"><i class="fe-airplay"></i><span>Dashboard</span></a></li>
                         <li><a href="xemphieukham.php"><i class="fas fa-user-tie"></i><span>Xem phiếu khám bệnh</span><span class="menu-arrow"></span></a></li>
                         <li><a href="xemlichkham.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch khám</span><span class="menu-arrow"></span></a></li>
-                        
+                        <li><a href="dangkylichkhambenh.php"><i class="mdi mdi-hospital-building"></i><span>Đăng ký lịch khám b</span><span class="menu-arrow"></span></a></li>
                     </ul>
                 </div>
             </div>
@@ -69,27 +75,23 @@ if (isset($_SESSION['maBenhNhan'])) {
                                     </thead>
                                     <tbody>
                                         <?php
-                                        // Hiển thị dữ liệu lịch khám
-                                        if ($dsLichKham && $dsLichKham->num_rows > 0) {
-                                            while ($row = $dsLichKham->fetch_assoc()) {
+                                        if ($dsLichKham) {
+                                            foreach ($dsLichKham as $row) {
                                                 echo "<tr>";
                                                 echo "<td>" . htmlspecialchars($row["maLichKham"]) . "</td>";
                                                 echo "<td>" . htmlspecialchars($row["ngayKham"]) . "</td>";
                                                 echo "<td>" . htmlspecialchars($row["gioKham"]) . "</td>";
                                                 echo "<td>" . htmlspecialchars($row["vanDeKham"]) . "</td>";
                                                 echo "<td>" . number_format($row["giaDichVuKham"], 0, ',', '.') . " VND</td>";
-                                                // echo "<td>" . htmlspecialchars($row["maNhanVien"]) . "</td>";
-                                                // echo "<td>" . htmlspecialchars($row["maBenhNhan"]) . "</td>";
-                                                // echo "<td>" . htmlspecialchars($row["maBaoHiem"]) . "</td>";
-                                                // echo "<td>" . htmlspecialchars($row["maKhoa"]) . "</td>";
-                                                echo "<td><a href='chitietLK.php?id=" . htmlspecialchars($row["maLichKham"]) . "' class='btn btn-sm btn-outline-primary btn-view'>Xem Chi Tiết</a></td>";
+                                                echo "<td><a href='chitietLK.php?id=" . htmlspecialchars($row["maLichKham"]) . "' class='btn btn-sm btn-outline-primary'>Xem Chi Tiết</a></td>";
                                                 echo "</tr>";
                                             }
                                         } else {
-                                            echo "<tr><td colspan='10' class='text-center text-danger'>Không có lịch khám cần chuẩn bị.</td></tr>";
+                                            echo "<tr><td colspan='6' class='text-center text-danger'>Không có lịch khám nào.</td></tr>";
                                         }
                                         ?>
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>

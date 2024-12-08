@@ -1,11 +1,19 @@
 <?php
+session_start();
 include_once("../../controller/cYTa.php");
 
+// Check if user is logged in and is a nurse
+if (!isset($_SESSION['user']) || !isset($_SESSION['user'][2]) || $_SESSION['user'][2] != 2) {
+    echo "<div class='error'>Vui lòng đăng nhập với tài khoản y tá!</div>";
+    exit;
+}
+
+$maNhanVien = $_SESSION['user'][0]; // Assuming maNhanVien is stored at index 0
 $shiftId = $_GET['id'] ?? null;
 
 if ($shiftId) {
     $controller = new cYTa();
-    $shiftDetails = $controller->chiTietLichLamViec($shiftId);
+    $shiftDetails = $controller->chiTietLichLamViec($shiftId, $maNhanVien);
 
     if ($shiftDetails) {
         echo "
@@ -61,7 +69,7 @@ if ($shiftId) {
         </head>
         <body>
             <div class='container'>
-                <h1></h1>";
+                <h1>Chi tiết ca làm việc</h1>";
                 
         echo "
                 <div class='detail'>
@@ -77,15 +85,15 @@ if ($shiftId) {
                     <strong>Tên nhân viên:</strong> {$shiftDetails['hoTen']}
                 </div>";
         
-        // Add more details as needed
         echo "
             </div>
         </body>
         </html>";
     } else {
-        echo "<div class='error'>Không tìm thấy thông tin ca làm việc.</div>";
+        echo "<div class='error'>Không tìm thấy thông tin ca làm việc hoặc bạn không có quyền xem thông tin này.</div>";
     }
 } else {
     echo "<div class='error'>Không có thông tin ca làm việc được chọn.</div>";
 }
 ?>
+

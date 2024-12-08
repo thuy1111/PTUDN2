@@ -68,9 +68,18 @@
         color: #721c24;
     }
 </style>
-
 <?php
+session_start();
 include_once("../../controller/cBacSi.php");
+
+// Check if user is logged in
+if (!isset($_SESSION['user']) || !isset($_SESSION['user'][2]) || $_SESSION['user'][2] != 1) {
+    echo "<script>alert('Vui lòng đăng nhập với tài khoản bác sĩ!'); window.location.href = '../dangNhap/';</script>";
+    exit();
+}
+
+$maNhanVien = $_SESSION['user'][0];
+
 error_reporting(0);
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 $homnay = date('Y-m-d');
@@ -90,7 +99,7 @@ for ($i = 1; $i < 8; $i++) {
     $daysOfWeek[] = date('Y-m-d', strtotime($a . " +{$i} days"));
 }
 
-echo'
+echo '
     <form method="POST" action="">
     <input type="hidden" name="currentWeekStart" value="'.$ngaydautuan.'">
     </form>
@@ -135,17 +144,16 @@ echo'
                     echo '</tr>';
         echo '  </tbody>
             </table>
-            <input type="submit" class="" name="btnDK" value="Đăng ký">
+            <input type="submit" class="btn btn-primary" name="btnDK" value="Đăng ký">
             </form>
         </div>';
 
 if(isset($_POST['btnDK'])){
     if(isset($_POST['date']) && !empty($_POST['date'])){
-    // $manv = $_SESSION[""]; Tự điền mã nhân viên vào đây nhé
-        $manv = 1; //t để mặc định tự sửa  HBDK_N3 WAS HERE
         $date = $_POST['date'];
         $ca = array_keys($date);
         $l2 = count($ca);
+        $rs = true;
         for ($k = 0; $k < $l2; $k++) {
             $c = $ca[$k];
             $l = count($date[$c]);
@@ -153,23 +161,22 @@ if(isset($_POST['btnDK'])){
             {
                 $d = $date[$c][$i];
                 $p = new cBacsi();
-                    if ($p->DKCa($manv, $d, $c)) {
-                        $rs = 1;
-                    } else {
-                        $rs = 0;
-                    }
+                if (!$p->DKCa($maNhanVien, $d, $c)) {
+                    $rs = false;
+                    break 2;
+                }
             }
         }
-        if($rs == 1)
+        if($rs)
         {
-            echo '<script>alert("Đăng ký thành công")</script>';
+            echo '<div class="alert alert-success">Đăng ký thành công</div>';
         }
-        else if($rs == 0)
+        else
         {
-            echo '<script>alert("Đăng ký thất bại")</script>';
+            echo '<div class="alert alert-danger">Đăng ký thất bại</div>';
         }
     }else{
-        echo '<script>alert("Vui lòng chọn ca làm việc")</script>';
+        echo '<div class="alert alert-danger">Vui lòng chọn ca làm việc</div>';
     }    
 }
 

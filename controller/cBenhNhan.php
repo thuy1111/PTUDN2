@@ -32,13 +32,19 @@ class cBenhNhan {
     }
 
     public function hienThiChiTietLKTheoBenhNhan($maLichKham, $maBenhNhan) {
-        if (!$maBenhNhan || !$maLichKham) {
-            return false; 
-        }
-
-        $lichKhamModel = new mBenhNhan();
-        $chiTietLK = $lichKhamModel->layChiTietLichKhamTheoBenhNhan($maLichKham, $maBenhNhan);
-        return $chiTietLK; // Trả về dữ liệu chi tiết hoặc false nếu không tìm thấy
-    }
+		if (!$maBenhNhan || !$maLichKham) {
+			return false;
+		}
+	
+		$lichKhamModel = new mBenhNhan();
+		$chiTietLK = $lichKhamModel->layChiTietLichKhamTheoBenhNhan($maLichKham, $maBenhNhan);
+	
+		if ($chiTietLK) {
+			return $chiTietLK; // Trả về chi tiết lịch khám nếu có dữ liệu
+		} else {
+			return null; // Không có dữ liệu cho lịch khám
+		}
+	}
+	
 }
 ?>
