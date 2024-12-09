@@ -1,37 +1,3 @@
-<?php
-include_once('../../controller/cThongkethuoc.php');
-$p = new cThongkethuoc();
-
-// Trạng thái bảo hiểm (true: có bảo hiểm, false: không bảo hiểm)
-$baoHiem = true; // hoặc $baoHiem = false;
-
-// Gọi hàm thống kê
-$result = $Thongkethuoc->thongKeThuocTheoBaoHiem($baoHiem);
-
-if ($result) {
-    $status = $baoHiem ? "Có bảo hiểm" : "Không có bảo hiểm";
-    echo "<h3>Thống kê thuốc ($status)</h3>";
-    echo "<table border='1'>
-            <tr>
-                <th>Mã thuốc</th>
-                <th>Tên thuốc</th>
-                <th>Tổng số lượng</th>
-                <th>Tổng tiền</th>
-            </tr>";
-    foreach ($result as $row) {
-        echo "<tr>
-                <td>" . $row['maThuoc'] . "</td>
-                <td>" . $row['tenThuoc'] . "</td>
-                <td>" . $row['tongSoLuong'] . "</td>
-                <td>" . number_format($row['tongTien'], 0, ',', '.') . " VND</td>
-              </tr>";
-    }
-    echo "</table>";
-} else {
-    echo "Không có dữ liệu thống kê cho trạng thái bảo hiểm này.";
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
     
@@ -63,8 +29,7 @@ if ($result) {
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box">
-                                    
-                                    <h4 class="page-title">Thống kê thuốc đã kê đơn</h4>
+                                    <h4 class="page-title">Thống kê thuốc đã kê đơn theo loại bảo hiểm</h4>
                                 </div>
                             </div>
                         </div>     
@@ -78,7 +43,33 @@ if ($result) {
                         </div>
 
                         <hr style="border-color: black;">
-                        
+                    
+    <div class="container mt-5">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Loại Bảo Hiểm</th>
+                    <th>Số Thuốc Đã Kê Đơn</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                    // Check if data exists and loop through the result set
+                    if (isset($result) && $result) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row['maBaoHiem']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['soLuongThuoc']) . "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='2' class='text-center'>" . (isset($message) ? $message : 'Không có dữ liệu thống kê thuốc.') . "</td></tr>";
+                    }
+                ?>
+            </tbody>
+        </table>
+        <a href="thongke.php" class="btn btn-primary">Quay Lại</a>
+
                     </div> <!-- container -->
 
                 </div> <!-- content -->
@@ -97,7 +88,7 @@ if ($result) {
         <script src="../../assets/libs/flot-charts/jquery.flot.selection.js"></script>
         <script src="../../assets/libs/flot-charts/jquery.flot.crosshair.js"></script>
 
-        <!-- Dashboar 1 init js-->
+        <!-- Dashboard 1 init js-->
         <script src="../../assets/js/pages/dashboard-1.init.js"></script>
 
         <!-- App js-->

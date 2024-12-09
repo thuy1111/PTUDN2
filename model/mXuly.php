@@ -2,30 +2,30 @@
 //xử lý đơn thuốc
     include_once("connect.php");
     class mXuly{
-        public function SelectAllXuly(){
-            $p = new clsKetNoi();
-            $con = $p->moketnoi();
-            $con -> set_charset('utf8');
-            if ($con){
-                $str = "select * from donthuoc";
-                $tblDT = $con -> query($str);
-                $p ->dongketnoi($con);
-                return $tblDT;
+        public function SelectAllDonThuoc(){
+            $p=new clsketnoi();
+            $con=$p->moKetNoi();
+            $truyvan="Select * from benhnhan b join donthuoc t on b.maBenhNhan=t.maBenhNhan";
+            $tbl=mysqli_query($con,$truyvan);
+            $p->dongKetNoi($con);
+            return $tbl;  
+        }
+        public function get01DT($maDonThuoc){
+            $p = new mXuLy();
+            $kq = $p -> select01DT($maDonThuoc);
+            if(mysqli_num_rows($kq)>0){
+                return $kq;
             }else{
                 return false;
             }
         }
-        public function selectAllXulyByName(){
-            $p = new clsketnoi();
-            $truyvan = " SELECT bn.*, dt.*
-                FROM benhnhan bn
-                JOIN donthuoc dt ON dt.maBenhNhan = bn.maBenhNhan";
-            $con = $p -> moketnoi();
-            $kq = mysqli_query($con, $truyvan);
-            $p -> dongketnoi($con);
-            return $kq;
+        public function updateDonThuoc($maDonThuoc,$tinhTrang){
+            $p = new mXuly();
+            $kq = $p -> updateDonThuoc($maDonThuoc,$tinhTrang);
+            if($kq){
+                return $kq;
+            }else{
+                return false;
+            }
         }
-        
-
-}
-?>
+    }
