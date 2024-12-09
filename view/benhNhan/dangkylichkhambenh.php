@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gioKham = $_POST['gioKham'];
 
     // Kết nối cơ sở dữ liệu
-    $conn = new mysqli('localhost:8081', 'root', '', 'hospital_db');
+    $conn = new mysqli('localhost', 'root', '', 'hospital_db');
     if ($conn->connect_error) {
         die("Kết nối thất bại: " . $conn->connect_error);
     }

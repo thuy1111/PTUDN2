@@ -70,7 +70,6 @@ if (isset($_POST["btndk"])) {
                     $_SESSION["customer"] = [$row["maBenhNhan"], $row["hoTen"]];
                     echo "<script>window.location.href = '../benhNhan/';</script>";
                 }
-                
                 $foundBN = false;
             }
         }

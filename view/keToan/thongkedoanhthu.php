@@ -1,3 +1,47 @@
+<?php
+include_once("../../controller/cUser.php");
+session_start();
+
+// Kiểm tra xem nhân viên đã đăng nhập chưa
+if (isset($_SESSION["user"][0])) {
+    $maNV = $_SESSION["user"][0];
+    $role = $_SESSION["user"][2]; // Lấy vai trò của nhân viên từ session
+    $ten = $_SESSION["user"][1]; // Lấy tên nhân viên từ session
+
+    // Chỉ cho phép nhân viên kế toán truy cập (role = 6)
+    if ($role !== '6') {
+        echo "<script>alert('Bạn không có quyền truy cập!');window.location.href = '../dangNhap/';</script>";
+        exit();
+    }
+} else {
+    // Nếu chưa đăng nhập, chuyển về trang đăng nhập
+    echo "<script>alert('Vui lòng đăng nhập!');window.location.href = '../dangNhap/';</script>";
+    exit();
+}
+
+// Xử lý điều hướng dựa trên action
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+
+    switch ($action) {
+        case 'thong_ke_khoa':
+            header("Location: thongkedoanhthutheokhoa.php");
+            exit();
+
+        case 'thong_ke_thoi_gian':
+            header("Location: thongkedoanhthutheoloaithoigian.php");
+            exit();
+
+        case 'phan_phong_kham':
+            header("Location: phanphongkham.php");
+            exit();
+
+        default:
+            echo "<script>alert('Chức năng không hợp lệ!');window.location.href = 'index.php';</script>";
+            exit();
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -92,15 +136,31 @@
                         </div>     
                         <!-- end page title --> 
 
-                        <div class="row">
+                        <hr style="border-color: black;">
+
+                        <div class="row mb-2">
                             <div class="col-12 text-center">
-                                <a href="thongketongdoanhthu.php" class="btn btn-primary mx-2">Thống kê tổng doanh thu</a>
-                                <a href="#" class="btn btn-success mx-2">Theo loại thời gian</a>
-                                <a href="#" class="btn btn-danger mx-2">Theo khoa</a>
+                                <a href="thongkedoanhthu?action=thong_ke_thoi_gian" class="btn btn-success mx-2">THEO LOẠI THỜI GIAN</a>
+                                <a href="thongkedoanhthu?action=thong_ke_khoa" class="btn btn-danger mx-2">THEO KHOA</a>
                             </div>
                         </div>
 
                         <hr style="border-color: black;">
+
+                        <?php
+                            if(isset($_POST['action'])){
+                                $action = $_POST['action'];
+                                
+                                if($action == 'thong_ke_thoi_gian'){
+                                    header("Location: thongkedoanhthutheoloaithoigian.php");
+                                    exit();
+                                    
+                                } elseif($action == 'thong_ke_khoa'){
+                                    header("Location: thongkedoanhthutheokhoa.php");
+                                    exit();
+                                }
+                            }
+                        ?>
                         
                     </div> <!-- container -->
 

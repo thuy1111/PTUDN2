@@ -399,7 +399,7 @@
         </div>
     </div>
     <!-- gallery Products End -->
-    
+</main>
     <footer>
         <!--? Footer Start-->
         <div class="footer-area section-bg" data-background="assets/images/gallery/footer_bg.jpg">

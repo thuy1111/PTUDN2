@@ -1,3 +1,15 @@
+<?php
+    include_once("controller/cBenhNhan.php");
+
+    if(isset($_SESSION['customer'][0])){
+        $maBenhNhan = $_SESSION['customer'][0];
+        $ctrlBenhNhan = new cBenhNhan();
+        
+    }else{
+        echo "<script>alert('Vui lòng đăng nhập!');window.location.href = 'view/dangNhap/';</script>";
+        exit();
+    }
+?>
 <!doctype html>
 <html lang="en">
 <head>
