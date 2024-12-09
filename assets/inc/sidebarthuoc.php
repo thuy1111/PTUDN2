@@ -17,37 +17,30 @@
                                 
                             </li>
 
-                            <li>
-                                <a href="../../view/quanLyNhanSu/quanlythongtinnhanvien.php">
-                                    <i class="fas fa-user-tie"></i>
-                                    <span>Quản lý thông tin nhân viên</span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-
-                            </li>
+                            
 
                             <li>
-                                <a href="../../view/quanLyNhanSu/quanlykhoa.php">
+                                <a href="../../view/quanLyThuoc/quanlythuoc.php">
                                     <i class="mdi mdi-hospital-building"></i>
-                                    <span>Quản lý khoa</span>
+                                    <span>Quản lý thông tin thuốc</span>
                                     <span class="menu-arrow"></span>
                                 </a>
 
                             </li>
 
                             <li>
-                                <a href="../../view/quanLyNhanSu/quanlyphongkham.php">
+                                <a href="../../view/quanLyThuoc/xulythuoc.php">
                                     <i class="fas fa-clinic-medical"></i>
-                                    <span>Quản lý phòng khám</span>
+                                    <span>Xử lý đơn thuốc</span>
                                     <span class="menu-arrow"></span>
                                 </a>
 
                             </li>
                 
                             <li>
-                                <a href="../../view/quanLyNhanSu/quanlybaohiem.php">
+                                <a href="../../view/quanLyThuoc/thongke.php">
                                     <i class="mdi mdi-shield-check"></i>
-                                    <span>Quản lý bảo hiểm</span>
+                                    <span>Thống kê thuốc đã kê đơn</span>
                                     <span class="menu-arrow"></span>
                                 </a>
                                 

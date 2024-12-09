@@ -1,3 +1,69 @@
+<?php
+error_reporting(1);
+session_start();
+
+include_once("../../controller/cUser.php");
+include_once("../../controller/cCustomer.php");
+
+$ctrlUser = new cUser;
+$ctrlCustomer = new cCustomer;
+
+if (isset($_POST["btndk"])) {
+    $userName = trim($_POST["username"]);
+    $pass = md5(trim($_POST["pass"])); // Mặc dù đang dùng md5, hãy xem xét thay đổi sang password_hash và password_verify
+    $foundNV = false;
+    $foundBN = false;
+
+    // Kiểm tra thông tin đăng nhập trống
+    if (empty($userName) || empty($pass)) {
+        echo "<script>alert('Vui lòng nhập đầy đủ thông tin đăng nhập!');</script>";
+    } else {
+        // Kiểm tra thông tin đăng nhập cho nhân viên
+        $result = $ctrlUser->cGetAllUser();
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if ($userName == $row["tenDangNhap"] && $pass == $row["matKhau"]) {
+                    $_SESSION["loginNV"] = true;
+                    $_SESSION["user"] = [$row["maNhanVien"], $row["hoTen"], $row["maChucVu"]];
+                    $foundNV = true;
+
+                    switch ($row["maChucVu"]) {
+                        case 1: echo "<script>window.location.href = '../bacSi/';</script>"; break;
+                        case 2: echo "<script>window.location.href = '../yTa/';</script>"; break;
+                        case 3: echo "<script>window.location.href = '../quanLyNhanSu/';</script>"; break;
+                        case 4: echo "<script>window.location.href = '../leTan/';</script>"; break;
+                        case 5: echo "<script>window.location.href = '../quanLyThuoc/';</script>"; break;
+                        case 6: echo "<script>window.location.href = '../keToan/';</script>"; break;
+                    }
+                    break;
+                }
+            }
+        }
+
+        // Kiểm tra thông tin đăng nhập cho bệnh nhân
+        if (!$foundNV) {
+            $result = $ctrlCustomer->cGetAllCustomer();
+            if ($result && $result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    if ($userName == $row["tenDangNhap"] && $pass == $row["matKhau"]) {
+                        $_SESSION["loginBN"] = true;
+                        $_SESSION["customer"] = [$row["maBenhNhan"], $row["hoTen"]];
+                        $foundBN = true;
+                        echo "<script>window.location.href = '../benhNhan/';</script>";
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    // Thông báo lỗi nếu không tìm thấy thông tin đăng nhập hợp lệ
+    if (!$foundNV && !$foundBN) {
+        echo "<script>alert('Thông tin đăng nhập không hợp lệ. Vui lòng đăng nhập lại!');</script>";
+    }
+}
+?>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -5,10 +71,10 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Đăng nhập</title>
     <link rel="shortcut icon" href="../../assets/images/logo/hospital.png" type="image/x-icon">
-    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<<<<<<< HEAD
 <?php
 error_reporting(1);
 session_start();
@@ -79,6 +145,8 @@ if (isset($_POST["btndk"])) {
         echo "<script>alert('Thông tin đăng nhập không hợp lệ. Vui lòng đăng nhập lại!');</script>";
 }
 ?>
+=======
+>>>>>>> 61d9a85a13ba46c8dfdf5a178bdb4abb642312cf
 
 <body class="h-screen flex items-center justify-center bg-[#F0FFFE]">
     <form action="" method="POST" class="m-0">
@@ -97,14 +165,14 @@ if (isset($_POST["btndk"])) {
                     <tbody>
                         <tr>
                             <td>
-                            <label for="userName" class="font-bold">Tên đăng nhập</label>
-                            <input type="text" id="userName" name="username" class="w-full mt-2 mb-4 px-4 py-2 bg-blue-100 border border-gray-300 rounded-md outline-blue-300" placeholder="Tên đăng nhập" />
+                                <label for="userName" class="font-bold">Tên đăng nhập</label>
+                                <input type="text" id="userName" name="username" class="w-full mt-2 mb-4 px-4 py-2 bg-blue-100 border border-gray-300 rounded-md outline-blue-300" placeholder="Tên đăng nhập" />
                             </td>
                         </tr>
                         <tr>
                             <td>
-                            <label for="pass" class="font-bold">Mật khẩu</label>
-                            <input type="password" id="pass" name="pass" class="w-full mt-2 px-4 py-2 bg-blue-100 border border-gray-300 rounded-md outline-blue-300" placeholder="Mật khẩu" />
+                                <label for="pass" class="font-bold">Mật khẩu</label>
+                                <input type="password" id="pass" name="pass" class="w-full mt-2 px-4 py-2 bg-blue-100 border border-gray-300 rounded-md outline-blue-300" placeholder="Mật khẩu" />
                             </td>
                         </tr>
                     </tbody>

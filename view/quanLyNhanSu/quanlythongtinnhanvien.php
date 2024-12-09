@@ -1,12 +1,11 @@
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="en">
-    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <!--Head Code-->
     <?php include("../../assets/inc/head.php");?>
 
     <body>
-    
 
         <!-- Begin page -->
         <div id="wrapper">
@@ -33,7 +32,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title">Quản Lý Phòng Khám</h4>
+                                    <h4 class="page-title">Quản Lý Thông Tin Nhân Viên</h4>
                                 </div>
                             </div>
                         </div>     
@@ -44,49 +43,60 @@
                             <div class="col-12 text-center">
                                 <button type="button" class="btn btn-primary mx-2">Thêm</button>
                                 <button type="button" class="btn btn-success mx-2">Cập nhật</button>
+                                <button type="button" class="btn btn-danger mx-2">Xóa</button>
                                 <button type="button" class="btn btn-danger mx-2">Hủy</button>
                             </div>
                         </div>
 
                         <hr style="border-color: black;">
 
-                        <h4 class="header-title mb-3">Thông tin phòng khám</h4>
+                        <h4 class="header-title mb-3">Thông tin nhân viên</h4>
 
                         <form class="mb-3">
                             <div class="row">
                                 <!-- Left column -->
                                 <div class="col-md-6">
-                                    <!-- Faculty of Management -->
+                                   
+                                    <!-- Employee name -->
                                     <div class="row mb-1">
                                         <div class="col-md-3">
-                                            <label for="khoaQuanLy" class="form-label">Khoa quản lý</label>
+                                            <label for="tenNhanVien" class="form-label">Tên phòng khám</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <select class="form-select form-control" id="khoaQuanLy">
-                                                <option selected>Chọn khoa quản lý</option>
-                                                <option value="1">Khoa 1</option>
-                                                <option value="2">Khoa 2</option>
-                                                </select>
+                                            <input type="text" class="form-control" id="tenNhanVien" placeholder="Nhập tên nhân viên">
                                         </div>
                                     </div>
 
-                                    <!-- Name of the clinic -->
+                                    <!-- date of birth -->
+                                    <div class="row mb-1">
+                                    <div class="col-md-3">
+                                        <label for="ngaySinh" class="form-label">Ngày sinh</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="ngaySinh" placeholder="Chọn ngày sinh">
+                                    </div>
+                                </div>
+
+                                    <!-- gender -->
                                     <div class="row mb-1">
                                         <div class="col-md-3">
-                                            <label for="tenPhongKham" class="form-label">Tên phòng khám</label>
+                                            <label for="gioiTinh" class="form-label">Giới tính</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control" id="tenPhongKham" placeholder="Nhập tên phòng khám">
+                                            <select class="form-select form-control" id="gioiTinh">
+                                                <option selected>Chọn giới tính</option>
+                                                <option value="1">Nam</option>
+                                                <option value="2">Nữ</option>
+                                            </select>
                                         </div>
                                     </div>
-
-                                    <!-- Functions -->
+                                    <!-- Address -->
                                     <div class="row mb-1">
                                         <div class="col-md-3">
-                                            <label for="chucNang" class="form-label">Chức năng</label>
+                                            <label for="diaChi" class="form-label">Địa chỉ</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control" id="chucNang" placeholder="Nhập chức năng">
+                                            <input type="text" class="form-control" id="diaChi" placeholder="Nhập địa chỉ">
                                         </div>
                                     </div>
 
@@ -95,43 +105,56 @@
 
                                 <!-- Right column -->
                                 <div class="col-md-6">
-                                    <!-- Position -->
+                                    <!-- Phone number -->
                                     <div class="row mb-1">
-                                        <div class="col-md-3">
-                                            <label for="viTri" class="form-label">Vị trí</label>
+                                    <div class="col-md-3">
+                                            <label for="sDT" class="form-label">SDT</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control" id="viTri" placeholder="Nhập vị trí">
+                                            <input type="text" class="form-control" id="sDT" placeholder="Nhập số điện thoại">
                                         </div>
                                     </div>
-                                    <!-- Doctors -->
-                                    <div class="row mb-1">
-                                        <div class="col-md-3">
-                                            <label for="bacSi" class="form-label">Bác sĩ</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <select class="form-select form-control" id="bacSi">
-                                                <option selected>Chọn bác sĩ</option>
-                                                <option value="1">Bác sĩ 1</option>
-                                                <option value="2">Bác sĩ 2</option>
-                                            </select>
-                                        </div>
-                                        </div>
 
-                                    <!-- Nurses -->
+                                    <!-- Email -->
                                     <div class="row mb-1">
-                                        <div class="col-md-3">
-                                            <label for="yTa" class="form-label">Y tá</label>
+                                    <div class="col-md-3">
+                                            <label for="eMail" class="form-label">Email</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <select class="form-select form-control" id="yTa">
-                                                <option selected>Chọn y tá</option>
-                                                <option value="1">Y tá 1</option>
-                                                <option value="2">Y tá 2</option>
+                                            <input type="text" class="form-control" id="eMail" placeholder="Nhập email">
+                                        </div>
+                                    </div>    
+
+
+                                    <!-- position -->
+                                    <div class="row mb-1">
+                                        <div class="col-md-3">
+                                            <label for="chucVu" class="form-label">Chức vụ</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <select class="form-select form-control" id="chucVu">
+                                                <option selected>Chọn chức vụ</option>
+                                                <option value="1">Bác sĩ</option>
+                                                <option value="2">Y tá</option>
+                                                <option value="1">Quản lý thuốc</option>
+                                                <option value="2">Kế toán</option>
                                             </select>
                                         </div>
                                     </div>    
 
+                                    <!-- part -->
+                                    <div class="row mb-1">
+                                        <div class="col-md-3">
+                                            <label for="boPhan" class="form-label">Bộ phận</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <select class="form-select form-control" id="boPhan">
+                                                <option selected>Chọn bộ phận</option>
+                                                <option value="1">Khoa 1</option>
+                                                <option value="2">Khoa 2</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     
                                 </div>
                             </div>
@@ -143,15 +166,15 @@
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="card-box">
-                                    <h4 class="header-title mb-3">Danh sách phòng khám</h4>
+                                    <h4 class="header-title mb-3">Danh sách nhân viên</h4>
                                     <div class="row mb-3">
     <div class="col-md-6">
-    <form method="GET" action="controller/PhongKhamController.php">
-    <div class="input-group">
-        <input type="text" class="form-control" name="search" placeholder="Tìm kiếm theo tên hoặc mã phòng khám" value="<?= isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-        <button class="btn btn-primary" type="submit">Tìm kiếm</button>
-    </div>
-</form>
+        <form method="GET" action="">
+            <div class="input-group">
+                <input type="text" class="form-control" name="search" placeholder="Tìm kiếm theo tên hoặc mã nhân viên">
+                <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+            </div>
+        </form>
     </div>
 </div>
                                     <div class="table-responsive">
@@ -160,59 +183,21 @@
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th>STT</th>
-                                                    <th>MÃ PHÒNG KHÁM</th>
-                                                    <th>TÊN PHÒNG KHÁM</th>
-                                                    <th>KHOA QUẢN LÝ</th>
-                                                    <th>CHỨC NĂNG</th>
-                                                    <th>VỊ TRÍ</th>
-                                                    <th>BÁC SĨ</th>
-                                                    <th>Y TÁ</th>
-                                                    <th>TRẠNG THÁI HOẠT ĐỘNG</th>
+                                                    <th>MÃ NHÂN VIÊN</th>
+                                                    <th>TÊN NHÂN VIÊN</th>
+                                                    <th>NGÀY SINH</th>
+                                                    <th>GIỚI TÍNH</th>
+                                                    <th>SỐ ĐIỆN THOẠI</th>
+                                                    <th>EMAIL</th>
+                                                    <th>ĐỊA CHỈ</th>
+                                                    <th>BỘ PHẬN</th>
+                                                    <th>CHỨC VỤ</th>
+                                                    <th>TÌNH TRẠNG LÀM VIỆC</th>
                                                 </tr>
                                             </thead>
                                            
-                                            <tbody><tr>
-
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>    
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-                                                </tr>
-                                            </tbody>
-                                            
-                                        </table>
-                                    </div>
-                                </div>
-                            </div> <!-- end col -->                                                                                                                                                                                                                                         
-                        </div>
-                        <!-- end row -->
-                        
-                    </div> <!-- container -->
-
-                </div> <!-- content -->
-
-            </div>
-
-        <!-- Vendor js -->
-        <script src="../../assets/js/vendor.min.js"></script>
-        <!-- Plugins js-->
-        <script src="../../assets/libs/flatpickr/flatpickr.min.js"></script>
-        <tr>
+                                            <tbody>
+                                                <tr>
 
                                                     <td>
                                                     </td>
@@ -267,6 +252,14 @@
         <!-- App js-->
         <script src="../../assets/js/app.min.js"></script>
         
+                <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script>
+            // Khởi tạo Flatpickr
+            flatpickr("#ngaySinh", {
+                dateFormat: "d-m-Y", // Định dạng ngày
+                locale: "vn" // Ngôn ngữ (có thể cần import nếu muốn dùng tiếng Việt)
+            });
+        </script>
     </body>
 
 </html>

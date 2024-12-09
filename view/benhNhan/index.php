@@ -1,4 +1,4 @@
-<html lang="en">
+
 <?php
 error_reporting(1);
 session_start();
@@ -9,58 +9,41 @@ if (!isset($_SESSION["loginBN"]))
             window.location.href = '../dangNhap';
     </script>";
 ?>
-<head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Trang chủ | Bệnh nhân</title>
-    <link rel="shortcut icon" href="../../assets/images/logo/hospital.png" type="image/x-icon">
+<!DOCTYPE html>
+<html lang="vi">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.tailwindcss.com"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách Lịch Khám</title>
+
+    <!-- Include Head Resources -->
+    <?php include("../../assets/inc/head.php"); ?>
+    <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 
-<body class="bg-[#F0FFFE]">
-    <div class="w-full">
-        <div class="flex justify-between items-center w-full p-4 border-b">
-            <div class="flex flex-col items-center">
-                <img
-                    src="../../assets/images/logo/hospital.png"
-                    alt="Hospital logo"
-                    class="size-16 mb-2" />
-                <h1 class="text-xl font-bold">HOSPITAL</h1>
-            </div>
-            <div class="flex justify-around items-center">
-                <div class="flex items-center mr-8">
-                    <h3 class="text-xl font-bold mr-1">BỆNH NHÂN</h3>
-                    <i class="fa-solid fa-clipboard-user text-2xl mr-1"></i>
-                </div>
-                <div class="flex items-center ml-8">
-                    <i class="fas fa-user-circle text-4xl ml-1"></i> 
-                    <span class="mr-1 ml-1 font-bold text-2xl"> <?php echo end(explode(" ", $_SESSION["customer"][1])); ?> </span>
+<body>
+    <div id="wrapper">
+        <!-- Topbar -->
+        <?php include('../../assets/inc/nav.php'); ?>
+
+        <div class="container-fluid">
+            <div class="row">
+                
+                <!-- Sidebar -->
+                <div class="left-side-menu">
+            <div class="slimscroll-menu">
+                <div id="sidebar-menu">
+                    <ul class="metismenu" id="side-menu">
+                        <li><a href=".php"><i class="fe-airplay"></i><span>Dashboard</span></a></li>
+                        <li><a href="xemphieukham.php"><i class="fas fa-user-tie"></i><span>Xem phiếu khám bệnh</span><span class="menu-arrow"></span></a></li>
+                        <li><a href="xemlichkham.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch khám</span><span class="menu-arrow"></span></a></li>
+                        <li><a href="dangkylichkhambenh.php"><i class="mdi mdi-hospital-building"></i><span>Đăng ký Lịch Khám</span><span class="menu-arrow"></span></a></li>
+                        
+                    </ul>
                 </div>
             </div>
         </div>
-        <div class="flex">
-            <div class="w-1/4 bg-[#D1E7E7] px-6 py-4 ">
-                <div class="text-2xl font-bold mb-2 pb-2 text-center border-b border-black">DÀNH CHO BỆNH NHÂN</div>
-                <ul class="navbar">
-                    <li class="border-b border-black">
-                        <a class="block p-2" href="index.php" id="trangchu"> TRANG CHỦ </a>
-                    </li>
-                    <li class="border-b border-black">
-                        <a class="block p-2" href="index.php?p=xemlich" id="xemlich"> XEM LỊCH KHÁM </a>
-                    </li>
-                    <li class="border-b border-black">
-                        <a class="block p-2" href="index.php?p=xemphieu" id="xemphieu">XEM PHIẾU KHÁM BỆNH</a>
-                    </li>
-                    <li class="border-b border-black">
-                        <a class="block p-2" href="index.php?p=dkkham" id="dkkham"> ĐĂNG KÝ KHÁM BỆNH </a>
-                    </li>
-                    <li class="border-b bg-gray-300 border-black">
-                        <a class="block p-2" href="../../view/dangXuat/"> ĐĂNG XUẤT </a>
-                    </li>
-                </ul>
-            </div>
             <div class="w-3/4 flex justify-between">
                 <?php
                 $p = "";

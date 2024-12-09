@@ -1,3 +1,36 @@
+<?php
+include_once('../../controller/cThongkethuoc.php');
+$p = new cThongkethuoc();
+
+// Trạng thái bảo hiểm (true: có bảo hiểm, false: không bảo hiểm)
+$baoHiem = true; // hoặc $baoHiem = false;
+
+// Gọi hàm thống kê
+$result = $Thongkethuoc->thongKeThuocTheoBaoHiem($baoHiem);
+
+if ($result) {
+    $status = $baoHiem ? "Có bảo hiểm" : "Không có bảo hiểm";
+    echo "<h3>Thống kê thuốc ($status)</h3>";
+    echo "<table border='1'>
+            <tr>
+                <th>Mã thuốc</th>
+                <th>Tên thuốc</th>
+                <th>Tổng số lượng</th>
+                <th>Tổng tiền</th>
+            </tr>";
+    foreach ($result as $row) {
+        echo "<tr>
+                <td>" . $row['maThuoc'] . "</td>
+                <td>" . $row['tenThuoc'] . "</td>
+                <td>" . $row['tongSoLuong'] . "</td>
+                <td>" . number_format($row['tongTien'], 0, ',', '.') . " VND</td>
+              </tr>";
+    }
+    echo "</table>";
+} else {
+    echo "Không có dữ liệu thống kê cho trạng thái bảo hiểm này.";
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +72,7 @@
 
                         <div class="row">
                             <div class="col-12 text-center">
-                                <a href="thongkethuoctheobaohiem.php" class="btn btn-success mx-2">Theo loại bảo hiểm</a>
+                                <a href="thongkethuoctheoloaibaohiem.php" class="btn btn-success mx-2">Theo loại bảo hiểm</a>
                                 <a href="thongkethuoctheobacsi.php" class="btn btn-danger mx-2">Theo bác sĩ</a>
                             </div>
                         </div>

@@ -1,11 +1,19 @@
 <?php
-include_once("../../controller/cLichLamViecBS.php");
+session_start();
+include_once("../../controller/cBacSi.php");
 
+// Check if user is logged in and is a nurse
+if (!isset($_SESSION['user']) || !isset($_SESSION['user'][2]) || $_SESSION['user'][2] != 1) {
+    echo "<div class='error'>Vui lòng đăng nhập với tài khoản Bác sĩ!</div>";
+    exit;
+}
+
+$maNhanVien = $_SESSION['user'][0]; // Assuming maNhanVien is stored at index 0
 $shiftId = $_GET['id'] ?? null;
 
 if ($shiftId) {
-    $controller = new cLichLamViec();
-    $shiftDetails = $controller->chiTietLichLamViec($shiftId);
+    $controller = new cBacSi();
+    $shiftDetails = $controller->chiTietLichLamViec($shiftId,$maNhanVien);
 
     if ($shiftDetails) {
         echo "

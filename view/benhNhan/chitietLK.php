@@ -1,15 +1,29 @@
 <?php
+session_start();
 // Gọi Controller
-include_once("../../controller/cBacSi.php");
+include_once("../../controller/cBenhNhan.php");
+
+// Kiểm tra đăng nhập
+if (!isset($_SESSION['customer'][0])) {
+    echo "<script>alert('Vui lòng đăng nhập!'); window.location.href = '../dangNhap/';</script>";
+    exit();
+}
 
 // Khởi tạo Controller
-$controller = new cBacSi();
+$controller = new cBenhNhan();
 
-// Lấy mã lịch khám từ URL
+// Lấy mã bệnh nhân từ session và mã lịch khám từ URL
+$maBenhNhan = $_SESSION['customer'][0];
 $maLichKham = isset($_GET['id']) ? $_GET['id'] : null;
 
+// Kiểm tra tham số
+if (!$maLichKham) {
+    echo "<script>alert('Không tìm thấy thông tin lịch khám!'); window.location.href = 'xemlichkham.php';</script>";
+    exit();
+}
+
 // Lấy chi tiết lịch khám từ Controller
-$chiTietLK = $controller->hienThiChiTietLK($maLichKham);
+$chiTietLK = $controller->hienThiChiTietLKTheoBenhNhan($maLichKham, $maBenhNhan);
 ?>
 
 <!DOCTYPE html>
@@ -33,19 +47,19 @@ $chiTietLK = $controller->hienThiChiTietLK($maLichKham);
                 <table class="table table-bordered">
                     <tr>
                         <th>Mã Lịch Khám</th>
-                        <td><?php echo $chiTietLK['maLichKham']; ?></td>
+                        <td><?php echo htmlspecialchars($chiTietLK['maLichKham']); ?></td>
                     </tr>
                     <tr>
                         <th>Ngày Khám</th>
-                        <td><?php echo $chiTietLK['ngayKham']; ?></td>
+                        <td><?php echo htmlspecialchars($chiTietLK['ngayKham']); ?></td>
                     </tr>
                     <tr>
                         <th>Giờ Khám</th>
-                        <td><?php echo $chiTietLK['gioKham']; ?></td>
+                        <td><?php echo htmlspecialchars($chiTietLK['gioKham']); ?></td>
                     </tr>
                     <tr>
                         <th>Vấn Đề Khám</th>
-                        <td><?php echo $chiTietLK['vanDeKham']; ?></td>
+                        <td><?php echo htmlspecialchars($chiTietLK['vanDeKham']); ?></td>
                     </tr>
                     <tr>
                         <th>Giá Dịch Vụ</th>
@@ -53,19 +67,19 @@ $chiTietLK = $controller->hienThiChiTietLK($maLichKham);
                     </tr>
                     <tr>
                         <th>Mã Nhân Viên</th>
-                        <td><?php echo $chiTietLK['maNhanVien']; ?></td>
+                        <td><?php echo htmlspecialchars($chiTietLK['maNhanVien']); ?></td>
                     </tr>
                     <tr>
                         <th>Mã Bệnh Nhân</th>
-                        <td><?php echo $chiTietLK['maBenhNhan']; ?></td>
+                        <td><?php echo htmlspecialchars($chiTietLK['maBenhNhan']); ?></td>
                     </tr>
                     <tr>
                         <th>Mã Bảo Hiểm</th>
-                        <td><?php echo $chiTietLK['maBaoHiem']; ?></td>
+                        <td><?php echo htmlspecialchars($chiTietLK['maBaoHiem']); ?></td>
                     </tr>
                     <tr>
                         <th>Mã Khoa</th>
-                        <td><?php echo $chiTietLK['maKhoa']; ?></td>
+                        <td><?php echo htmlspecialchars($chiTietLK['maKhoa']); ?></td>
                     </tr>
                 </table>
             </div>

@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    
+
     <!--Head Code-->
     <?php include("../../assets/inc/head.php");?>
 
@@ -15,76 +15,7 @@
             <!-- end Topbar -->
 
             <!-- ========== Left Sidebar Start ========== -->
-            <div class="left-side-menu">
-
-                <div class="slimscroll-menu">
-
-                    <!--- Sidemenu -->
-                    <div id="sidebar-menu">
-
-                        <ul class="metismenu" id="side-menu">
-
-                            <!--<li class="menu-title">Navigation</li>-->
-
-                            <li>
-                                <a href="#">
-                                    <i class="fe-airplay"></i>
-                                    <span> Dashboard </span>
-                                </a>
-                                
-                            </li>
-
-                            <li>
-                                <a href="javascript: void(0);">
-                                    <i class="fas fa-user-tie"></i>
-                                    <span>Quản lý thuốc</span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <ul class="nav-second-level" aria-expanded="false">
-                                    <li>
-                                        <a href="timkiemthuoc.php">Tìm kiếm thuốc</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Thêm thuốc mới</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Cập nhật thông tin thuốc</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Xóa thông tin thuốc</a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li>
-                                <a href="javascript: void(0);">
-                                    <i class="mdi mdi-hospital-building"></i>
-                                    <span>Xử lý đơn thuốc</span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-
-                            </li>
-
-                            <li>
-                                <a href="../../view/quanLyNhanSu/quanlyphongkham.php">
-                                    <i class="fas fa-clinic-medical"></i>
-                                    <span>Thống kê thuốc</span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-
-                            </li>
-                
-                        </ul>
-
-                    </div>
-                    <!-- End Sidebar -->
-
-                    <div class="clearfix"></div>
-
-                </div>
-                <!-- Sidebar -left -->
-
-            </div>
+            <?php include('../../assets/inc/sidebarthuoc.php');?>
             <!-- Left Sidebar End -->
 
             <!-- ============================================================== -->
@@ -109,28 +40,109 @@
                         <hr style="border-color: black;">
 
                         <div class="row">
-                            <div class="col-12 d-flex justify-content-end">
-                                <form class="app-search" style="width: 300px;">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Nhập tên hoặc mã thuốc..." aria-label="Search" aria-describedby="search-button">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="submit" id="search-button">
-                                                <i class="fe-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
+                            <div class="col-12 text-center">
+                                <button type="button" class="btn btn-primary mx-2">Thêm</button>
+                                <button type="button" class="btn btn-success mx-2">Cập nhật</button>
+                                <button type="button" class="btn btn-danger mx-2">Hủy</button>
                             </div>
                         </div>
 
                         <hr style="border-color: black;">
 
-                        <h4 class="header-title mb-3">KẾT QUẢ TÌM KIẾM</h4>
+                        <h4 class="header-title mb-3">Thông tin thuốc</h4>
+
+                        <form class="mb-3">
+                            <div class="row">
+                                <!-- Left column -->
+                                <div class="col-md-6">
+                                    <!-- Faculty of Management -->
+                                    <div class="row mb-1">
+                                    <div class="col-md-3">
+                                            <label for="tenThuoc" class="form-label">Tên thuốc</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="tenThuoc" placeholder="Nhập tên thuốc">
+                                        </div>
+                                    </div>
+
+                                    <!-- Name of the clinic -->
+                                    <div class="row mb-1">
+                                        <div class="col-md-3">
+                                            <label for="dangBaoChe" class="form-label">Dạng bào chế</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="dangBaoChe" placeholder="Nhập dạng bào chế">
+                                        </div>
+                                    </div>
+
+                                    <!-- Functions -->
+                                    <div class="row mb-1">
+                                        <div class="col-md-3">
+                                            <label for="soLuongTon" class="form-label">Số lượng tồn</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="soLuongTon" placeholder="Nhập số lượng tồn">
+                                        </div>
+                                    </div>
+
+                                    
+
+                                    
+                                </div>
+
+                                <!-- Right column -->
+                                <div class="col-md-6">
+                                    <div class="row mb-1">
+                                        <div class="col-md-3">
+                                            <label for="donGia" class="form-label">Đơn giá</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="donGia" placeholder="Nhập đơn giá">
+                                        </div>
+                                    </div>
+                                    <!-- Position -->
+                                    <div class="row mb-1">
+                                        <div class="col-md-3">
+                                            <label for="nhaSanXuat" class="form-label">Nhà sản xuất</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="nhaSanXuat" placeholder="Nhà sản xuất ">
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Nurses -->
+                                    <div class="row mb-1">
+                                        <div class="col-md-3">
+                                            <label for="congDung" class="form-label">Công dụng</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="congDung" placeholder="Công dụng ">
+                                        </div>
+                                    </div>
+
+                                    
+                                </div>
+                            </div>
+                        </form>
+
+                        <hr style="border-color: black;">
 
                         <!--Clinic list-->
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="card-box">
+                                    <h4 class="header-title mb-3">Danh sách phòng khám</h4>
+                                    <div class="row mb-3">
+    <div class="col-md-6">
+        <form method="GET" action="">
+            <div class="input-group">
+                <input type="text" class="form-control" name="search" placeholder="Tìm kiếm theo tên hoặc mã thuốc">
+                <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+            </div>
+        </form>
+    </div>
+</div>
                                     <div class="table-responsive">
                                         <table class="table table-borderless table-hover table-centered m-0">
 
@@ -144,7 +156,7 @@
                                                     <th>ĐƠN GIÁ</th>
                                                     <th>NHÀ SẢN XUẤT</th>
                                                     <th>DẠNG BÀO CHẾ</th>
-                                                    <th>TRẠNG THÁI</th>
+                                                    <th>TRẠNG THÁI </th>
                                                 </tr>
                                             </thead>
                                            

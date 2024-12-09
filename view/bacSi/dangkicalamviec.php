@@ -1,4 +1,6 @@
-
+<?php
+    include_once ("../../controller/cBacSi.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,7 +59,13 @@
     </div>
 
     <!-- Modal -->
-    
+    <div class="content-page">
+            <div class="content">
+                <div class="container-fluid">
+                    <!-- Page Title -->
+                    <?php include_once("dkllv.php"); ?>
+            </div>
+        </div>
 
     <!-- Footer -->
     <footer>

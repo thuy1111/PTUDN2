@@ -51,8 +51,8 @@ class mPhieuKhamBenh
     {
         $p = new clsKetNoi();
         $conn = $p->moketnoi();
-        $conn->set_charset("utf8");
         if ($conn) {
+            $conn->set_charset("utf8");
             $str = "SELECT pkb.*, bn.hoTen as tenBenhNhan, nv.hoTen as tenNhanVien
                     FROM phieukhambenh pkb
                     JOIN benhnhan bn ON pkb.maBenhNhan = bn.maBenhNhan
@@ -62,8 +62,9 @@ class mPhieuKhamBenh
             $stmt->bind_param("s", $maPhieuKhamBenh);
             $stmt->execute();
             $result = $stmt->get_result();
+            $data = $result->fetch_assoc();
             $p->dongketnoi($conn);
-            return $result->fetch_assoc();
+            return $data;
         } else {
             return false;
         }
