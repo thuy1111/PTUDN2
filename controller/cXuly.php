@@ -1,28 +1,31 @@
 <?php
     include_once("../../model/mXuly.php");
     class cXuly{
-        public function getAllXuly(){
+        public function getAllDonThuoc(){
             $p = new mXuly();
-            $tblDT = $p->SelectAllXuly();
-            if(!$tblDT){
-                return -1;
-            }else{
-                if($tblDT->num_rows > 0){
-                    return $tblDT;
-                }else{
-                    return 0;
-                }
-            }
+            $tbl = $p->selectAllDonThuoc();
+			if(mysqli_num_rows($tbl)){
+				return $tbl;
+			}else{
+				return false;
+			}
         }
-        public function getAllXulyByName(){
-            $p = new mXuly();
-            $kq = $p->selectAllXulyByName();
-            if(mysqli_num_rows($kq) > 0){
-                return $kq;
-            } else {
-                return false;
+        public function select01DT($maDonThuoc){
+            $p = new clsketnoi();
+            $con = $p->moKetNoi();
+            $truyvan="Select * from `donthuoc` where maDonThuoc=$maDoThuoc";
+            $tbl= mysqli_query($con,$truyvan);
+            $p -> dongKetNoi($con);
+            return $tbl;
+}
+        public function updateDonThuoc($maDonThuoc,$tinhTrang){
+            $p = new clsketnoi();
+            $truyvan = "update `donthuoc` set  maDonThuoc = $maDonThuoc, tinhTrang='$tinhTrang', 
+            where maDonThuoc = $maDonThuoc";
+            $con = $p -> moKetNoi();
+            $kq = mysqli_query($con, $truyvan);
+            $p -> dongKetNoi($con);
+            return $kq;
             }
-        }
-
 }
 ?> 
