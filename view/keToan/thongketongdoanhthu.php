@@ -19,7 +19,6 @@ if (isset($_SESSION["user"][0])) {
     exit();
 }
 
-// Xử lý điều hướng dựa trên action
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
 
