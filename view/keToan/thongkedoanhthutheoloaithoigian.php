@@ -202,58 +202,61 @@ if (isset($_REQUEST['submit'])) {
                                 </div>
                                 <div class="col-md-3">
                                     <select class="form-select form-control" id="loaiTG" name="loaiTG">
-                                        <option value="0">Chọn loại thời gian</option>
-                                        <option value='1'>Ngày</option>
-                                        <option value='2'>Tháng</option>
-                                        <option value='3'>Quý</option>
+                                        <option value='1' <?= isset($_POST['loaiTG']) && $_POST['loaiTG'] == '1' ? 'selected' : '' ?>>Ngày</option>
+                                        <option value='2' <?= isset($_POST['loaiTG']) && $_POST['loaiTG'] == '2' ? 'selected' : '' ?>>Tháng</option>
+                                        <option value='3' <?= isset($_POST['loaiTG']) && $_POST['loaiTG'] == '3' ? 'selected' : '' ?>>Quý</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div class = "row">
-                                <div class = "col-md-6">
-                                    <div class="form-group time-range d-none">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group time-range <?= isset($_POST['loaiTG']) && $_POST['loaiTG'] == '1' ? '' : 'd-none' ?>">
                                         <div class="row">
                                             <div class="col-md-4 text-start">
                                                 <label for="timeRange">KHOẢNG THỜI GIAN</label>
                                             </div>
                                             <div class="col-md-4">
                                                 <select class="form-control timeRange" id="timeRange" name="timeRange">
-                                                    <option value='1'>Hôm nay</option>
-                                                    <option value='2'>Trong 7 ngày</option>
-                                                    <option value='3'>Trong tháng</option>
-                                                    <option value='4'>Tùy chọn</option>
+                                                    <option value='1' <?= isset($_POST['timeRange']) && $_POST['timeRange'] == '1' ? 'selected' : '' ?>>Hôm nay</option>
+                                                    <option value='2' <?= isset($_POST['timeRange']) && $_POST['timeRange'] == '2' ? 'selected' : '' ?>>Trong 7 ngày</option>
+                                                    <option value='3' <?= isset($_POST['timeRange']) && $_POST['timeRange'] == '3' ? 'selected' : '' ?>>Trong tháng</option>
+                                                    <option value='4' <?= isset($_POST['timeRange']) && $_POST['timeRange'] == '4' ? 'selected' : '' ?>>Tùy chọn</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group year d-none">
+                                    <div class="form-group year <?= isset($_POST['loaiTG']) && ($_POST['loaiTG'] == '2' || $_POST['loaiTG'] == '3') ? '' : 'd-none' ?>">
                                         <div class="row">
                                             <div class="col-md-4 text-start">
                                                 <label for="year">NĂM</label>
                                             </div>
                                             <div class="col-md-4">
-                                                <input type="text" class="yearpicker" name="year" value="" />
+                                                <input type="text" class="yearpicker" name="year" value="<?= htmlspecialchars($_POST['year'] ?? '') ?>" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
-                                    <div class="custom-date-range d-none mt-3">
+                                    <div class="custom-date-range <?= isset($_POST['timeRange']) && $_POST['timeRange'] == '4' ? '' : 'd-none' ?> mt-3">
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <label for="startDate">NGÀY BẮT ĐẦU</label>
                                             </div>
                                             <div class="col-md-3">
-                                                <input type="date" id="startDate" name="startDate" class="form-control" value="<?php echo date('Y-m-d'); ?>" min="2023-03-08" max="<?php echo date('Y-m-d'); ?>">
+                                                <input type="date" id="startDate" name="startDate" class="form-control" 
+                                                    value="<?= htmlspecialchars($_POST['startDate'] ?? date('Y-m-d')) ?>" 
+                                                    min="2023-03-08" max="<?= date('Y-m-d') ?>">
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="endDate">NGÀY KẾT THÚC</label>
                                             </div>
                                             <div class="col-md-3">
-                                                <input type="date" id="endDate" name="endDate" class="form-control" value="<?php echo date('Y-m-d'); ?>" min="2023-03-08" max="<?php echo date('Y-m-d'); ?>">
+                                                <input type="date" id="endDate" name="endDate" class="form-control" 
+                                                    value="<?= htmlspecialchars($_POST['endDate'] ?? date('Y-m-d')) ?>" 
+                                                    min="2023-03-08" max="<?= date('Y-m-d') ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -262,6 +265,7 @@ if (isset($_REQUEST['submit'])) {
 
                             <div class="row text-center">
                                 <div class="col-md-12">
+                                    <button type="reset" class="btn btn-primary mx-2" id="reset" name="reset">RESET</button>
                                     <button type="submit" class="btn btn-primary mx-2" id="submit" name="submit">XÁC NHẬN</button>
                                 </div>
                             </div>
@@ -332,52 +336,86 @@ if (isset($_REQUEST['submit'])) {
 
                     <script>
                         $(document).ready(function() {
-                            $("#loaiTG").change(function() {
-                                var selectedType = $(this).val();
+                            // Hiển thị đúng trường dữ liệu khi trang được tải
+                            function updateVisibilityBasedOnType() {
+                                var selectedType = $("#loaiTG").val();
                                 if (selectedType == "1") { // Ngày
-                                    $('.time-range').removeClass('d-none');
-                                    $('.year').addClass('d-none');
+                                    $('.time-range').removeClass('d-none'); // Hiển thị khoảng thời gian
+                                    $('.custom-date-range').addClass('d-none'); // Ẩn ngày bắt đầu/kết thúc nếu không chọn "Tùy chọn"
+                                    $('.year').addClass('d-none'); // Ẩn năm
                                 } else if (selectedType == "2" || selectedType == "3") { // Tháng hoặc Quý
-                                    $('.time-range').addClass('d-none');
-                                    $('.year').removeClass('d-none');
-                                    $('.custom-date-range').addClass('d-none');
-                                    $(function() {  
-                                        $('.yearpicker').yearpicker();
-                                    });
-
-                                    $(function() {  
-                                        $('.yearpicker').yearpicker({
-                                        autoHide: true,
-                                        year: null,
-                                        startYear: null,
-                                        endYear: null,
-                                        itemTag: 'li',
-                                        selectedClass: 'selected',
-                                        disabledClass: 'disabled',
-                                        hideClass: 'hide',
-                                        highlightedClass: 'highlighted'
-                                        });
-                                    });
-                                }else if(selectedType == "0"){
-                                    $('.time-range').addClass('d-none');
-                                    $('.year').addClass('d-none');
-                                    $('.custom-date-range').addClass('d-none');
-                                }
-                            });
-
-                            $('#timeRange').on('change', function() {
-                                if ($(this).val() == '4') {
-                                    $('.custom-date-range').removeClass('d-none');
+                                    $('.time-range').addClass('d-none'); // Ẩn khoảng thời gian
+                                    $('.custom-date-range').addClass('d-none'); // Ẩn ngày bắt đầu/kết thúc
+                                    $('.year').removeClass('d-none'); // Hiển thị năm
                                 } else {
-                                    $('.custom-date-range').addClass('d-none');
+                                    // Loại thời gian không hợp lệ
+                                    $('.time-range, .custom-date-range, .year').addClass('d-none');
+                                }
+                            }
+
+                            // Gọi cập nhật ban đầu khi trang được tải
+                            updateVisibilityBasedOnType();
+
+                            // Cập nhật khi loại thời gian thay đổi
+                            $("#loaiTG").change(function() {
+                                updateVisibilityBasedOnType();
+                            });
+
+                            // Hiển thị khung chọn ngày khi người dùng chọn "Tùy chọn" trong khoảng thời gian
+                            $('#timeRange').on('change', function() {
+                                if ($(this).val() == '4') { // Nếu chọn "Tùy chọn"
+                                    $('.custom-date-range').removeClass('d-none'); // Hiển thị khoảng ngày
+                                } else {
+                                    $('.custom-date-range').addClass('d-none'); // Ẩn khoảng ngày
                                 }
                             });
 
+                            // Flatpickr cho ngày
                             $("#startDate, #endDate").flatpickr({
-                                dateFormat: "Y-m-d",  // Format to Year-Month-Day
-                                enableTime: false     // No time selection
+                                dateFormat: "Y-m-d",  // Format YYYY-MM-DD
+                                enableTime: false     // Không cần chọn thời gian
                             });
-                            
+                        });
+                    </script>
+
+                    <script>
+                        $(function () {
+                            // Lấy năm hiện tại
+                            const currentYear = new Date().getFullYear();
+
+                            // Khởi tạo YearPicker
+                            $('.yearpicker').yearpicker({
+                                autoHide: true,             // Ẩn sau khi chọn năm
+                                year: currentYear,          // Mặc định hiển thị năm hiện tại
+                                startYear: 2000,            // Năm bắt đầu hiển thị
+                                endYear: currentYear + 10,  // Năm kết thúc hiển thị
+                                itemTag: 'li',              // Tag của danh sách năm
+                                selectedClass: 'selected',  // Lớp CSS cho năm được chọn
+                                disabledClass: 'disabled',  // Lớp CSS cho năm bị vô hiệu hóa
+                                hideClass: 'hide',          // Lớp CSS để ẩn danh sách
+                                highlightedClass: 'highlighted' // Lớp CSS cho năm được đánh dấu
+                            });
+
+                            // Log ra năm được chọn
+                            $('.yearpicker').on('change', function () {
+                                console.log("Năm đã chọn:", $(this).val());
+                            });
+                        });
+                    </script>
+
+                    <script>
+                        // Xử lý khi nhấn nút RESET
+                        document.getElementById('reset').addEventListener('click', function () {
+                            // Đặt lại Loại thời gian về "Ngày"
+                            document.getElementById('loaiTG').value = "1";
+
+                            // Hiển thị khoảng thời gian cho "Ngày"
+                            $('.time-range').removeClass('d-none'); // Hiển thị trường khoảng thời gian
+                            $('.custom-date-range').addClass('d-none'); // Ẩn ngày bắt đầu/kết thúc
+                            $('.year').addClass('d-none'); // Ẩn trường Năm
+
+                            // Đặt lại giá trị cho khoảng thời gian
+                            document.getElementById('timeRange').value = "1"; // Mặc định "Hôm nay"
                         });
                     </script>
 
@@ -446,11 +484,11 @@ if (isset($_REQUEST['submit'])) {
                             }
                         });
                     </script>
-                    </div> <!-- container -->
+                </div> <!-- container -->
 
-                </div> <!-- content -->
+            </div> <!-- content -->
 
-            </div>
+        </div>
 
         <!-- Vendor js -->
         <script src="../../assets/js/vendor.min.js"></script>
