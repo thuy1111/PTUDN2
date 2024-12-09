@@ -1,15 +1,15 @@
 <?php
     //Quản lý sản phẩm
     include_once("connect.php");
-    class mKhoa
+    class mThuoc
 	{
-		public function layDSKhoa()
+		public function layDSThuoc()
 		{
 			$p = new clsKetNoi();
 			$conn = $p->moketnoi();
 			$conn ->set_charset("utf8");
 			if ($conn) {
-				$str = "SELECT *,k.tenPhongKham from khoa p join phongkham k on p.maKhoa= k.maKhoa";
+				$str = "SELECT * from thuoc";
 				$tbl = $conn->query($str);
 				$p->dongketnoi($conn);
 				return $tbl;

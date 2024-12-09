@@ -162,7 +162,32 @@
                                                     <th>TRẠNG THÁI </th>
                                                 </tr>
                                             </thead>
-                                           
+                                            <?php
+    include_once("../../controller/cBaoHiem.php");
+    $q= new cBaoHiem();
+    $tbl = $q->layDSBaoHiem();
+    if($tbl)
+    {
+        echo ' <tbody>';
+        $stt= 1;
+        while ($r= mysqli_fetch_assoc($tbl))
+        {
+            echo'<tr>
+                                                    <td>'.$stt.'</td>   
+                                                    <td>'.$r['soTheBaoHiem'].'</td>
+                                                    <td>'.$r['tenLoai'].'</td>
+                                                    <td>'.$r['ngayBatDau'].'</td>
+                                                    <td>'.$r['ngayHetHan'].'</td>
+                                                    <td>'.$r['noiDangKyKham'].'</td>
+                                                    <td>'.$r['quyenLoi'].'</td>
+                                                    <td>'.$r['trangThaiBaoHiem'].'</td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                                                </tr>';
+                                                $stt++;
+        }
+
+    }
+?>
                                             <tbody>
                                                 <tr>
 

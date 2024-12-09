@@ -132,7 +132,7 @@
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="card-box">
-                                    <h4 class="header-title mb-3">Danh sách phòng khám</h4>
+                                    <h4 class="header-title mb-3">Danh sách thuốc</h4>
                                     <div class="row mb-3">
     <div class="col-md-6">
         <form method="GET" action="">
@@ -149,17 +149,43 @@
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th>STT</th>
-                                                    <th>MÃ THUỐC</th>
                                                     <th>TÊN THUỐC</th>
                                                     <th>SỐ LƯỢNG TỒN</th>
-                                                    <th>CÔNG DỤNG</th>
+                                                    <th>ĐƠN VỊ CUNG CẤP</th>
                                                     <th>ĐƠN GIÁ</th>
-                                                    <th>NHÀ SẢN XUẤT</th>
-                                                    <th>DẠNG BÀO CHẾ</th>
+                                                    <th>ĐƠN VỊ TÍNH</th>
+                                                    <th>CÁCH DÙNG</th>
+                                                    
                                                     <th>TRẠNG THÁI </th>
                                                 </tr>
                                             </thead>
-                                           
+                                            <?php
+    include_once("../../controller/cThuoc.php");
+    $q= new cThuoc();
+    $tbl = $q->layDSThuoc();
+    if($tbl)
+    {
+        echo ' <tbody>';
+        $stt= 1;
+        while ($r= mysqli_fetch_assoc($tbl))
+        {
+            echo'<tr>
+                                                    <td>'.$stt.'</td>   
+                                                    <td>'.$r['tenThuoc'].'</td>
+                                                    <td>'.$r['soLuong'].'</td>
+                                                    <td>'.$r['donViCungCap'].'</td>
+                                                    <td>'.$r['donGia'].'</td>
+                                                    <td>'.$r['donViTinh'].'</td>
+                                                    <td>'.$r['cachDung'].'</td>
+                                                    
+                                                    <td>'.$r['trangThai'].'</td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                                                </tr>';
+                                                $stt++;
+        }
+
+    }
+?>
                                             <tbody>
                                                 <tr>
 

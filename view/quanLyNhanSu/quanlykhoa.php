@@ -79,25 +79,9 @@
                                         </div>
                                     </div>
 
-                                    <!-- Functions -->
-                                    <div class="row mb-1">
-                                        <div class="col-md-3">
-                                            <label for="chucNang" class="form-label">Chức năng</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" id="chucNang" placeholder="Nhập chức năng">
-                                        </div>
-                                    </div>
+                                    
 
-                                    <!-- Position -->
-                                    <div class="row mb-1">
-                                        <div class="col-md-3">
-                                            <label for="viTri" class="form-label">Vị trí</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" id="viTri" placeholder="Nhập vị trí">
-                                        </div>
-                                    </div>
+                                    
                                 </div>
 
                                 <!-- Right column -->
@@ -162,41 +146,39 @@
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th>STT</th>
-                                                    <th>MÃ KHOA</th>
                                                     <th>TÊN KHOA</th>
                                                     <th>PHÒNG KHÁM THUỘC KHOA</th>
                                                     <th>TRƯỞNG KHOA</th>
-                                                    <th>CHỨC NĂNG</th>
-                                                    <th>VỊ TRÍ</th>
                                                     <th>SĐT</th>
                                                     <th>EMAIL</th>
                                                     <th>TRẠNG THÁI HOẠT ĐỘNG</th>
                                                 </tr>
                                             </thead>
-                                           
-                                            <tbody>
-                                                <tr>
-
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>    
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
+                                            <?php
+    include_once("../../controller/cKhoa.php");
+    $q= new cKhoa();
+    $tbl = $q->layDSKhoa();
+    if($tbl)
+    {
+        echo ' <tbody>';
+        $stt= 1;
+        while ($r= mysqli_fetch_assoc($tbl))
+        {
+            echo'<tr>
+                                                    <td>'.$stt.'</td>   
+                                                    <td>'.$r['tenKhoa'].'</td>
+                                                    <td>'.$r['tenPhongKham'].'</td>
+                                                    <td>'.$r['truongKhoa'].'</td>
+                                                    <td>'.$r['soDienThoai'].'</td>
+                                                    <td>'.$r['email'].'</td>
+                                                    <td>'.$r['trangThaiKhoa'].'</td>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-                                                </tr>
+                                                </tr>';
+                                                $stt++;
+        }
+
+    }
+?>
                                             </tbody>
                                             
                                         </table>

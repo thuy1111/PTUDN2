@@ -95,15 +95,7 @@
 
                                 <!-- Right column -->
                                 <div class="col-md-6">
-                                    <!-- Position -->
-                                    <div class="row mb-1">
-                                        <div class="col-md-3">
-                                            <label for="viTri" class="form-label">Vị trí</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" id="viTri" placeholder="Nhập vị trí">
-                                        </div>
-                                    </div>
+                                    
                                     <!-- Doctors -->
                                     <div class="row mb-1">
                                         <div class="col-md-3">
@@ -160,39 +152,36 @@
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th>STT</th>
-                                                    <th>MÃ PHÒNG KHÁM</th>
                                                     <th>TÊN PHÒNG KHÁM</th>
                                                     <th>KHOA QUẢN LÝ</th>
                                                     <th>CHỨC NĂNG</th>
-                                                    <th>VỊ TRÍ</th>
-                                                    <th>BÁC SĨ</th>
-                                                    <th>Y TÁ</th>
+                                                   
                                                     <th>TRẠNG THÁI HOẠT ĐỘNG</th>
                                                 </tr>
                                             </thead>
-                                           
-                                            <tbody><tr>
-
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>    
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
+                                            <?php
+    include_once("../../controller/cPhongKham.php");
+    $q= new cPhongKham();
+    $tbl = $q->laydanhsachphongkham();
+    if($tbl)
+    {
+        echo ' <tbody>';
+        $stt= 1;
+        while ($r= mysqli_fetch_assoc($tbl))
+        {
+            echo'<tr>
+                                                    <td>'.$stt.'</td>   
+                                                    <td>'.$r['tenPhongKham'].'</td>
+                                                    <td>'.$r['tenKhoa'].'</td>
+                                                    <td>'.$r['chucNang'].'</td>
+                                                    
+                                                    <td>'.$r['tinhTrangHoatDong'].'</td>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-                                                </tr>
+                                                </tr>';
+        }
+
+    }
+?>
                                             </tbody>
                                             
                                         </table>
