@@ -89,20 +89,74 @@ class mBacsi{
 	}
 	
 
+    public function DKCa($manv, $date, $ca){
+        if (!$this->conn) {
+            return false;
+        }
     
+        try {
+            
+            $checkStr = "SELECT COUNT(*) as count FROM `lichlamviec` WHERE `ngayLamViec` = ? AND `caLamViec` = ?";
+            $checkStmt = $this->conn->prepare($checkStr);
+            $checkStmt->bind_param("ss", $date, $ca);
+            $checkStmt->execute();
+            $result = $checkStmt->get_result();
+            $count = $result->fetch_assoc()['count'];
+            $checkStmt->close();
+    
+            
+            if ($count >= 5) {
+                return [
+                    'status' => false,
+                    'message' => 'Đã đạt giới hạn đăng ký cho ca làm việc này.'
+                ];
+            }
+    
+            
+            $str = "INSERT INTO `lichlamviec` (`ngayLamViec`, `caLamViec`, `maNhanVien`) VALUES (?, ?, ?)";
+            $stmt = $this->conn->prepare($str);
+            $stmt->bind_param("ssi", $date, $ca, $manv);
+            $result = $stmt->execute();
+            $stmt->close();
+    
+            if ($result) {
+                return [
+                    'status' => true,
+                    'message' => 'Đăng ký ca làm việc thành công.'
+                ];
+            } else {
+                return [
+                    'status' => false,
+                    'message' => 'Đã xảy ra lỗi khi đăng ký ca làm việc.'
+                ];
+            }
+        } catch (Exception $e) {
+            error_log("Error in DKCa: " . $e->getMessage());
+            return [
+                'status' => false,
+                'message' => 'Đã xảy ra lỗi khi đăng ký ca làm việc.'
+            ];
+        }
+    }
 
-    public function DKCa($manv,$date,$ca){
-        $p = new clsKetNoi();
-			$conn = $p->moketnoi();
-			$conn ->set_charset("utf8");
-			if ($conn) {
-				$str = "INSERT INTO `lichlamviec` (`maLichLamViec`, `ngayLamViec`, `caLamViec`, `maNhanVien`) VALUES (NULL, '$date', '$ca', '$manv')";
-				$tbl = $conn->query($str);
-				$p->dongketnoi($conn);
-				return $tbl;
-			} else {
-				return false;
-			}
+    public function kiemTraCaLam($manv, $date, $ca) {
+        if (!$this->conn) {
+            return false;
+        }
+    
+        try {
+            $str = "SELECT * FROM lichlamviec WHERE maNhanVien = ? AND ngayLamViec = ? AND caLamViec = ?";
+            $stmt = $this->conn->prepare($str);
+            $stmt->bind_param("iss", $manv, $date, $ca);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $stmt->close();
+
+            return $result->num_rows > 0;
+        } catch (Exception $e) {
+            error_log("Error in kiemTraCaLam: " . $e->getMessage());
+            return false;
+        }
     }
 
 	public function layDSLichKham($maNhanVien)
@@ -133,20 +187,27 @@ class mBacsi{
 
     
     public function layChiTietLichKham($maLichKham)
-    {
-        $p = new clsKetNoi();
-        $conn = $p->moketnoi();
-        $conn->set_charset("utf8");
+{
+    $p = new clsKetNoi();
+    $conn = $p->moketnoi();
+    $conn->set_charset("utf8");
 
-        if ($conn && $maLichKham) {
-            
-            $str = "SELECT * FROM lichkham WHERE maLichKham = ?";
+    if ($conn && $maLichKham) {
+        try {
+            $str = "SELECT lk.*, 
+                           bn.hoTen AS TenBenhNhan, 
+                           nv.hoTen AS TenNhanVien, 
+                           k.tenKhoa AS TenKhoa
+                    FROM lichkham lk
+                    INNER JOIN benhnhan bn ON lk.maBenhNhan = bn.maBenhNhan
+                    INNER JOIN nhanvien nv ON lk.maNhanVien = nv.maNhanVien
+                    INNER JOIN khoa k ON lk.maKhoa = k.maKhoa
+                    WHERE lk.maLichKham = ?";
             $stmt = $conn->prepare($str);
             $stmt->bind_param("i", $maLichKham);  
             $stmt->execute();
             $result = $stmt->get_result();
 
-            
             if ($result->num_rows > 0) {
                 $chiTiet = $result->fetch_assoc();
                 $stmt->close();
@@ -157,10 +218,15 @@ class mBacsi{
                 $p->dongketnoi($conn);
                 return false;
             }
-        } else {
+        } catch (Exception $e) {
+            error_log("Error in layChiTietLichKham: " . $e->getMessage());
             return false;
         }
+    } else {
+        return false;
     }
+}
+
 	public function __destruct() {
         if ($this->conn) {
             $p = new clsKetNoi();

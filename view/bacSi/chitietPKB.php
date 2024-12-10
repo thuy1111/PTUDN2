@@ -96,7 +96,7 @@ $chiTietPKB = $controller->hienThiChiTietPKB($maPhieuKhamBenh);
                         <td><?php echo $chiTietPKB['tenBenhNhan']; ?></td>
                     </tr>
                     <tr>
-                        <th>Nhân Viên</th>
+                        <th>Bác sĩ</th>
                         <td><?php echo $chiTietPKB['tenNhanVien']; ?></td>
                     </tr>
                 </table>

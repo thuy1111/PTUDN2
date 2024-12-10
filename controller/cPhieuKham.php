@@ -1,5 +1,4 @@
 <?php
-// Controller Quản lý Phiếu Khám Bệnh
 include_once("../../model/mPhieuKham.php");
 
 class cPhieuKhamBenh {
@@ -13,13 +12,19 @@ class cPhieuKhamBenh {
         return $this->model->layChiTietPKB($maPhieuKhamBenh);
     }
 
-    // Lấy danh sách phiếu khám bệnh (có tìm kiếm)
-    public function hienThiDanhSachPKB($keyword = "", $maBenhNhan = "")
-    {
-        // Kiểm tra và truyền đúng tham số vào model
-        $keyword = trim($keyword);
-        $maBenhNhan = trim($maBenhNhan);
-        return $this->model->layDSPKB($keyword, $maBenhNhan);
+    public function hienThiDanhSachPKB($keyword = "", $maBenhNhan = "", $maNhanVien = "")
+{
+    $keyword = trim($keyword);
+    $maBenhNhan = trim($maBenhNhan);
+    $maNhanVien = trim($maNhanVien); 
+    return $this->model->layDSPKB($keyword, $maBenhNhan, $maNhanVien); 
+}
+
+
+    public function hienThiDanhSachPKBBS($maBenhNhan, $maNhanVien) {
+        $p = new mPhieuKhamBenh();
+        $dsPKB = $p->layDSPKB("", $maBenhNhan, $maNhanVien);
+        return $dsPKB;
     }
 }
 ?>

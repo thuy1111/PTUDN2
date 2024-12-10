@@ -4,11 +4,11 @@ include_once("../../controller/cBacSi.php");
 
 // Check if user is logged in and is a doctor
 if (!isset($_SESSION['user']) || !isset($_SESSION['user'][2]) || $_SESSION['user'][2] != 1) {
-    echo "Vui lòng đăng nhập với tài khoản bác sĩ!";
-    exit;
+    echo "<script>alert('Vui lòng đăng nhập với tài khoản bác sĩ!'); window.location.href = '../dangNhap/';</script>";
+    exit();
 }
 
-$maNhanVien = $_SESSION['user'][0]; // Assuming maNhanVien is stored at index 0
+$maNhanVien = $_SESSION['user'][0]; 
 
 $startDate = $_GET['start'] ?? date('Y-m-d', strtotime('monday this week'));
 $endDate = $_GET['end'] ?? date('Y-m-d', strtotime('sunday this week'));

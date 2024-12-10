@@ -70,8 +70,11 @@
 </style>
 
 <?php
-include_once("../../controller/cBacSi.php");
+
+include_once("../../controller/cYTa.php");
 error_reporting(0);
+
+
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 $homnay = date('Y-m-d');
 $week = date('w');
@@ -139,39 +142,42 @@ echo'
             </form>
         </div>';
 
-if(isset($_POST['btnDK'])){
-    if(isset($_POST['date']) && !empty($_POST['date'])){
-    // $manv = $_SESSION[""]; Tự điền mã nhân viên vào đây nhé
-        $manv = 1; //t để mặc định tự sửa  HBDK_N3 WAS HERE
-        $date = $_POST['date'];
-        $ca = array_keys($date);
-        $l2 = count($ca);
-        for ($k = 0; $k < $l2; $k++) {
-            $c = $ca[$k];
-            $l = count($date[$c]);
-            for ($i = 0; $i < $l; $i++)
-            {
-                $d = $date[$c][$i];
-                $p = new cBacsi();
-                    if ($p->DKCa($manv, $d, $c)) {
-                        $rs = 1;
-                    } else {
-                        $rs = 0;
+        if (isset($_POST['btnDK'])) {
+            if (isset($_POST['date']) && !empty($_POST['date'])) {
+                $manv = $_SESSION['user'][0]; 
+                $date = $_POST['date'];
+                $ca = array_keys($date);
+                $l2 = count($ca);
+                $rs = 0;
+                $message = '';
+                
+                for ($k = 0; $k < $l2; $k++) {
+                    $c = $ca[$k];
+                    $l = count($date[$c]);
+                    for ($i = 0; $i < $l; $i++) {
+                        $d = $date[$c][$i];
+                        $p = new cYTa();
+                        $response = $p->DKCa($manv, $d, $c);
+                        if ($response['status'] == true) {
+                            $rs = 1;
+                            $message = $response['message']; // Thành công
+                        } else {
+                            $rs = 0;
+                            $message = $response['message']; // Thất bại
+                        }
                     }
-            }
+                }
+        
+                if ($rs == 1) {
+                    echo '<script>alert("' . $message . '")</script>';
+                } else {
+                    echo '<script>alert("' . $message . '")</script>';
+                }
+            } else {
+                echo '<script>alert("Vui lòng chọn ca làm việc")</script>';
+            }    
         }
-        if($rs == 1)
-        {
-            echo '<script>alert("Đăng ký thành công")</script>';
-        }
-        else if($rs == 0)
-        {
-            echo '<script>alert("Đăng ký thất bại")</script>';
-        }
-    }else{
-        echo '<script>alert("Vui lòng chọn ca làm việc")</script>';
-    }    
-}
+        
 
 ?>
 <script>
@@ -181,14 +187,11 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener("click", function(e) {
             e.preventDefault();
 
-            // Get the week change value
             const weekChange = button.value;
 
-            // Get the current week start date
             let currentWeekStart = document.querySelector("input[name='currentWeekStart']").value;
             currentWeekStart = new Date(currentWeekStart);
 
-            // Calculate the new week start date based on the button clicked
             if (weekChange === 'prev') {
                 currentWeekStart.setDate(currentWeekStart.getDate() - 7);
             } else if (weekChange === 'next') {
@@ -199,16 +202,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 currentWeekStart = new Date(today.setDate(today.getDate() - today.getDay()));
             }
 
-            // Ensure the week always starts on Sunday
             currentWeekStart.setDate(currentWeekStart.getDate() - currentWeekStart.getDay());
 
-            // Update the hidden input value for the server
             document.querySelector("input[name='currentWeekStart']").value = currentWeekStart.toISOString().split('T')[0];
 
-            // Get the selected department code
             const khoaSelect = document.querySelector("select[name='khoaSelect']") ? document.querySelector("select[name='khoaSelect']").value : "";
 
-            // Send request to update the work schedule
             updateSchedule({ changeWeek: weekChange, currentWeekStart: currentWeekStart.toISOString().split('T')[0], khoaSelect: khoaSelect });
         });
     });
@@ -229,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         };
 
-        // Create parameter string for the request
+
         const params = Object.keys(data).map(key => `${key}=${encodeURIComponent(data[key])}`).join("&");
         xhr.send(params);
     }

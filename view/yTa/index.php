@@ -1,13 +1,11 @@
 <?php
     session_start();
 
-    if (!isset($_SESSION['user']) || !isset($_SESSION['user'][2]) || $_SESSION['user'][2] != 1) {
-        echo "<script>
-            alert('Bạn không có quyền truy cập!');
-            window.location.href = '../dangNhap';
-        </script>";
-        exit; 
+    if (!isset($_SESSION['user']) || !isset($_SESSION['user'][2]) || $_SESSION['user'][2] != 2) {
+        echo "<script>alert('Vui lòng đăng nhập với tài khoản Y tá!'); window.location.href = '../dangNhap/';</script>";
+        exit();
     }
+        include_once ("../../controller/cYTa.php");
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -46,7 +44,7 @@
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <div class="col-12">
                             <div class="page-title-box">
-                                <h4 class="page-title">Trang Quản Lý - Bác sĩ</h4>
+                                <h4 class="page-title">Trang Quản Lý - Y tá</h4>
                                 <p>Chào mừng bạn, nhân viên: <strong><?php echo $ten; ?></strong></p>
                             </div>
                         </div>

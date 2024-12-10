@@ -1,11 +1,24 @@
 <?php
-include_once("../../controller/cPhieuKham.php");
+session_start(); 
 
-$controller = new cPhieuKhamBenh();
+
+require_once("../../controller/cPhieuKham.php");
+if (!isset($_SESSION['user']) || !isset($_SESSION['user'][2]) || $_SESSION['user'][2] != 1) {
+    echo "<script>alert('Vui lòng đăng nhập với tài khoản bác sĩ!'); window.location.href = '../dangNhap/';</script>";
+    exit();
+}
+$maNhanVien = $_SESSION['user'][0];  
+$controller = new cPhieuKhamBenh();  
+
 
 $maBenhNhan = isset($_GET['maBenhNhan']) ? $_GET['maBenhNhan'] : "";
-$dsPKB = $controller->hienThiDanhSachPKB("", $maBenhNhan);
+
+
+$dsPKB = $controller->hienThiDanhSachPKBBS($maBenhNhan, $maNhanVien);  
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -38,12 +51,11 @@ $dsPKB = $controller->hienThiDanhSachPKB("", $maBenhNhan);
                     <div class="slimscroll-menu">
                         <div id="sidebar-menu">
                             <ul class="metismenu" id="side-menu">
-                                <li><a href="index.php"><i class="fe-airplay"></i><span>Dashboard</span></a></li>
-                                <li><a href="javascript: void(0);"><i class="fas fa-user-tie"></i><span>Xem phiếu khám bệnh</span><span class="menu-arrow"></span></a></li>
+                                <li><a href=".php"><i class="fe-airplay"></i><span>Dashboard</span></a></li>
+                                <li><a href="xemphieukham.php"><i class="fas fa-user-tie"></i><span>Xem phiếu khám bệnh</span><span class="menu-arrow"></span></a></li>
                                 <li><a href="xemlichkham.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch khám</span><span class="menu-arrow"></span></a></li>
                                 <li><a href="dangkicalamviec.php"><i class="mdi mdi-hospital-building"></i><span>Đăng ký ca</span><span class="menu-arrow"></span></a></li>
-                                <li><a href="xemlichlamviec.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch làm việc</span><span class="menu-arrow"></span></a></li>
-                            </ul>
+                                <li><a href="xemlichlamviec.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch làm việc</span><span class="menu-arrow"></span></a></li>       
                         </div>
                     </div>
                 </div>
@@ -76,7 +88,7 @@ $dsPKB = $controller->hienThiDanhSachPKB("", $maBenhNhan);
                                             <th>Phòng Khám</th>
                                             <th>Ngày Khám</th>
                                             <th>Bệnh Nhân</th>
-                                            <th>Nhân Viên</th>
+                                            <th>Bác Sĩ</th>
                                             <th>Lý Do</th>
                                             <th>Kết Luận</th>
                                             <th>Chi Tiết</th>
