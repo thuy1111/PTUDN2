@@ -122,7 +122,7 @@
                                 </nav>
                             </div>
                             <div class="header-right-btn f-right d-none d-lg-block ml-30">
-                                <a href="view/dangNhap/" class="btn header-btn">Đăng Nhập</a>
+                                <a href="../dangNhap/" class="btn header-btn">Đăng Nhập</a>
                             </div>
                         </div>
                     </div>   

@@ -1,15 +1,21 @@
 <?php
 include_once("../../controller/cUser.php");
+include_once("../../controller/cCustomer.php");
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Kiểm tra xem nhân viên hoặc khách hàng đã đăng nhập chưa
+$maNV = $ten = $role = $maBN = $tenBN = null;
 
-// Kiểm tra xem nhân viên đã đăng nhập chưa
-if (isset($_SESSION["user"][0])) {
+if (isset($_SESSION["user"]) && isset($_SESSION["user"][0])) {
     $maNV = $_SESSION["user"][0];
-    $role = $_SESSION["user"][2];
     $ten = $_SESSION["user"][1];
+    $role = $_SESSION["user"][2];
+} elseif (isset($_SESSION["customer"]) && isset($_SESSION["customer"][0])) {
+    $maBN = $_SESSION["customer"][0];
+    $tenBN = $_SESSION["customer"][1];
 }
 ?>
 
@@ -56,12 +62,21 @@ if (isset($_SESSION["user"][0])) {
     padding: 10px 15px;
 }
 </style>
-    <div class="navbar-custom">
+
+<div class="navbar-custom">
     <ul class="list-unstyled topnav-menu float-right mb-0">
         <li class="dropdown notification-list">
             <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 <img src="../../assets/images/users/defaultimg.jpg" alt="User Image" class="rounded-circle">
-                <span class="pro-user-name ml-1"><?php echo $ten; ?></span>
+                <span class="pro-user-name ml-1">
+                    <?php
+                    if ($ten) {
+                        echo htmlspecialchars($ten, ENT_QUOTES, 'UTF-8');
+                    } elseif ($tenBN) {
+                        echo htmlspecialchars($tenBN, ENT_QUOTES, 'UTF-8');
+                    }
+                    ?>
+                </span>
             </a>
             <div class="dropdown-menu dropdown-menu-right profile-dropdown">
                 <div class="dropdown-header noti-title">

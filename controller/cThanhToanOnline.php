@@ -4,7 +4,7 @@ class cThanhToanOnline {
         if (isset($_POST['redirect'])) {
             // Cấu hình cổng thanh toán VNPAY
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-            $vnp_Returnurl = "http://localhost/PTUDN2/index.php";
+            $vnp_Returnurl = "http://localhost/PTUDN2/view/benhNhan/xemlichkham.php";
             $vnp_TmnCode = "GBX04TR9"; // Mã website tại VNPAY
             $vnp_HashSecret = "Y12QOFH6162LGBD3LZ7OXFTUYW9VKTYJ"; // Chuỗi bí mật
             

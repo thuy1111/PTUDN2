@@ -48,7 +48,7 @@
                                         <li><a href="bacsi.php">Bác Sĩ</a></li>
                                         <li><a href="tintuc.php">Tin Tức</a></li>
                                         <li><a href="lienhe.php">Liên Hệ</a></li>
-                                        <li><a href="dangkykham.php">Đăng Ký Khám</a></li>
+                                        <li><a href="view/benhNhan/dangkylichkham.php">Đăng Ký Khám</a></li>
                                     </ul>
                                 </nav>
                             </div>
