@@ -74,6 +74,79 @@ if (isset($_POST["btndk"])) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<<<<<<< HEAD
+<?php
+error_reporting(1);
+session_start();
+
+include_once("../../controller/cUser.php");
+include_once("../../controller/cCustomer.php");
+$ctrlUser = new cUser;
+$ctrlCustomer = new cCustomer;
+
+if (isset($_POST["btndk"])) {
+    $userName = $_POST["username"];
+    $pass = md5($_POST["pass"]);
+    $foundNV = true;
+    $foundBN = true;
+
+    if (empty($userName) || empty($pass)) {
+        echo "<script>alert('Vui lòng nhập đầy đủ thông tin đăng nhập!');</script>";
+    } else {
+        if ($ctrlUser->cGetAllUser() != 0) {
+            $result = $ctrlUser->cGetAllUser();
+
+            while ($row = $result->fetch_assoc()) {
+                if ($userName == $row["tenDangNhap"] && $pass == $row["matKhau"]) {
+                    $_SESSION["loginNV"] = true;
+                    $_SESSION["user"] = [$row["maNhanVien"], $row["hoTen"], $row["maChucVu"]];
+
+                    switch ($row["maChucVu"]) {
+                        case 1:
+                            echo "<script>window.location.href = '../bacSi/';</script>";
+                            break;
+                        case 2:
+                            echo "<script>window.location.href = '../yTa/';</script>";
+                            break;
+                        case 3:
+                            echo "<script>window.location.href = '../quanLyNhanSu/';</script>";
+                            break;
+                        case 4:
+                            echo "<script>window.location.href = '../leTan/';</script>";
+                            break;
+                        case 5:
+                            echo "<script>window.location.href = '../quanLyThuoc/';</script>";
+                            break;
+                        case 6:
+                            echo "<script>window.location.href = '../keToan/';</script>";
+                            break;
+                    }
+                }
+                
+                $foundNV = false;
+            }
+        }
+        
+        if (!$foundNV && $ctrlCustomer->cGetAllCustomer() != 0) {
+            $result = $ctrlCustomer->cGetAllCustomer();
+
+            while ($row = $result->fetch_assoc()) {
+                if ($userName == $row["tenDangNhap"] && $pass == $row["matKhau"]) {
+                    $_SESSION["loginBN"] = true;
+                    $_SESSION["customer"] = [$row["maBenhNhan"], $row["hoTen"]];
+                    echo "<script>window.location.href = '../benhNhan/';</script>";
+                }
+                $foundBN = false;
+            }
+        }
+    }
+    
+    if (!$foundNV && !$foundBN)
+        echo "<script>alert('Thông tin đăng nhập không hợp lệ. Vui lòng đăng nhập lại!');</script>";
+}
+?>
+=======
+>>>>>>> 61d9a85a13ba46c8dfdf5a178bdb4abb642312cf
 
 <body class="h-screen flex items-center justify-center bg-[#F0FFFE]">
     <form action="" method="POST" class="m-0">

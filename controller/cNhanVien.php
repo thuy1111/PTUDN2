@@ -3,7 +3,7 @@
     class cNhanVien{
         public function laydanhsachnhanvien(){
             $p = new   mNhanVien();
-           
+			
 			$tbl = $p->xemdanhsachnhanvien();
 			if ($tbl) {
 				if ($tbl->num_rows > 0) {
@@ -63,6 +63,7 @@
 				
 			
         }
+		
 
     }
     ?>

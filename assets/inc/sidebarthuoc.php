@@ -29,7 +29,7 @@
                             </li>
 
                             <li>
-                                <a href="../../view/quanLyThuoc/thanhtoan.php">
+                                <a href="../../view/quanLyThuoc/xulythuoc.php">
                                     <i class="fas fa-clinic-medical"></i>
                                     <span>Xử lý đơn thuốc</span>
                                     <span class="menu-arrow"></span>

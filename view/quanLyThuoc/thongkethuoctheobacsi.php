@@ -1,3 +1,43 @@
+<?php
+include_once('../../controller/cThongkethuoc.php');
+$p = new cThongkethuoc(); // Khởi tạo đối tượng cThongkethuoc
+
+// Truyền 3 tham số vào phương thức thongKeThuocTheoBacSi
+$startDate = '2024-01-01';
+$endDate = '2024-12-31';
+$bacSiId = 1; // Giả sử bạn cần truyền id bác sĩ (hoặc một tham số khác nếu cần)
+
+// Gọi hàm thống kê với 3 tham số
+$result = $p->thongKeThuocTheoBacSi($bacSiId, $startDate, $endDate); // Thêm tham số id bác sĩ
+
+if ($result) {
+    echo "<h3>Thống kê thuốc theo bác sĩ</h3>";
+    echo "<table border='1'>
+            <tr>
+                <th>Mã bác sĩ</th>
+                <th>Tên bác sĩ</th>
+                <th>Mã thuốc</th>
+                <th>Tên thuốc</th>
+                <th>Tổng số lượng</th>
+                <th>Tổng tiền</th>
+            </tr>";
+    foreach ($result as $row) {
+        echo "<tr>
+                <td>" . $row['maBacSi'] . "</td>
+                <td>" . $row['tenBacSi'] . "</td>
+                <td>" . $row['maThuoc'] . "</td>
+                <td>" . $row['tenThuoc'] . "</td>
+                <td>" . $row['tongSoLuong'] . "</td>
+                <td>" . number_format($row['tongTien'], 0, ',', '.') . " VND</td>
+              </tr>";
+    }
+    echo "</table>";
+} else {
+    echo "Không có dữ liệu thống kê.";
+}
+?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +79,7 @@
 
                         <div class="row">
                             <div class="col-12 text-center">
-                                <a href="thongkethuoctheobaohiem.php" class="btn btn-success mx-2">Theo loại bảo hiểm</a>
+                                <a href="thongkethuoctheoloaibaohiem.php" class="btn btn-success mx-2">Theo loại bảo hiểm</a>
                                 <a href="thongkethuoctheobacsi.php" class="btn btn-danger mx-2">Theo bác sĩ</a>
                             </div>
                         </div>

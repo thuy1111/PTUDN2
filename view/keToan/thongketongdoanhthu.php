@@ -1,4 +1,49 @@
 <?php
+include_once("../../controller/cUser.php");
+session_start();
+
+// Kiểm tra xem nhân viên đã đăng nhập chưa
+if (isset($_SESSION["user"][0])) {
+    $maNV = $_SESSION["user"][0];
+    $role = $_SESSION["user"][2]; // Lấy vai trò của nhân viên từ session
+    $ten = $_SESSION["user"][1]; // Lấy tên nhân viên từ session
+
+    // Chỉ cho phép nhân viên kế toán truy cập (role = 6)
+    if ($role !== '6') {
+        echo "<script>alert('Bạn không có quyền truy cập!');window.location.href = '../dangNhap/';</script>";
+        exit();
+    }
+} else {
+    // Nếu chưa đăng nhập, chuyển về trang đăng nhập
+    echo "<script>alert('Vui lòng đăng nhập!');window.location.href = '../dangNhap/';</script>";
+    exit();
+}
+
+// Xử lý điều hướng dựa trên action
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+
+    switch ($action) {
+        case 'thong_ke_khoa':
+            header("Location: thongkedoanhthutheokhoa.php");
+            exit();
+
+        case 'thong_ke_thoi_gian':
+            header("Location: thongkedoanhthutheoloaithoigian.php");
+            exit();
+
+        case 'phan_phong_kham':
+            header("Location: phanphongkham.php");
+            exit();
+
+        default:
+            echo "<script>alert('Chức năng không hợp lệ!');window.location.href = 'index.php';</script>";
+            exit();
+    }
+}
+?>
+
+<?php
 include_once('../../controller/cThongKe.php');
 $p = new cThongKe();
 

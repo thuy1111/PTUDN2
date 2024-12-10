@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     
@@ -30,8 +29,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box">
-                                    
-                                    <h4 class="page-title">Thống kê thuốc đã kê đơn</h4>
+                                    <h4 class="page-title">Thống kê thuốc đã kê đơn theo loại bảo hiểm</h4>
                                 </div>
                             </div>
                         </div>     
@@ -39,13 +37,39 @@
 
                         <div class="row">
                             <div class="col-12 text-center">
-                                <a href="thongkethuoctheobaohiem.php" class="btn btn-success mx-2">Theo loại bảo hiểm</a>
+                                <a href="thongkethuoctheoloaibaohiem.php" class="btn btn-success mx-2">Theo loại bảo hiểm</a>
                                 <a href="thongkethuoctheobacsi.php" class="btn btn-danger mx-2">Theo bác sĩ</a>
                             </div>
                         </div>
 
                         <hr style="border-color: black;">
-                        
+                    
+    <div class="container mt-5">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Loại Bảo Hiểm</th>
+                    <th>Số Thuốc Đã Kê Đơn</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                    // Check if data exists and loop through the result set
+                    if (isset($result) && $result) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row['maBaoHiem']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['soLuongThuoc']) . "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='2' class='text-center'>" . (isset($message) ? $message : 'Không có dữ liệu thống kê thuốc.') . "</td></tr>";
+                    }
+                ?>
+            </tbody>
+        </table>
+        <a href="thongke.php" class="btn btn-primary">Quay Lại</a>
+
                     </div> <!-- container -->
 
                 </div> <!-- content -->
@@ -64,7 +88,7 @@
         <script src="../../assets/libs/flot-charts/jquery.flot.selection.js"></script>
         <script src="../../assets/libs/flot-charts/jquery.flot.crosshair.js"></script>
 
-        <!-- Dashboar 1 init js-->
+        <!-- Dashboard 1 init js-->
         <script src="../../assets/js/pages/dashboard-1.init.js"></script>
 
         <!-- App js-->

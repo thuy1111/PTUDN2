@@ -7,7 +7,9 @@
 			$conn = $p->moketnoi();
 			$conn ->set_charset("utf8");
 			if ($conn) {
-				$str = "Select *,tenKhoa,tenChucVu from nhanvien v join khoa k on v.maKhoa= k.maKhoa join chucvu c on c.maChucVu=v.maChucVu ";
+				$str = "Select 
+                        v.maNhanVien, v.hoTen, v.ngaySinh, v.gioiTinh, v.soDienThoai,v.email, v.diaChi, v.tinhTrangNhanVien, k.tenKhoa, c.tenChucVu, k.trangThaiKhoa
+                        from nhanvien v join khoa k on v.maKhoa= k.maKhoa join chucvu c on c.maChucVu=v.maChucVu  ORDER BY v.maNhanVien ASC";
 				$tbl = $conn->query($str);
 				$p->dongketnoi($conn);
 				return $tbl;
@@ -65,7 +67,25 @@
 			$conn = $p->moketnoi();
 			$conn ->set_charset("utf8");
 			if ($conn) {
-				$str = "Select *,tenKhoa,tenChucVu from nhanvien v join khoa k on v.maKhoa= k.maKhoa join chucvu c on c.maChucVu=v.maChucVu where maNhanVien LIKE '%$timkiem%' or hoTen like '%$timkiem%'";
+				// Kiểm tra nếu $timkiem là chuỗi rỗng
+				if (empty($timkiem)) {
+					$str = "SELECT * FROM nhanvien v 
+							JOIN khoa k ON v.maKhoa = k.maKhoa 
+							JOIN chucvu c ON c.maChucVu = v.maChucVu";
+				} else {
+					// Kiểm tra nếu timkiem là một số
+					if (is_numeric($timkiem)) {
+						$str = "SELECT * FROM nhanvien v 
+								JOIN khoa k ON v.maKhoa = k.maKhoa 
+								JOIN chucvu c ON c.maChucVu = v.maChucVu 
+								WHERE maNhanVien = $timkiem";
+					} else {
+						// Nếu không phải số, thì tìm theo tên nhân viên
+						$str = "SELECT * FROM nhanvien v 
+								JOIN khoa k ON v.maKhoa = k.maKhoa 
+								JOIN chucvu c ON c.maChucVu = v.maChucVu 
+								WHERE hoTen LIKE '%$timkiem%'";
+					}}
 				$tbl = $conn->query($str);
 				$p->dongketnoi($conn);
 				return $tbl;

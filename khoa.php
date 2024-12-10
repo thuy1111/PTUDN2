@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Medical HTML-5 Template </title>
+    <title> Smiles Hospital | Trang chủ</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo/hospital.png">
 
 	<!-- CSS here -->
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -68,21 +68,7 @@
     <!-- Header End -->
 </header>
 <main>
-    <!--? Hero Start -->
-    <div class="slider-area2">
-        <div class="slider-height2 d-flex align-items-center">
-            <div class="container">
-                <div class="row">
-                <div class="col-xl-12">
-                    <div class="hero-cap hero-cap2 text-center">
-                        <h2>Khoa</h2>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Hero End -->
+   
     <!--? department_area_start  -->
     <div class="department_area section-padding2">
         <div class="container">
@@ -90,8 +76,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-tittle text-center mb-100">
-                        <span>Our Departments</span>
-                        <h2>Our Medical Services</h2>
+                        <h2>Các Chuyên Khoa</h2>
                     </div>
                 </div>
             </div>
@@ -100,40 +85,34 @@
                     <div class="depart_ment_tab mb-30">
                         <!-- Tabs Buttons -->
                         <ul class="nav" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
-                                    <i class="flaticon-teeth"></i>
-                                    <h4>Dentistry</h4>
+                        <li class="nav-item">
+                                <a class="nav-link" id="Blood-tab" data-toggle="tab" href="#Blood" role="tab" aria-controls="contact" aria-selected="false">
+                                    <i class="flaticon-cell"></i>
+                                    <h4>Xét Nghiệm</h4>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
                                     <i class="flaticon-cardiovascular"></i>
-                                    <h4>Cardiology</h4>
+                                    <h4>Khám Bệnh</h4>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
                                     <i class="flaticon-ear"></i>
-                                    <h4>ENT Specialists</h4>
+                                    <h4>Dược</h4>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="Astrology-tab" data-toggle="tab" href="#Astrology" role="tab" aria-controls="contact" aria-selected="false">
                                     <i class="flaticon-bone"></i>
-                                    <h4>Astrology</h4>
+                                    <h4>Nội Soi</h4>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="Neuroanatomy-tab" data-toggle="tab" href="#Neuroanatomy" role="tab" aria-controls="contact" aria-selected="false">
                                     <i class="flaticon-lung"></i>
-                                    <h4>Neuroanatomy</h4>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="Blood-tab" data-toggle="tab" href="#Blood" role="tab" aria-controls="contact" aria-selected="false">
-                                    <i class="flaticon-cell"></i>
-                                    <h4>Blood Screening</h4>
+                                    <h4>Chuẩn Đoán Hình </h4>
                                 </a>
                             </li>
                         </ul>
@@ -143,113 +122,6 @@
             <div class="dept_main_info white-bg">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <!-- single_content  -->
-                        <div class="row align-items-center no-gutters">
-                            <div class="col-lg-7">
-                                <div class="dept_info">
-                                    <h3>Dentist with surgical mask holding <br> scaler near patient</h3 >
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                                    <a href="#" class="dep-btn">Appointment<i class="ti-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="dept_thumb">
-                                    <img src="assets/images/gallery/department_man.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- single_content  -->
-                    </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <!-- single_content  -->
-                        <div class="row align-items-center no-gutters">
-                            <div class="col-lg-7">
-                                <div class="dept_info">
-                                    <h3>Dentist with surgical mask holding <br> scaler near patient</h3 >
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                                    <a href="#" class="dep-btn">Appointment<i class="ti-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="dept_thumb">
-                                    <img src="assets/images/gallery/department_man.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- single_content  -->
-                    </div>
-                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                        <!-- single_content  -->
-                        <div class="row align-items-center no-gutters">
-                            <div class="col-lg-7">
-                                <div class="dept_info">
-                                    <h3>Dentist with surgical mask holding <br> scaler near patient</h3 >
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                                    <a href="#" class="dep-btn">Appointment<i class="ti-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="dept_thumb">
-                                    <img src="assets/images/gallery/department_man.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- single_content  -->
-                    </div>
-                    <div class="tab-pane fade" id="Astrology" role="tabpanel" aria-labelledby="Astrology-tab">
-                        <!-- single_content  -->
-                        <div class="row align-items-center no-gutters">
-                            <div class="col-lg-7">
-                                <div class="dept_info">
-                                    <h3>Dentist with surgical mask holding <br> scaler near patient</h3 >
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                                    <a href="#" class="dep-btn">Appointment<i class="ti-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="dept_thumb">
-                                    <img src="assets/images/gallery/department_man.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- single_content  -->
-                    </div>
-                    <div class="tab-pane fade" id="Neuroanatomy" role="tabpanel" aria-labelledby="Neuroanatomy-tab">
-                        <!-- single_content  -->
-                        <div class="row align-items-center no-gutters">
-                            <div class="col-lg-7">
-                                <div class="dept_info">
-                                    <h3>Dentist with surgical mask holding <br> scaler near patient</h3 >
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                                    <a href="#" class="dep-btn">Appointment<i class="ti-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="dept_thumb">
-                                    <img src="assets/images/gallery/department_man.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- single_content  -->
-                    </div>
-                    <div class="tab-pane fade" id="Blood" role="tabpanel" aria-labelledby="Blood-tab">
-                        <!-- single_content  -->
-                        <div class="row align-items-center no-gutters">
-                            <div class="col-lg-7">
-                                <div class="dept_info">
-                                    <h3>Dentist with surgical mask holding <br> scaler near patient</h3 >
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                                    <a href="#" class="dep-btn">Appointment<i class="ti-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="dept_thumb">
-                                    <img src="assets/images/gallery/department_man.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- single_content  -->
-                    </div>
                 </div>
             </div>
         </div>

@@ -1,20 +1,28 @@
 <?php
-	include_once("../../model/mBaoHiem.php");
-	class cBaoHiem
-	{
-		public function layDSBaoHiem()
-		{
-			$p = new mBaoHiem();
-			$tbl = $p->layDSBaoHiem();
-			if ($tbl) {
-				if ($tbl->num_rows > 0) {
-					return $tbl;
-				} else {
-					return -1; // Không có dữ liệu trong bảng
-				}
-			} else {
-				return false;
-			}
-		}
-	}
+
+
+include_once("../../model/mBaoHiem.php");
+
+class controlBaoHiem {
+	
+    public function getAllBaoHiem() {
+        $p = new modelBaoHiem();
+        $tbl = $p->selectAllBaoHiem();
+        if (mysqli_num_rows($tbl)) {
+            return $tbl;
+        } else {
+            return false; 
+        }
+    }
+    public function getBaoHiemById($maBaoHiem) {
+        $p = new modelBaoHiem();
+        $tbl = $p->selectBaoHiemById($maBaoHiem);
+        if (mysqli_num_rows($tbl)) {
+            return $tbl; 
+        } else {
+            return false; 
+        }
+    }
+}
 ?>
+

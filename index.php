@@ -77,9 +77,18 @@
                     <div class="row">
                         <div class="col-xl-7 col-lg-9 col-md-8 col-sm-9">
                             <div class="hero__caption">
-                                <h1 class="cd-headline letters scale">Chào Mừng Đến Bệnh Viện của chúng tôi
-                                </h1>
-                                <p data-animation="fadeInLeft" data-delay="0.1s"></p>
+                                <h1 class="cd-headline letters scale">
+                                <img src="assets/images/hero/h1_hero.png" alt="Hero Image" class="full-screen-image">
+                                <style>
+
+                                /* Full-screen image styling */
+                                .full-screen-image {
+                                    width: 100%; /* Image takes up full width of the container */
+                                    height: 100%; /* Image takes up full height of the container */
+                                    object-fit: cover; /* Ensures the image covers the entire container without distortion */
+                                    display: block; /* Removes any space below the image */
+                                }
+                                </style>
                             </div>
                         </div>
                     </div>
@@ -399,7 +408,7 @@
         </div>
     </div>
     <!-- gallery Products End -->
-    
+</main>
     <footer>
         <!--? Footer Start-->
         <div class="footer-area section-bg" data-background="assets/images/gallery/footer_bg.jpg">
