@@ -1,62 +1,58 @@
 <?php
 session_start();
-require_once("../../controller/cBenhNhan.php");
 
 if (isset($_SESSION['customer'][0])) {
     $maBenhNhan = $_SESSION['customer'][0];
     $tenBenhNhan = $_SESSION['customer'][1]; 
-    $controller = new cBenhNhan();
 } else {
     echo "<script>alert('Vui lòng đăng nhập!'); window.location.href = '../dangNhap/';</script>";
     exit();
 }
 ?>
+
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Smiles Hospital | Trang chủ</title>
+    <title> Xem phiếu khám bệnh</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo/hospital.png">
-
-	<!-- CSS here -->
-	<link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../../assets/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="../../assets/css/slicknav.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/images/logo/hospital.png">
+    <style>
+        
+    
+    </style>
+    <!-- CSS here -->
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../../assets/css/slicknav.css">
     <link rel="stylesheet" href="../../assets/css/flaticon.css">
     <link rel="stylesheet" href="../../assets/css/gijgo.css">
     <link rel="stylesheet" href="../../assets/css/animate.min.css">
     <link rel="stylesheet" href="../../assets/css/animated-headline.css">
-	<link rel="stylesheet" href="../../assets/css/magnific-popup.css">
-	<link rel="stylesheet" href="../../assets/css/fontawesome-all.min.css">
-	<link rel="stylesheet" href="../../assets/css/themify-icons.css">
-	<link rel="stylesheet" href="../../assets/css/slick.css">
-	<link rel="stylesheet" href="../../assets/css/nice-select.css">
-	<link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="../../assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../../assets/css/themify-icons.css">
+    <link rel="stylesheet" href="../../assets/css/slick.css">
+    <link rel="stylesheet" href="../../assets/css/nice-select.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="../../assets/css/payment.css">
     <link rel="stylesheet" href="../../assets/css/dropdown.css">
-    <style>
-        
-    </style>
 </head>
 <body>
 <header>
-    <!--? Header Start -->
     <div class="header-area">
         <div class="main-header header-sticky">
             <div class="container-fluid">
                 <div class="row align-items-center">
-                    <!-- Logo -->
                     <div class="col-xl-2 col-lg-2 col-md-1 mt-3">
                         <div class="logo">
-                            <a href="index.php"><img src="assets/images/logo/logo_main.png" alt="" width="100"></a>
+                            <a href="index.php"><img src="../../assets/images/logo/logo_main.png" alt="" width="100"></a>
                         </div>
                     </div>
                     <div class="col-xl-10 col-lg-10 col-md-10">
                         <div class="menu-main d-flex align-items-center justify-content-end">
-                            <!-- Main-menu -->
                             <div class="main-menu f-right d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
@@ -68,33 +64,31 @@ if (isset($_SESSION['customer'][0])) {
                                         <li class="dropdown">
                                         <a class="dropbtn" href="#">Chức năng</a>
                                         <div class="dropdown-content">
-                                            <a href="dangkylichkhambenh.php.php">Đăng ký lịch khám</a>
-                                            <a href="xemlichkham.php">Xem Lịch Khám</a>
-                                            <a href="xemphieukham.php">Xem Phiếu Khám Bệnh</a>
+                                            <a href="view/benhnhan/dangkylichkhambenh.php.php">Đăng ký lịch khám</a>
+                                            <a href="view/benhnhan/xemlichkham.php">Xem Lịch Khám</a>
+                                            <a href="view/benhnhan/xemphieukham.php">Xem Phiếu Khám Bệnh</a>
                                         </div>
                                         </li>
                                     </ul>
                                 </nav>
                             </div>
                             <div class="header-right-btn f-right d-none d-lg-block ml-30">
-                                <?php if (isset($tenBenhNhan)) { ?>
-                                    <div class="dropdown">
-                                        <button class="btn header-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <?php echo htmlspecialchars($tenBenhNhan); ?>
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <li><a class="dropdown-item" href="../index.php">Đăng xuất</a></li>
-                                        </ul>
-                                    </div>
-                                <?php } else { ?>
-                                    <a href="../dangNhap/" class="btn header-btn">Đăng nhập</a>
-                                <?php } ?>
-                            </div>
-
+                            <?php if (isset($tenBenhNhan)) { ?>
+                                <div class="dropdown">
+                                    <button class="btn header-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <?php echo htmlspecialchars($tenBenhNhan); ?>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li><a class="dropdown-item" href="view/dangxuat/">Đăng xuất</a></li>
+                                    </ul>
+                                </div>
+                            <?php } else { ?>
+                                <a href="../dangNhap/" class="btn header-btn">Đăng nhập</a>
+                            <?php } ?>
+                        </div>
 
                         </div>
                     </div>   
-                    <!-- Mobile Menu -->
                     <div class="col-12">
                         <div class="mobile_menu d-block d-lg-none"></div>
                     </div>
@@ -102,7 +96,6 @@ if (isset($_SESSION['customer'][0])) {
             </div>
         </div>
     </div>
-    <!-- Header End -->
 </header>
 <main>
     <!--? slider Area Start-->
@@ -557,5 +550,9 @@ if (isset($_SESSION['customer'][0])) {
     <script src="assets/js/vendor/jquery.datetimepicker.full.min.js"></script>
     <script src="assets/js/main.js"></script>
     
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
 </html>
