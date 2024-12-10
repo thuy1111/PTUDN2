@@ -1,11 +1,11 @@
 <?php
-// Quản lý phiếu khám bệnh
+
 include_once("connect.php");
 
 class mPhieuKhamBenh
 {
-    // Lấy danh sách phiếu khám bệnh (có tìm kiếm)
-    public function layDSPKB($keyword = "", $maBenhNhan = "")
+
+    public function layDSPKB($keyword = "", $maBenhNhan = "", $maNhanVien = "")
     {
         $p = new clsKetNoi();
         $conn = $p->moketnoi();
@@ -32,6 +32,12 @@ class mPhieuKhamBenh
                 $types .= "s";
             }
 
+            if ($maNhanVien != "") {
+                $str .= " AND pkb.maNhanVien = ?";
+                $params[] = $maNhanVien;
+                $types .= "s";  
+            }
+
             $stmt = $conn->prepare($str);
             if (!empty($params)) {
                 $stmt->bind_param($types, ...$params);
@@ -46,7 +52,7 @@ class mPhieuKhamBenh
         }
     }
 
-    // Lấy chi tiết phiếu khám bệnh theo mã phiếu
+
     public function layChiTietPKB($maPhieuKhamBenh)
     {
         $p = new clsKetNoi();

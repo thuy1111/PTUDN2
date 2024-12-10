@@ -1,4 +1,11 @@
 <?php
+    
+    session_start();
+    if (!isset($_SESSION['user']) || !isset($_SESSION['user'][2]) || $_SESSION['user'][2] != 1) {
+        echo "<script>alert('Vui lòng đăng nhập với tài khoản bác sĩ!'); window.location.href = '../dangNhap/';</script>";
+        exit();
+    }
+
     include_once ("../../controller/cBacSi.php");
 ?>
 <!DOCTYPE html>

@@ -62,24 +62,30 @@
 			}
 		}
 
-		public function layChiTietLichKhamTheoBenhNhan($maLichKham, $maBenhNhan) 
-		{
+		public function layChiTietLichKhamTheoBenhNhan($maLichKham, $maBenhNhan) {
 			$p = new clsKetNoi();
 			$conn = $p->moketnoi();
 			$conn->set_charset("utf8");
-
+		
 			if ($conn && $maLichKham && $maBenhNhan) {
-				$str = "SELECT * FROM lichkham WHERE maLichKham = ? AND maBenhNhan = ?";
+				
+				$str = "SELECT lk.*, bn.hoTen AS tenBenhNhan, nv.hoTen AS tenNhanVien, k.tenKhoa
+						FROM lichkham lk
+						JOIN benhnhan bn ON lk.maBenhNhan = bn.maBenhNhan
+						JOIN nhanvien nv ON lk.maNhanVien = nv.maNhanVien
+						JOIN khoa k ON lk.maKhoa = k.maKhoa
+						WHERE lk.maLichKham = ? AND lk.maBenhNhan = ?";
+		
 				$stmt = $conn->prepare($str);
 				$stmt->bind_param("ii", $maLichKham, $maBenhNhan);
 				$stmt->execute();
 				$result = $stmt->get_result();
-
+		
 				if ($result->num_rows > 0) {
 					$chiTiet = $result->fetch_assoc();
 					$stmt->close();
 					$p->dongketnoi($conn);
-					return $chiTiet;
+					return $chiTiet; 
 				} else {
 					$stmt->close();
 					$p->dongketnoi($conn);
@@ -89,28 +95,29 @@
 				return false;
 			}
 		}
+		
 
 		
-		// Lấy danh sách phiếu khám bệnh của bệnh nhân đã đăng nhập
+		
 public function layDSPKB($keyword = "", $maBenhNhan = "")
 {
-    // Kiểm tra kết nối cơ sở dữ liệu
+    
     $p = new clsKetNoi();
     $conn = $p->moketnoi();
     $conn->set_charset("utf8");
     
     if ($conn) {
-        // Truy vấn lấy phiếu khám bệnh theo bệnh nhân đã đăng nhập
+        
         $str = "SELECT pkb.*, bn.hoTen as tenBenhNhan, nv.hoTen as tenNhanVien 
                 FROM phieukhambenh pkb
                 JOIN benhnhan bn ON pkb.maBenhNhan = bn.maBenhNhan
                 JOIN nhanvien nv ON pkb.maNhanVien = nv.maNhanVien
                 WHERE pkb.maBenhNhan = ?";
         
-        $params = array($maBenhNhan);  // Lọc theo mã bệnh nhân
-        $types = "s";  // Loại tham số (string)
+        $params = array($maBenhNhan); 
+        $types = "s";  
 
-        // Nếu có từ khóa tìm kiếm, thêm vào điều kiện tìm kiếm
+       
         if ($keyword != "") {
             $str .= " AND (pkb.maPhieuKhamBenh LIKE ? OR bn.hoTen LIKE ? OR nv.hoTen LIKE ? OR pkb.ngayKham LIKE ?)";
             $search = "%$keyword%";
@@ -118,13 +125,13 @@ public function layDSPKB($keyword = "", $maBenhNhan = "")
             $types .= "ssss";
         }
 
-        // Thực thi truy vấn
+        
         $stmt = $conn->prepare($str);
         $stmt->bind_param($types, ...$params);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        // Đóng kết nối
+        
         $p->dongketnoi($conn);
         return $result;
     } else {

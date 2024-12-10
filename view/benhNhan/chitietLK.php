@@ -66,20 +66,20 @@ $chiTietLK = $controller->hienThiChiTietLKTheoBenhNhan($maLichKham, $maBenhNhan)
                         <td><?php echo number_format($chiTietLK['giaDichVuKham'], 0, ',', '.'); ?> VND</td>
                     </tr>
                     <tr>
-                        <th>Mã Nhân Viên</th>
-                        <td><?php echo htmlspecialchars($chiTietLK['maNhanVien']); ?></td>
+                        <th>Bác sĩ phụ trách</th>
+                        <td><?php echo htmlspecialchars($chiTietLK['tenNhanVien']); ?></td>
                     </tr>
                     <tr>
-                        <th>Mã Bệnh Nhân</th>
-                        <td><?php echo htmlspecialchars($chiTietLK['maBenhNhan']); ?></td>
+                        <th>Bệnh Nhân</th>
+                        <td><?php echo htmlspecialchars($chiTietLK['tenBenhNhan']); ?></td>
                     </tr>
                     <tr>
                         <th>Mã Bảo Hiểm</th>
                         <td><?php echo htmlspecialchars($chiTietLK['maBaoHiem']); ?></td>
                     </tr>
                     <tr>
-                        <th>Mã Khoa</th>
-                        <td><?php echo htmlspecialchars($chiTietLK['maKhoa']); ?></td>
+                        <th>Khoa</th>
+                        <td><?php echo htmlspecialchars($chiTietLK['tenKhoa']); ?></td>
                     </tr>
                 </table>
             </div>
