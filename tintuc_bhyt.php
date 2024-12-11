@@ -48,7 +48,14 @@
                                         <li><a href="bacsi.php">Bác Sĩ</a></li>
                                         <li><a href="tintuc.php">Tin Tức</a></li>
                                         <li><a href="lienhe.php">Liên Hệ</a></li>
-                                        <li><a href="view/benhNhan/dangkylichkham.php">Đăng Ký Khám</a></li>
+                                        <li class="dropdown">
+                                        <a class="dropbtn" href="#">Chức năng</a>
+                                        <div class="dropdown-content">
+                                            <a href="view/benhNhan/dangkylichkham.php">Đăng ký lịch khám</a>
+                                            <a href="view/benhNhan/xemlichkham.php">Xem Lịch Khám</a>
+                                            <a href="view/benhNhan/xemphieukham.php">Xem Phiếu Khám Bệnh</a>
+                                        </div>
+                                        </li>
                                     </ul>
                                 </nav>
                             </div>

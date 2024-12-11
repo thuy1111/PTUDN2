@@ -57,18 +57,14 @@ if (isset($_SESSION['customer'][0])) {
                                         <li><a href="bacsi.php">Bác Sĩ</a></li>
                                         <li><a href="tintuc.php">Tin Tức</a></li>
                                         <li><a href="lienhe.php">Liên Hệ</a></li>
-<<<<<<< HEAD
-                                        <li><a href="view/benhNhan/dangkylichkham.php">Đăng Ký Khám</a></li>
-=======
                                         <li class="dropdown">
                                         <a class="dropbtn" href="#">Chức năng</a>
                                         <div class="dropdown-content">
-                                            <a href="view/benhnhan/dangkylichkhambenh.php.php">Đăng ký lịch khám</a>
-                                            <a href="view/benhnhan/xemlichkham.php">Xem Lịch Khám</a>
-                                            <a href="view/benhnhan/xemphieukham.php">Xem Phiếu Khám Bệnh</a>
+                                            <a href="view/benhNhan/dangkylichkham.php">Đăng ký lịch khám</a>
+                                            <a href="view/benhNhan/xemlichkham.php">Xem Lịch Khám</a>
+                                            <a href="view/benhNhan/xemphieukham.php">Xem Phiếu Khám Bệnh</a>
                                         </div>
                                         </li>
->>>>>>> 4f13eeee26d9246074c8bae8ea3e6b62b5ad6b7a
                                     </ul>
                                 </nav>
                             </div>
@@ -259,7 +255,7 @@ if (isset($_SESSION['customer'][0])) {
     <script src="assets/js/main.js"></script>
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
