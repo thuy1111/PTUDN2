@@ -282,17 +282,9 @@ if (isset($_SESSION['customer'][0])) {
     <div class="row">
         <main role="main" class="col-md-12 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Danh Sách Lịch Khám</h1>
+                <h1 class="h2"></h1>
             </div>
-            <div class="row mb-3">
-                <div class="col mt-2">
-                    <form class="d-flex" method="get" action="">
-                        <input class="form-control me-2" type="text" name="maBenhNhan" placeholder="Nhập mã bệnh nhân" value="<?php echo isset($_GET['maBenhNhan']) ? htmlspecialchars($_GET['maBenhNhan']) : ''; ?>">
-                        <button class="btn btn-custom-search" type="submit">Tìm kiếm</button>
-                    </form>
-                </div>
-            </div>
-
+            
             <div class="card">
                 <div class="card-header">
                     Danh Sách lịch khám

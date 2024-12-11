@@ -24,7 +24,7 @@ if (isset($_SESSION['customer'][0])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="../../assets/images/logo/hospital.png">
     <style>
-        /* General Styles */
+        
         body {
             font-family: Arial, sans-serif;
             font-size: 16px; 
@@ -39,33 +39,33 @@ if (isset($_SESSION['customer'][0])) {
         }
 
         .table {
-    width: 100%; 
-    table-layout: fixed; 
-    font-size: 14px;
-    line-height: 1.5;
-    color: #444;
-}
+            width: 100%; 
+            table-layout: fixed; 
+            font-size: 14px;
+            line-height: 1.5;
+            color: #444;
+        }
 
-.table th, .table td {
-    padding: 12px;
-    text-align: left; 
-}
+        .table th, .table td {
+            padding: 12px;
+            text-align: left; 
+        }
 
-.table th {
-    background-color: #f7f7f7;
-    color: #333;
-}
+        .table th {
+            background-color: #f7f7f7;
+            color: #333;
+        }
 
-.table-hover tbody tr:hover {
-    background-color: #f0f0f0;
-}
+        .table-hover tbody tr:hover {
+            background-color: #f0f0f0;
+        }
 
 
-.table-responsive {
-    width: 100%;
-    overflow-x: auto; 
-    margin: 0 auto; 
-}
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto; 
+            margin: 0 auto; 
+        }
 
         input, button {
             font-size: 14px; 
@@ -89,110 +89,110 @@ if (isset($_SESSION['customer'][0])) {
         }
 
         
-#navigation li {
-    position: relative;
-}
+        #navigation li {
+            position: relative;
+        }
 
-#navigation li a {
-    display: block;
-    padding: 10px 15px;
-    color: #333;
-    text-decoration: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
+        #navigation li a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
-#navigation li:hover > .dropdown-content {
-    display: block;
-}
+        #navigation li:hover > .dropdown-content {
+            display: block;
+        }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    left: 0;
-    top: 100%;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    min-width: 200px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-}
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 100%;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            min-width: 200px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
 
-.dropdown-content li {
-    padding: 8px 12px;
-    border-bottom: 1px solid #eee;
-}
+        .dropdown-content li {
+            padding: 8px 12px;
+            border-bottom: 1px solid #eee;
+        }
 
-.dropdown-content li:last-child {
-    border-bottom: none;
-}
+        .dropdown-content li:last-child {
+            border-bottom: none;
+        }
 
-.dropdown-content li a {
-    color: #555;
-    font-size: 14px;
-    padding: 8px;
-    display: block;
-    text-decoration: none;
-}
+        .dropdown-content li a {
+            color: #555;
+            font-size: 14px;
+            padding: 8px;
+            display: block;
+            text-decoration: none;
+        }
 
-.dropdown-content li a:hover {
-    background-color: #007bff;
-    color: #fff;
-    border-radius: 4px;
-}
+        .dropdown-content li a:hover {
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+        }
 
-.btn.header-btn {
-    font-size: 16px;
-    padding: 10px 20px; 
-    border-radius: 5px; 
-    color: #fff; 
-    background-color: #007bff; 
-    border: 1px solid #007bff; 
-    transition: background-color 0.3s ease, border-color 0.3s ease; 
-}
+        .btn.header-btn {
+            font-size: 16px;
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            color: #fff; 
+            background-color: #007bff; 
+            border: 1px solid #007bff; 
+            transition: background-color 0.3s ease, border-color 0.3s ease; 
+        }
 
-.btn.header-btn:hover {
-    background-color: #0056b3; 
-    border-color: #0056b3; 
-    color: #fff; 
-}
+        .btn.header-btn:hover {
+            background-color: #0056b3; 
+            border-color: #0056b3; 
+            color: #fff; 
+        }
 
-.dropdown-item {
-    font-size: 16px; 
-    padding: 10px 20px; 
-    color: #fff; 
-    background-color: #007bff; 
-    border-radius: 5px; 
-    transition: background-color 0.3s ease; 
-}
+        .dropdown-item {
+            font-size: 16px; 
+            padding: 10px 20px; 
+            color: #fff; 
+            background-color: #007bff; 
+            border-radius: 5px; 
+            transition: background-color 0.3s ease; 
+        }
 
-.dropdown-item:hover {
-    background-color: #0056b3; 
-    color: #fff; 
-}
+        .dropdown-item:hover {
+            background-color: #0056b3; 
+            color: #fff; 
+        }
 
 
-.dropdown-menu {
-    background-color: #f8f9fa; 
-    border-radius: 5px; /* Bo góc cho menu */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm hiệu ứng đổ bóng */
-}
+        .dropdown-menu {
+            background-color: #f8f9fa; 
+            border-radius: 5px; /* Bo góc cho menu */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm hiệu ứng đổ bóng */
+        }
 
-/* Mobile View */
-@media (max-width: 768px) {
-    .dropdown-content {
-        position: static;
-        display: none;
-        background-color: #fff;
-        border: none;
-        box-shadow: none;
-        min-width: 100%;
-    }
+        /* Mobile View */
+        @media (max-width: 768px) {
+            .dropdown-content {
+                position: static;
+                display: none;
+                background-color: #fff;
+                border: none;
+                box-shadow: none;
+                min-width: 100%;
+            }
 
-    #navigation li.active > .dropdown-content {
-        display: block;
-    }
-}
+            #navigation li.active > .dropdown-content {
+                display: block;
+            }
+        }
             body {
                 font-size: 15px; 
             }
@@ -204,7 +204,7 @@ if (isset($_SESSION['customer'][0])) {
             .btn-custom-search, .btn-view {
                 font-size: 12px; 
             }
-    
+            
     </style>
     <!-- CSS here -->
     <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
@@ -284,20 +284,27 @@ if (isset($_SESSION['customer'][0])) {
     <div class="row">
         <main role="main" class="col-md-12 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Danh Sách Lịch Khám</h1>
+                <h1 class="h2"></h1>
             </div>
             <div class="row mb-3">
                 <div class="col mt-2">
                     <form class="d-flex" method="get" action="">
-                        <input class="form-control me-2" type="text" name="maNhanVien" placeholder="Nhập mã bác sĩ" value="<?php echo isset($_GET['maNhanVien']) ? htmlspecialchars($_GET['maNhanVien']) : ''; ?>">
+                        <input 
+                            class="form-control search-input me-2" 
+                            type="text" 
+                            name="maNhanVien" 
+                            placeholder="Nhập mã bác sĩ" 
+                            value="<?php echo isset($_GET['maNhanVien']) ? htmlspecialchars($_GET['maNhanVien']) : ''; ?>"
+                        >
                         <button class="btn btn-custom-search" type="submit">Tìm kiếm</button>
                     </form>
                 </div>
             </div>
 
+
             <div class="card">
                 <div class="card-header">
-                    Danh Sách lịch khám
+                    Danh Sách phiếu khám bệnh
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -308,7 +315,7 @@ if (isset($_SESSION['customer'][0])) {
                                     <th>Phòng Khám</th>
                                     <th>Ngày Khám</th>
                                     <th>Bệnh Nhân</th>
-                                    <th>Nhân Viên</th>
+                                    <th>Bác sĩ phụ trách</th>
                                     <th>Lý Do</th>
                                     <th>Kết Luận</th>
                                     <th>Chi Tiết</th>

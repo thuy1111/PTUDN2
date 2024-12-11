@@ -82,7 +82,7 @@ if (isset($_SESSION['customer'][0])) {
                                     </ul>
                                 </div>
                             <?php } else { ?>
-                                <a href="../dangNhap/" class="btn header-btn">Đăng nhập</a>
+                                <a href="view/dangNhap/" class="btn header-btn">Đăng nhập</a>
                             <?php } ?>
                         </div>
                 </div>
