@@ -187,45 +187,45 @@ class mBacsi{
 
     
     public function layChiTietLichKham($maLichKham)
-{
-    $p = new clsKetNoi();
-    $conn = $p->moketnoi();
-    $conn->set_charset("utf8");
+    {
+        $p = new clsKetNoi();
+        $conn = $p->moketnoi();
+        $conn->set_charset("utf8");
 
-    if ($conn && $maLichKham) {
-        try {
-            $str = "SELECT lk.*, 
-                           bn.hoTen AS TenBenhNhan, 
-                           nv.hoTen AS TenNhanVien, 
-                           k.tenKhoa AS TenKhoa
-                    FROM lichkham lk
-                    INNER JOIN benhnhan bn ON lk.maBenhNhan = bn.maBenhNhan
-                    INNER JOIN nhanvien nv ON lk.maNhanVien = nv.maNhanVien
-                    INNER JOIN khoa k ON lk.maKhoa = k.maKhoa
-                    WHERE lk.maLichKham = ?";
-            $stmt = $conn->prepare($str);
-            $stmt->bind_param("i", $maLichKham);  
-            $stmt->execute();
-            $result = $stmt->get_result();
+        if ($conn && $maLichKham) {
+            try {
+                $str = "SELECT lk.*, 
+                            bn.hoTen AS TenBenhNhan, 
+                            nv.hoTen AS TenNhanVien, 
+                            k.tenKhoa AS TenKhoa
+                        FROM lichkham lk
+                        INNER JOIN benhnhan bn ON lk.maBenhNhan = bn.maBenhNhan
+                        INNER JOIN nhanvien nv ON lk.maNhanVien = nv.maNhanVien
+                        INNER JOIN khoa k ON lk.maKhoa = k.maKhoa
+                        WHERE lk.maLichKham = ?";
+                $stmt = $conn->prepare($str);
+                $stmt->bind_param("i", $maLichKham);  
+                $stmt->execute();
+                $result = $stmt->get_result();
 
-            if ($result->num_rows > 0) {
-                $chiTiet = $result->fetch_assoc();
-                $stmt->close();
-                $p->dongketnoi($conn);
-                return $chiTiet;
-            } else {
-                $stmt->close();
-                $p->dongketnoi($conn);
+                if ($result->num_rows > 0) {
+                    $chiTiet = $result->fetch_assoc();
+                    $stmt->close();
+                    $p->dongketnoi($conn);
+                    return $chiTiet;
+                } else {
+                    $stmt->close();
+                    $p->dongketnoi($conn);
+                    return false;
+                }
+            } catch (Exception $e) {
+                error_log("Error in layChiTietLichKham: " . $e->getMessage());
                 return false;
             }
-        } catch (Exception $e) {
-            error_log("Error in layChiTietLichKham: " . $e->getMessage());
+        } else {
             return false;
         }
-    } else {
-        return false;
     }
-<<<<<<< HEAD
 
     // Lấy danh sách lịch làm việc của bác sĩ theo tháng hiện tại
     public function layDSLichLamViecBacSi($maNhanVien) {
@@ -289,18 +289,12 @@ class mBacsi{
             return false;
         }
     }
-    
-=======
-}
 
->>>>>>> 4f13eeee26d9246074c8bae8ea3e6b62b5ad6b7a
 	public function __destruct() {
         if ($this->conn) {
             $p = new clsKetNoi();
             $p->dongketnoi($this->conn);
         }
     }
-
-   
 
 } 

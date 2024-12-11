@@ -16,47 +16,47 @@
         }
 
 		public function hienThiDSLichLamViec($startDate, $endDate, $maNhanVien)
-    {
-        $model = new mBacsi();
-        $dsLichLamViec = $model->layDSLichLamViec($startDate, $endDate, $maNhanVien);
+        {
+            $model = new mBacsi();
+            $dsLichLamViec = $model->layDSLichLamViec($startDate, $endDate, $maNhanVien);
 
-        if ($dsLichLamViec) {
-            return $dsLichLamViec;
-        } else {
-            return [];
+            if ($dsLichLamViec) {
+                return $dsLichLamViec;
+            } else {
+                return [];
+            }
         }
-    }
 
-    public function chiTietLichLamViec($maLichLamViec, $maNhanVien)
-    {
-        $model = new mBacSi();
-        $chiTiet = $model->layChiTietLichLamViec($maLichLamViec, $maNhanVien);
+        public function chiTietLichLamViec($maLichLamViec, $maNhanVien)
+        {
+            $model = new mBacSi();
+            $chiTiet = $model->layChiTietLichLamViec($maLichLamViec, $maNhanVien);
 
-        return $chiTiet ? $chiTiet : null;
-    }
+            return $chiTiet ? $chiTiet : null;
+        }
     
-	public function hienThiLichKham($maNhanVien)
+        public function hienThiLichKham($maNhanVien)
+        {
+            $lichKhamModel = new mBacsi();
+            $dsLichKham = $lichKhamModel->layDSLichKham($maNhanVien);
+            if ($dsLichKham) {
+                return $dsLichKham;
+            } else {
+                return false;
+            }
+        }
+
+    
+    public function hienThiChiTietLK($maLichKham)
     {
         $lichKhamModel = new mBacsi();
-        $dsLichKham = $lichKhamModel->layDSLichKham($maNhanVien);
-        if ($dsLichKham) {
-            return $dsLichKham;
+        $chiTietLK = $lichKhamModel->layChiTietLichKham($maLichKham);
+        if ($chiTietLK) {
+            return $chiTietLK;
         } else {
             return false;
         }
     }
-
-    
-    public function hienThiChiTietLK($maLichKham)
-{
-    $lichKhamModel = new mBacsi();
-    $chiTietLK = $lichKhamModel->layChiTietLichKham($maLichKham);
-    if ($chiTietLK) {
-        return $chiTietLK;
-    } else {
-        return false;
-    }
-<<<<<<< HEAD
 
     // Lấy danh sách lịch làm việc của bác sĩ
     public function layDSLichLamViecBacSi($maNhanVien) {
@@ -81,8 +81,4 @@
             return false;
         }
     }
-=======
 }
->>>>>>> 4f13eeee26d9246074c8bae8ea3e6b62b5ad6b7a
-
- }

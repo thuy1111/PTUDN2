@@ -16,7 +16,6 @@
 				return false;
 			}
 		}
-<<<<<<< HEAD
 
 		public function layDSBSTheoKhoa($maKhoa){
 			$p = new mKhoa();
@@ -27,9 +26,6 @@
 				return false;
 			}
 		}
-	}
-?>
-=======
 		public function xemthongtinkhoa($maKhoa){
             $p = new   mKhoa();
            
@@ -78,8 +74,5 @@
 				
 			
         }
-		
-
-    }
-    ?>
->>>>>>> 4f13eeee26d9246074c8bae8ea3e6b62b5ad6b7a
+	}
+?>

@@ -17,7 +17,6 @@
 				return false;
 			}
 		}
-<<<<<<< HEAD
 
 		public function layDSBSTheoKhoa($maKhoa){
 			$p = new clsKetNoi();
@@ -25,7 +24,13 @@
 			$conn->set_charset("utf8");
 			if ($conn) {
 				$str = "SELECT * FROM nhanvien WHERE maKhoa = $maKhoa AND maChucVu = '1'";
-=======
+				$tbl = $conn->query($str);
+				$p->dongketnoi($conn);
+				return $tbl;
+			} else {
+				return false;
+			}
+		}
 		public function themKhoa($tenKhoa,$truongKhoa,$soDienThoai,$email,$trangthai)
         {
             $p = new clsKetNoi();
@@ -34,19 +39,14 @@
             if ($conn) {
 				$str = "INSERT INTO `khoa` (`maKhoa`,`tenKhoa`, `truongKhoa`, `soDienThoai`, `email`, `trangThaiKhoa`) 
                 VALUES (NULL, '$tenKhoa', '$truongKhoa', '$soDienThoai', '$email', '$trangthai');";
->>>>>>> 4f13eeee26d9246074c8bae8ea3e6b62b5ad6b7a
 				$tbl = $conn->query($str);
 				$p->dongketnoi($conn);
 				return $tbl;
 			} else {
 				return false;
 			}
-<<<<<<< HEAD
 		}
 		
-	}
-=======
-        }
         public function capnhatthongtinkhoa($maKhoa,$tenKhoa,$truongKhoa,$soDienThoai,$email,$trangthai)
         {
             $p = new clsKetNoi();
@@ -105,5 +105,4 @@
         }
     }
 
->>>>>>> 4f13eeee26d9246074c8bae8ea3e6b62b5ad6b7a
 ?>

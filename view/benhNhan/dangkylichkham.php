@@ -179,6 +179,8 @@
                 <select id="bac-si" class="form-select mb-5" name="bacsi" required>
                     <option value="" disabled selected>Chọn bác sĩ</option>
                     <?php
+                    include_once("../../controller/cKhoa.php");
+                    $p = new cKhoa();
                     if (isset($_POST['khoa']) && !empty($_POST['khoa'])) {
                         $maKhoa = $_POST['khoa'];
                         $tbl = $p->layDSBSTheoKhoa($maKhoa);
