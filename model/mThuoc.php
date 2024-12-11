@@ -47,20 +47,44 @@
 				return false;
 			}
         }
-        public function capnhatthongtinthuoc($maThuoc,$tenThuoc,$soLuong,$donViCungCap,$donGia,$donViTinh,$cachDung,$trangThai,$maLoaiThuoc)
-        {
-            $p = new clsKetNoi();
-			$conn = $p->moketnoi();
-			$conn ->set_charset("utf8");
-            if ($conn) {
-				$str = "UPDATE `thuoc` SET `tenThuoc` = '$tenThuoc', `soLuong` = '$soLuong', `donViCungCap` = '$donViCungCap', `donGia` = '$donGia',`donViTinh`='$donViTinh', `cachDung` = $cachDung,`maLoaiThuoc` = $maLoaiThuoc, `trangThai` = $trangThai WHERE `thuoc`.`maThuoc` = $maThuoc;";
-				$tbl = $conn->query($str);
-				$p->dongketnoi($conn);
-				return $tbl;
-			} else {
-				return false;
-			}
-        }
+        public function capnhatthongtinthuoc($maThuoc, $tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $trangThai, $maLoaiThuoc)
+{
+    $p = new clsKetNoi();
+    $conn = $p->moketnoi();
+    $conn->set_charset("utf8");
+
+    if ($conn) {
+        // Sanitize inputs to prevent SQL injection
+        $maThuoc = mysqli_real_escape_string($conn, $maThuoc);
+        $tenThuoc = mysqli_real_escape_string($conn, $tenThuoc);
+        $soLuong = mysqli_real_escape_string($conn, $soLuong);
+        $donViCungCap = mysqli_real_escape_string($conn, $donViCungCap);
+        $donGia = mysqli_real_escape_string($conn, $donGia);
+        $donViTinh = mysqli_real_escape_string($conn, $donViTinh);
+        $cachDung = mysqli_real_escape_string($conn, $cachDung);
+        $trangThai = mysqli_real_escape_string($conn, $trangThai);
+        $maLoaiThuoc = mysqli_real_escape_string($conn, $maLoaiThuoc);
+
+        // Build the update query
+        $str = "UPDATE thuoc SET 
+                tenThuoc = '$tenThuoc', 
+                soLuong = '$soLuong', 
+                donViCungCap = '$donViCungCap', 
+                donGia = '$donGia', 
+                donViTinh = '$donViTinh', 
+                cachDung = '$cachDung', 
+                trangThai = '$trangThai', 
+                maLoaiThuoc = '$maLoaiThuoc'
+                WHERE maThuoc = '$maThuoc'";
+
+        $tbl = $conn->query($str);
+        $p->dongketnoi($conn);
+        return $tbl;
+    } else {
+        return false;
+    }
+}
+
 		public function searchthuoc($timkiem)
 		{
 			$p = new clsKetNoi();

@@ -25,38 +25,34 @@ if (isset($_REQUEST['maThuoc'])) {
 // Handle the form submission for update
 if (isset($_POST['btnupdate'])) {
     // Sanitize the input data
+    $maThuoc = isset($_POST['maThuoc']) ? intval($_POST['maThuoc']) : 0;
     $tenThuoc = htmlspecialchars(trim($_POST['tenThuoc']));
-    $soLuong = intval($_POST['soLuongTon']);  // Assuming it's a number
+    $soLuong = intval($_POST['soLuongTon']);
     $donViCungCap = htmlspecialchars(trim($_POST['donViCungCap']));
-    $donGia = floatval($_POST['donGia']); // Assuming it's a float
+    $donGia = floatval($_POST['donGia']);
     $donViTinh = htmlspecialchars(trim($_POST['donViTinh']));
     $cachDung = htmlspecialchars(trim($_POST['cachDung']));
-    $trangThai = htmlspecialchars(trim($_POST['trangThai']));
-    $loaiThuoc = htmlspecialchars(trim($_POST['loaiThuoc']));
+    $trangThai = intval($_POST['trangThai']); // Change to intval
+    $maLoaiThuoc = intval($_POST['loaiThuoc']);
 
     // Validate that the necessary fields are not empty
-    if (empty($tenThuoc) || empty($soLuong) || empty($donViCungCap) || empty($donGia) || empty($donViTinh) || empty($cachDung) || empty($trangThai) || empty($loaiThuoc)) {
+    if (empty($tenThuoc) || empty($soLuong) || empty($donViCungCap) || empty($donGia) || empty($donViTinh) || empty($cachDung) || empty($trangThai) || empty($maLoaiThuoc)) {
         echo "<script>alert('Vui lòng điền đầy đủ thông tin.');</script>";
-        exit;
-    }
-
-    // Call the update method from the controller
-    $updateResult = $p->capnhatThuoc($tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $trangThai, $loaiThuoc);
-
-
-
-    if ($updateResult) {
-        echo "<script>alert('Cập nhật thuốc thành công');</script>";
-        echo "<script>window.location.href = 'quanlythuoc.php';</script>";
-        exit;
     } else {
-        // Log the error for debugging purposes
-        error_log("Update failed: " . $p->getLastError());  // Assuming your controller has a getLastError method
-        echo "<script>alert('Cập nhật thuốc thất bại');</script>";
+        // Call the update method from the controller
+        $updateResult = $p->capnhatThuoc($maThuoc, $tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $trangThai, $maLoaiThuoc);
+
+        if ($updateResult) {
+            echo "<script>alert('Cập nhật thuốc thành công');</script>";
+            echo "<script>window.location.href = 'quanlythuoc.php';</script>";
+            exit;
+        } else {
+            echo "<script>alert('Cập nhật thuốc thất bại');</script>";
+        }
     }
 }
 
-    // Handle form submission for adding a new medicine
+// Handle form submission for adding a new medicine
 if (isset($_POST['btnadd'])) {
     $tenThuoc = $_POST['tenThuoc'];
     $soLuong = $_POST['soLuongTon'];
@@ -116,6 +112,7 @@ if (isset($_POST['btnadd'])) {
                     </div>     
                     <!-- end page title --> 
                     <form class="mb-3" method="post">
+                        <input type="hidden" name="maThuoc" value="<?= isset($maThuoc) ? $maThuoc : ''; ?>">
                         <hr style="border-color: black;">
                         <div class="row">
                             <div class="col-12 text-center">
@@ -206,10 +203,9 @@ if (isset($_POST['btnadd'])) {
                                             $controller = new cLoaiThuoc();
                                             $dsLoaiThuoc = $controller->layDSLoaiThuoc();
                                             
-                                            // Fetch and populate options
                                             if ($dsLoaiThuoc) {
                                                 while ($loai = $dsLoaiThuoc->fetch_assoc()) {
-                                                    $selected = (isset($loai['maLoaiThuoc']) && $loai['maLoaiThuoc'] == $r['loaiThuoc']) ? 'selected' : '';
+                                                    $selected = (isset($maLoaiThuoc) && $maLoaiThuoc == $loai['maLoaiThuoc']) ? 'selected' : '';
                                                     echo "<option value='{$loai['maLoaiThuoc']}' $selected>{$loai['tenLoaiThuoc']}</option>";
                                                 }
                                             } else {
@@ -278,6 +274,22 @@ if (isset($_POST['btnadd'])) {
                                             if ($tbl) {
                                                 $stt = 1;
                                                 while ($r = mysqli_fetch_assoc($tbl)) {
+                                                    
+                                                    $trangThaiText = '';
+                                                    switch ($r['trangThai']) {
+                                                        case 1:
+                                                            $trangThaiText = 'Còn hàng';
+                                                            break;
+                                                        case 2:
+                                                            $trangThaiText = 'Gần hết';
+                                                            break;
+                                                        case 3:
+                                                            $trangThaiText = 'Hết hàng';
+                                                            break;
+                                                        default:
+                                                            $trangThaiText = 'Không xác định';
+                                                    }
+
                                                     echo "<tr>
                                                             <td>$stt</td>
                                                             <td><a href='?maThuoc={$r['maThuoc']}'>$r[tenThuoc]</a></td>

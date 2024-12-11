@@ -72,51 +72,52 @@
 
 	
 		// Function to update medicine details
-		public function capnhatThuoc($tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $trangThai, $loaiThuoc)
- {
-			// Open database connection
-			$p = new clsKetNoi();
-			$conn = $p->moketnoi();
-			$conn->set_charset("utf8");
-		
-			if (!$conn) {
-				return false; // Connection failed
-			}
-		
-			// Sanitize inputs to prevent SQL injection
-			$maThuoc = mysqli_real_escape_string($conn, $maThuoc);
-			$tenThuoc = mysqli_real_escape_string($conn, $tenThuoc);
-			$soLuong = mysqli_real_escape_string($conn, $soLuong);
-			$donViCungCap = mysqli_real_escape_string($conn, $donViCungCap);
-			$donGia = mysqli_real_escape_string($conn, $donGia);
-			$donViTinh = mysqli_real_escape_string($conn, $donViTinh);
-			$cachDung = mysqli_real_escape_string($conn, $cachDung);
-			$trangThai = mysqli_real_escape_string($conn, $trangThai);
-			$loaiThuoc = mysqli_real_escape_string($conn, $loaiThuoc);
-		
-			// Build the update query
-			$query = "UPDATE thuoc 
-					  SET 
-						  tenThuoc = '$tenThuoc',
-						  soLuong = '$soLuong',
-						  donViCungCap = '$donViCungCap',
-						  donGia = '$donGia',
-						  donViTinh = '$donViTinh',
-						  cachDung = '$cachDung',
-						  trangThai = '$trangThai',
-						  maLoaiThuoc = '$loaiThuoc' -- Include loaiThuoc here
-					  WHERE 
-						  maThuoc = '$maThuoc'";
-		
-			// Execute the query
-			$result = $conn->query($query);
-		
-			// Close the connection
-			$p->dongketnoi($conn);
-		
-			// Return the result (true for success, false for failure)
-			return $result;
-		}
+		public function capnhatThuoc($maThuoc, $tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $trangThai, $loaiThuoc)
+{
+    // Open database connection
+    $p = new clsKetNoi();
+    $conn = $p->moketnoi();
+    $conn->set_charset("utf8");
+
+    if (!$conn) {
+        return false; // Connection failed
+    }
+
+    // Sanitize inputs to prevent SQL injection
+    $maThuoc = mysqli_real_escape_string($conn, $maThuoc);
+    $tenThuoc = mysqli_real_escape_string($conn, $tenThuoc);
+    $soLuong = mysqli_real_escape_string($conn, $soLuong);
+    $donViCungCap = mysqli_real_escape_string($conn, $donViCungCap);
+    $donGia = mysqli_real_escape_string($conn, $donGia);
+    $donViTinh = mysqli_real_escape_string($conn, $donViTinh);
+    $cachDung = mysqli_real_escape_string($conn, $cachDung);
+    $trangThai = mysqli_real_escape_string($conn, $trangThai);
+    $loaiThuoc = mysqli_real_escape_string($conn, $loaiThuoc);
+
+    // Build the update query
+    $query = "UPDATE thuoc 
+              SET 
+                  tenThuoc = '$tenThuoc',
+                  soLuong = '$soLuong',
+                  donViCungCap = '$donViCungCap',
+                  donGia = '$donGia',
+                  donViTinh = '$donViTinh',
+                  cachDung = '$cachDung',
+                  trangThai = '$trangThai',
+                  maLoaiThuoc = '$loaiThuoc'
+              WHERE 
+                  maThuoc = '$maThuoc'";
+
+    // Execute the query
+    $result = $conn->query($query);
+
+    // Close the connection
+    $p->dongketnoi($conn);
+
+    // Return the result (true for success, false for failure)
+    return $result;
+}
+
 		
 	}
 ?>
