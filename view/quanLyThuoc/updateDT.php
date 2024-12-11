@@ -103,73 +103,63 @@
                     </style>
                     
                     <?php
-    include("../../controller/cCTDT.php");
-    $p = new controlCTDT();
-    $con = $p -> getAllCTDT();
 
-    if(!$con || mysqli_num_rows($con) == 0) {
-        echo "No data available.";
-    } else {
-        $r = mysqli_fetch_assoc($con);
-
-        if ($r) {
-            echo "<div class='form-group'>
-                <label for='bac-si'>Tên Bệnh Nhân:</label>
-                <input type='text' class='form-control' id='bac-si' name='bacSi' value='" . htmlspecialchars($r['hoTenBenhNhan']) . "' readonly>
-            </div>";
-            echo "<div class='form-group'>
-                <label for='bac-si'>Bác sĩ kê đơn:</label>
-                <input type='text' class='form-control' id='bac-si' name='bacSi' value='" . htmlspecialchars($r['hoTenBacSi']) . "' readonly>
-            </div>";
-            echo "<div class='form-group'>
-                <label for='chuandoan'>Chuẩn Đoán: </label>
-                <input type='text' class='form-control' id='chuandoan' name='chuandoan' value='" . htmlspecialchars($r['chuanDoan']) . "' readonly>
-            </div>";
-            echo "<div class='form-group'>
-                <label for='tinhTrang'>Tình Trạng: </label>
-                <input type='text' class='form-control' id='tinhTrang' name='tinhTrang' value='" . htmlspecialchars($r['tinhTrang']) . "' readonly>
-            </div>";
-        }
-
-        // Now output the table of details
-        echo "<table border='1' width='100%'>";
-        echo "<tr>
-                <th>STT</th>
-                <th>Tên Thuốc</th>
-                <th>Đơn Vị</th>
-                <th>Đơn Giá</th>
-                <th>Số Lượng</th>
-                <th>Thành Tiền</th>
-            </tr>";
-
-        // Reset pointer back to the beginning of the result set
-        mysqli_data_seek($con, 0); // Move pointer back to the start
-
-        // Loop through the results
-        while ($r = mysqli_fetch_assoc($con)) {
-            echo "
-                <tr>
-                    <td>" . htmlspecialchars($r["STT"]) . "</td>
-                    <td>" . htmlspecialchars($r["tenThuoc"]) . "</td>
-                    <td>" . htmlspecialchars($r["donVi"]) . "</td>
-                    <td>" . htmlspecialchars($r["donGia"]) . "</td>
-                    <td>" . htmlspecialchars($r["soLuong"]) . "</td>
-                    <td>" . htmlspecialchars($r["thanhTien"]) . "</td>
-                </tr>
-            ";
-        }
-        echo "</table>";
+                include_once("../../controller/cCTDT.php");
+                include_once("../../controller/cDonThuoc.php");
+                $p= new controlCTDT();
+                if(isset($_REQUEST['maChiTietDT']))
+                {
+                    $kq= $p->getAllCTDT($_REQUEST['maChiTietDT']);
+                    if($kq)
+                    {
+                        while($r=mysqli_fetch_assoc($kq))
+                        {
+                            $maBenhNhan=$r['hoTenBenhNhan'];
+                            $maBacSi=$r['hoTenBacSi'];
+                            $chuanDoan=$r['chuanDoan'];
+                            $STT=$r['STT'];
+                            $maThuoc=$r['tenThuoc'];
+                            $donVi=$r['donVi'];
+                            $donGia=$r['donGia'];
+                            $soLuong=$r['soLuong'];
+                            $thanhTien=$r['thanhTien'];
+                            $trangThai=$r['trangThai'];
+                        }
+                    }
+                }
+                ?>
+                <!-- Trạng Thái -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="trangThai" class="form-label">Trạng thái</label>
+                </div>
+                <div class="col-md-9">
+                    <select name="trangThai" class="form-select" id="htmlspecialchars($r['tinhTrang'])" required>
+                        <option value="" disabled selected>Chọn trạng thái</option>
+                        <option value="2">Đã Thanh Toán</option>
+                        <option value="3">Chưa Thanh Toán</option>
+                    </select>
+                </div>
+            </div>
+<?php
+if(isset($_REQUEST['btnupdate']) && $_REQUEST['btnupdate']=='Cập nhật' )
+{
+    $update= $qk->updateCTDT($_REQUEST['maThuoc'],$_REQUEST['trangThai']);
+    if($update)
+    {
+        echo "<script>alert('Cập nhật thông tin đơn thuốc thành công');</script>";
+        echo "<script>window.location.href = 'xulythuoc.php';</script>";
     }
+    else {
+        echo "<script>alert('Cập nhật thông tin đơn thuốc không thành công');</script>";
+        echo "<script>window.location.href = 'xulythuoc.php';</script>";
+    }
+}
 ?>
-<div class="buttons">
-<style>
-    .btn-custom-blue {
-        background-color: #007bff; /* Customize the blue color */
-        color: white;
-    }
-</style>
 
-    <button class="btn btn-custom-blue"onclick="window.location.href='updateDT.php?id'">Cập Nhật</button>
+<div class="buttons">
+
+    <input type="submit" name="btnupdate"  class="btn btn-success mx-2" value="Cập nhật"> 
 
     <button class="btn btn-danger" onclick="window.location.href='xulythuoc.php';">Quay Lại</button>
 

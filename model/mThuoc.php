@@ -17,6 +17,21 @@
 				return false;
 			}
 		}
+		public function xem1thuoc($maThuoc)
+        {
+            $p = new clsKetNoi();
+			$conn = $p->moketnoi();
+			$conn ->set_charset("utf8");
+			if ($conn) {
+				$str = "Select * from thuoc where maThuoc ='$maThuoc'";
+				$tbl = $conn->query($str);
+				$p->dongketnoi($conn);
+				return $tbl;
+			} else {
+				return false;
+			}
+
+        }
 		public function themthuoc($tenThuoc,$soLuong,$donViCungCap,$donGia,$donViTinh,$cachDung,$trangThai,$maLoaiThuoc)
         {
             $p = new clsKetNoi();
@@ -46,21 +61,6 @@
 				return false;
 			}
         }
-        public function xem1thuoc($maThuoc)
-        {
-            $p = new clsKetNoi();
-			$conn = $p->moketnoi();
-			$conn ->set_charset("utf8");
-			if ($conn) {
-				$str = "Select * from thuoc where maThuoc ='$maThuoc'";
-				$tbl = $conn->query($str);
-				$p->dongketnoi($conn);
-				return $tbl;
-			} else {
-				return false;
-			}
-
-        }
 		public function searchthuoc($timkiem)
         {
             $p = new clsKetNoi();
@@ -76,9 +76,9 @@
 						$str = "SELECT *,l.tenLoaiThuoc from thuoc t join loaithuoc l on l.maLoaiThuoc= t.maLoaiThuoc
 								WHERE maThuoc = $timkiem";
 					} else {
-						// Nếu không phải số, thì tìm theo tên nhân viên
+						// Nếu không phải số, thì tìm theo tên loại thuốc 
 						$str = "SELECT *,l.tenLoaiThuoc from thuoc t join loaithuoc l on l.maLoaiThuoc= t.maLoaiThuoc
-								WHERE tenThuoc LIKE '%$timkiem%'";
+								WHERE tenLoaiThuoc LIKE '%$timkiem%'";
 					}}
 				$tbl = $conn->query($str);
 				$p->dongketnoi($conn);

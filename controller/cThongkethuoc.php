@@ -1,10 +1,20 @@
 <?php
-include_once("../../model/mThongkethuoc.php");
+include_once('../../model/mThongkethuoc.php');
 
-class cThongkeThuoc {
-    public function thongKeThuoc() {
-        $model = new mThongkeThuoc();
-        $result = $model->getThuocByLoaiBaoHiem();
+class cThongkethuoc {
+    public function thongKeThuoc($bacSiId = null) {
+        $model = new mThongkethuoc();
+        $result = $model->getThuocByBacSi($bacSiId);
+
+        if ($result && mysqli_num_rows($result) > 0) {
+            $data = [];
+            while ($row = mysqli_fetch_assoc($result)) {
+                $data[] = $row;
+            }
+            return $data;
+        } else {
+            return null;
         }
     }
+}
 ?>
