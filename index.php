@@ -12,7 +12,7 @@ if (isset($_SESSION['customer'][0])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Xem phiếu khám bệnh</title>
+    <title>Smiles Hospital | Trang chủ</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="../../assets/images/logo/hospital.png">
@@ -45,7 +45,8 @@ if (isset($_SESSION['customer'][0])) {
                 <div class="row align-items-center">
                     <div class="col-xl-2 col-lg-2 col-md-1 mt-3">
                         <div class="logo">
-                            <a href="index.php"><img src="../../assets/images/logo/logo_main.png" alt="" width="100"></a>
+                            <a href="index.php"><img src="assets/images/logo/logo_main.png" alt="Test Logo" style="width: 100px; height: auto;">
+                            </a>
                         </div>
                     </div>
                     <div class="col-xl-10 col-lg-10 col-md-10">
@@ -96,32 +97,65 @@ if (isset($_SESSION['customer'][0])) {
 </header>
 <main>
     <!--? slider Area Start-->
-    <div class="slider-area position-relative">
-        <div class="slider-active">
-            <!-- Single Slider -->
-            <div class="single-slider slider-height d-flex align-items-center">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-7 col-lg-9 col-md-8 col-sm-9">
-                            <div class="hero__caption">
-                                <h1 class="cd-headline letters scale">
-                                <img src="assets/images/hero/h1_hero.png" alt="Hero Image" class="full-screen-image">
-                                <style>
-
-                                /* Full-screen image styling */
-                                .full-screen-image {
-                                    width: 100%; /* Image takes up full width of the container */
-                                    height: 100%; /* Image takes up full height of the container */
-                                    object-fit: cover; /* Ensures the image covers the entire container without distortion */
-                                    display: block; /* Removes any space below the image */
-                                }
-                                </style>
-                            </div>
-                        </div>
-                    </div>
-                </div>          
+            <div class="slider-area position-relative">
+            <div class="single-slider">
+                <!-- Hình ảnh nền -->
+                <img src="assets/images/hero/h1_hero.png" alt="Banner Image" class="banner-image">
+                <!-- Nội dung banner -->
+                <div class="hero__caption">
+                    <h1>Chào mừng đến với Smiles Hospital</h1>
+                    <p>Sức khỏe của bạn là ưu tiên hàng đầu của chúng tôi.</p>
+                    
+                </div>
             </div>
-    </div>
+        </div>
+                       <style>
+                
+                .header-area {
+                    position: relative;
+                    z-index: 10;
+                }
+
+                .main-header {
+                    position: sticky;
+                    top: 0;
+                    z-index: 10;
+                    background-color: #fff;
+                    padding: 15px 0; 
+                }
+
+                .slider-area {
+                    margin-top: 60px; 
+                    position: relative;
+                    height: 650px;
+                    overflow: hidden;
+                    background-color: #f5f5f5;
+                    z-index: 1;
+                }
+
+                .hero__caption {
+                    position: relative;
+                    z-index: 2;
+                    text-align: center;
+                    color: #333;
+                    background: rgba(255, 255, 255, 0.8);
+                    padding: 15px 30px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                }
+
+                .banner-image {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    z-index: 1;
+                    filter: brightness(0.8);
+                }
+
+</style>                 
     <!-- slider Area End-->
     <!--? About Start-->
     <div class="about-area section-padding2">
