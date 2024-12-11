@@ -4,10 +4,7 @@ session_start();
 if (isset($_SESSION['customer'][0])) {
     $maBenhNhan = $_SESSION['customer'][0];
     $tenBenhNhan = $_SESSION['customer'][1]; 
-} else {
-    echo "<script>alert('Vui lòng đăng nhập!'); window.location.href = '../dangNhap/';</script>";
-    exit();
-}
+} 
 ?>
 
 <!doctype html>

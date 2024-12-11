@@ -261,7 +261,7 @@ if (isset($_SESSION['customer'][0])) {
                                             <?php echo htmlspecialchars($tenBenhNhan); ?>
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <li><a class="dropdown-item" href="../../index.php">Đăng xuất</a></li>
+                                            <li><a class="dropdown-item" href="../dangxuat/">Đăng xuất</a></li>
                                         </ul>
                                     </div>
                                 <?php } else { ?>
