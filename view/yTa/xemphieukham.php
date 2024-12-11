@@ -79,7 +79,7 @@ $dsPKB = $controller->hienThiDanhSachPKB("", $maBenhNhan);
                                             <th>Phòng Khám</th>
                                             <th>Ngày Khám</th>
                                             <th>Bệnh Nhân</th>
-                                            <th>Nhân Viên</th>
+                                            <th>Bác sĩ phụ trách</th>
                                             <th>Lý Do</th>
                                             <th>Kết Luận</th>
                                             <th>Chi Tiết</th>

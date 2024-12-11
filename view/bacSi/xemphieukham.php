@@ -51,7 +51,7 @@ $dsPKB = $controller->hienThiDanhSachPKBBS($maBenhNhan, $maNhanVien);
                     <div class="slimscroll-menu">
                         <div id="sidebar-menu">
                             <ul class="metismenu" id="side-menu">
-                                <li><a href=".php"><i class="fe-airplay"></i><span>Dashboard</span></a></li>
+                                <li><a href="index.php"><i class="fe-airplay"></i><span>Dashboard</span></a></li>
                                 <li><a href="xemphieukham.php"><i class="fas fa-user-tie"></i><span>Xem phiếu khám bệnh</span><span class="menu-arrow"></span></a></li>
                                 <li><a href="xemlichkham.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch khám</span><span class="menu-arrow"></span></a></li>
                                 <li><a href="dangkicalamviec.php"><i class="mdi mdi-hospital-building"></i><span>Đăng ký ca</span><span class="menu-arrow"></span></a></li>
@@ -88,7 +88,7 @@ $dsPKB = $controller->hienThiDanhSachPKBBS($maBenhNhan, $maNhanVien);
                                             <th>Phòng Khám</th>
                                             <th>Ngày Khám</th>
                                             <th>Bệnh Nhân</th>
-                                            <th>Bác Sĩ</th>
+                                            <th>Bác Sĩ phụ trách</th>
                                             <th>Lý Do</th>
                                             <th>Kết Luận</th>
                                             <th>Chi Tiết</th>
