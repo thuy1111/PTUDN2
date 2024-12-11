@@ -1,0 +1,131 @@
+#navigation li {
+    position: relative;
+}
+
+#navigation li a {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#navigation li:hover>.dropdown-content {
+    display: block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.dropdown-content li {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-content li:last-child {
+    border-bottom: none;
+}
+
+.dropdown-content li a {
+    color: #555;
+    font-size: 14px;
+    padding: 8px;
+    display: block;
+    text-decoration: none;
+}
+
+.dropdown-content li a:hover {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+}
+
+/* Đảm bảo cả nút "Đăng xuất" và nút hiển thị tên đều có phong cách giống nhau */
+.btn.header-btn {
+    font-size: 16px;
+    /* Kích thước chữ giống nhau */
+    padding: 10px 20px;
+    /* Tăng kích thước padding để nút lớn hơn */
+    border-radius: 5px;
+    /* Bo góc cho nút */
+    color: #fff;
+    /* Màu chữ trắng */
+    background-color: #007bff;
+    /* Màu nền xanh dương */
+    border: 1px solid #007bff;
+    /* Đường viền xanh dương */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    /* Hiệu ứng chuyển màu nền và viền */
+}
+
+.btn.header-btn:hover {
+    background-color: #0056b3;
+    /* Màu nền khi hover */
+    border-color: #0056b3;
+    /* Màu viền khi hover */
+    color: #fff;
+    /* Màu chữ khi hover */
+}
+
+.dropdown-item {
+    font-size: 16px;
+    /* Đặt kích thước chữ rõ ràng */
+    padding: 10px 20px;
+    /* Tăng khoảng cách giữa các mục */
+    color: #fff;
+    /* Màu chữ trắng */
+    background-color: #007bff;
+    /* Màu nền xanh dương */
+    border-radius: 5px;
+    /* Bo góc cho nút */
+    transition: background-color 0.3s ease;
+    /* Hiệu ứng chuyển màu nền khi hover */
+}
+
+.dropdown-item:hover {
+    background-color: #0056b3;
+    /* Màu nền khi hover */
+    color: #fff;
+    /* Màu chữ khi hover */
+}
+
+/* Tùy chỉnh dropdown menu */
+.dropdown-menu {
+    background-color: #f8f9fa;
+    /* Màu nền cho menu */
+    border-radius: 5px;
+    /* Bo góc cho menu */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Thêm hiệu ứng đổ bóng */
+}
+
+
+/* Mobile View */
+@media (max-width: 768px) {
+    .dropdown-content {
+        position: static;
+        display: none;
+        background-color: #fff;
+        border: none;
+        box-shadow: none;
+        min-width: 100%;
+    }
+
+    #navigation li.active>.dropdown-content {
+        display: block;
+    }
+}
+
+body {
+    font-size: 15px;
+}

@@ -68,19 +68,13 @@
         color: #721c24;
     }
 </style>
+
 <?php
-session_start();
+
 include_once("../../controller/cBacSi.php");
-
-// Check if user is logged in
-if (!isset($_SESSION['user']) || !isset($_SESSION['user'][2]) || $_SESSION['user'][2] != 1) {
-    echo "<script>alert('Vui lòng đăng nhập với tài khoản bác sĩ!'); window.location.href = '../dangNhap/';</script>";
-    exit();
-}
-
-$maNhanVien = $_SESSION['user'][0];
-
 error_reporting(0);
+
+
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 $homnay = date('Y-m-d');
 $week = date('w');
@@ -99,7 +93,7 @@ for ($i = 1; $i < 8; $i++) {
     $daysOfWeek[] = date('Y-m-d', strtotime($a . " +{$i} days"));
 }
 
-echo '
+echo'
     <form method="POST" action="">
     <input type="hidden" name="currentWeekStart" value="'.$ngaydautuan.'">
     </form>
@@ -144,41 +138,46 @@ echo '
                     echo '</tr>';
         echo '  </tbody>
             </table>
-            <input type="submit" class="btn btn-primary" name="btnDK" value="Đăng ký">
+            <input type="submit" class="" name="btnDK" value="Đăng ký">
             </form>
         </div>';
 
-if(isset($_POST['btnDK'])){
-    if(isset($_POST['date']) && !empty($_POST['date'])){
-        $date = $_POST['date'];
-        $ca = array_keys($date);
-        $l2 = count($ca);
-        $rs = true;
-        for ($k = 0; $k < $l2; $k++) {
-            $c = $ca[$k];
-            $l = count($date[$c]);
-            for ($i = 0; $i < $l; $i++)
-            {
-                $d = $date[$c][$i];
-                $p = new cBacsi();
-                if (!$p->DKCa($maNhanVien, $d, $c)) {
-                    $rs = false;
-                    break 2;
+        if (isset($_POST['btnDK'])) {
+            if (isset($_POST['date']) && !empty($_POST['date'])) {
+                $manv = $_SESSION['user'][0]; 
+                $date = $_POST['date'];
+                $ca = array_keys($date);
+                $l2 = count($ca);
+                $rs = 0;
+                $message = '';
+                
+                for ($k = 0; $k < $l2; $k++) {
+                    $c = $ca[$k];
+                    $l = count($date[$c]);
+                    for ($i = 0; $i < $l; $i++) {
+                        $d = $date[$c][$i];
+                        $p = new cBacSi();
+                        $response = $p->DKCa($manv, $d, $c);
+                        if ($response['status'] == true) {
+                            $rs = 1;
+                            $message = $response['message']; // Thành công
+                        } else {
+                            $rs = 0;
+                            $message = $response['message']; // Thất bại
+                        }
+                    }
                 }
-            }
+        
+                if ($rs == 1) {
+                    echo '<script>alert("' . $message . '")</script>';
+                } else {
+                    echo '<script>alert("' . $message . '")</script>';
+                }
+            } else {
+                echo '<script>alert("Vui lòng chọn ca làm việc")</script>';
+            }    
         }
-        if($rs)
-        {
-            echo '<div class="alert alert-success">Đăng ký thành công</div>';
-        }
-        else
-        {
-            echo '<div class="alert alert-danger">Đăng ký thất bại</div>';
-        }
-    }else{
-        echo '<div class="alert alert-danger">Vui lòng chọn ca làm việc</div>';
-    }    
-}
+        
 
 ?>
 <script>
@@ -188,14 +187,11 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener("click", function(e) {
             e.preventDefault();
 
-            // Get the week change value
             const weekChange = button.value;
 
-            // Get the current week start date
             let currentWeekStart = document.querySelector("input[name='currentWeekStart']").value;
             currentWeekStart = new Date(currentWeekStart);
 
-            // Calculate the new week start date based on the button clicked
             if (weekChange === 'prev') {
                 currentWeekStart.setDate(currentWeekStart.getDate() - 7);
             } else if (weekChange === 'next') {
@@ -206,16 +202,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 currentWeekStart = new Date(today.setDate(today.getDate() - today.getDay()));
             }
 
-            // Ensure the week always starts on Sunday
             currentWeekStart.setDate(currentWeekStart.getDate() - currentWeekStart.getDay());
 
-            // Update the hidden input value for the server
             document.querySelector("input[name='currentWeekStart']").value = currentWeekStart.toISOString().split('T')[0];
 
-            // Get the selected department code
             const khoaSelect = document.querySelector("select[name='khoaSelect']") ? document.querySelector("select[name='khoaSelect']").value : "";
 
-            // Send request to update the work schedule
             updateSchedule({ changeWeek: weekChange, currentWeekStart: currentWeekStart.toISOString().split('T')[0], khoaSelect: khoaSelect });
         });
     });
@@ -236,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         };
 
-        // Create parameter string for the request
+
         const params = Object.keys(data).map(key => `${key}=${encodeURIComponent(data[key])}`).join("&");
         xhr.send(params);
     }

@@ -9,7 +9,7 @@ class cBenhNhan {
             if ($tbl->num_rows > 0) {
                 return $tbl;
             } else {
-                return null; // Không có dữ liệu trong bảng
+                return null; 
             }
         } else {
             return false;
@@ -19,7 +19,7 @@ class cBenhNhan {
     public function themThongTinVaoHoaDon($maBenhNhan, $maLichKham) {
         $p = new mBenhNhan();
         $result = $p->themThongTinVaoHoaDon($maBenhNhan, $maLichKham);
-        return $result; // Trả về true nếu thêm thành công, false nếu thất bại
+        return $result; 
     }
 
     public function hienThiLichKhamTheoBenhNhan($maBenhNhan) {
@@ -28,7 +28,7 @@ class cBenhNhan {
         }
         $lichKhamModel = new mBenhNhan();
         $dsLichKham = $lichKhamModel->layDSLichKhamTheoBenhNhan($maBenhNhan);
-        return $dsLichKham; // Trả về mảng dữ liệu hoặc false nếu không có dữ liệu
+        return $dsLichKham;
     }
 
     public function hienThiChiTietLKTheoBenhNhan($maLichKham, $maBenhNhan) {
@@ -40,9 +40,9 @@ class cBenhNhan {
 		$chiTietLK = $lichKhamModel->layChiTietLichKhamTheoBenhNhan($maLichKham, $maBenhNhan);
 	
 		if ($chiTietLK) {
-			return $chiTietLK; // Trả về chi tiết lịch khám nếu có dữ liệu
+			return $chiTietLK; 
 		} else {
-			return null; // Không có dữ liệu cho lịch khám
+			return null; 
 		}
 	}
 	

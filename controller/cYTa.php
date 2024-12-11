@@ -4,9 +4,17 @@ include_once("../../model/mYTa.php");
 class cYTa
 {
     public function DKCa($manv, $date, $ca) {
-        $model = new mYTa();
-        $result = $model->DKCa($manv, $date, $ca);
-        return $result;
+        $p = new mYTa();
+        
+        $existingShift = $p->kiemTraCaLam($manv, $date, $ca);
+        if ($existingShift) {
+            return [
+                'status' => false,
+                'message' => 'Ca làm việc này đã được đăng ký trước đó.'
+            ];
+        }
+        
+        return $p->DKCa($manv, $date, $ca);
     }
 
     public function hienThiDSLichLamViec($startDate, $endDate, $maNhanVien)

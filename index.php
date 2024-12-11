@@ -1,45 +1,56 @@
+<?php
+session_start();
+
+if (isset($_SESSION['customer'][0])) {
+    $maBenhNhan = $_SESSION['customer'][0];
+    $tenBenhNhan = $_SESSION['customer'][1]; 
+} 
+?>
+
 <!doctype html>
 <html class="no-js" lang="zxx">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> Smiles Hospital | Trang chủ</title>
+    <title>Smiles Hospital | Trang chủ</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo/hospital.png">
-
-	<!-- CSS here -->
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="assets/css/slicknav.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/images/logo/hospital.png">
+    <style>
+        
+    
+    </style>
+    <!-- CSS here -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/slicknav.css">
     <link rel="stylesheet" href="assets/css/flaticon.css">
     <link rel="stylesheet" href="assets/css/gijgo.css">
     <link rel="stylesheet" href="assets/css/animate.min.css">
     <link rel="stylesheet" href="assets/css/animated-headline.css">
-	<link rel="stylesheet" href="assets/css/magnific-popup.css">
-	<link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-	<link rel="stylesheet" href="assets/css/themify-icons.css">
-	<link rel="stylesheet" href="assets/css/slick.css">
-	<link rel="stylesheet" href="assets/css/nice-select.css">
-	<link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/payment.css">
+    <link rel="stylesheet" href="assets/css/dropdown.css">
 </head>
 <body>
 <header>
-    <!--? Header Start -->
     <div class="header-area">
         <div class="main-header header-sticky">
             <div class="container-fluid">
                 <div class="row align-items-center">
-                    <!-- Logo -->
                     <div class="col-xl-2 col-lg-2 col-md-1 mt-3">
                         <div class="logo">
-                            <a href="index.php"><img src="assets/images/logo/logo_main.png" alt="" width="100"></a>
+                            <a href="index.php"><img src="assets/images/logo/logo_main.png" alt="Test Logo" style="width: 100px; height: auto;">
+                            </a>
                         </div>
                     </div>
                     <div class="col-xl-10 col-lg-10 col-md-10">
                         <div class="menu-main d-flex align-items-center justify-content-end">
-                            <!-- Main-menu -->
                             <div class="main-menu f-right d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
@@ -48,16 +59,38 @@
                                         <li><a href="bacsi.php">Bác Sĩ</a></li>
                                         <li><a href="tintuc.php">Tin Tức</a></li>
                                         <li><a href="lienhe.php">Liên Hệ</a></li>
+<<<<<<< HEAD
                                         <li><a href="view/benhNhan/dangkylichkham.php">Đăng Ký Khám</a></li>
+=======
+                                        <li class="dropdown">
+                                        <a class="dropbtn" href="#">Chức năng</a>
+                                        <div class="dropdown-content">
+                                            <a href="view/benhnhan/dangkylichkhambenh.php.php">Đăng ký lịch khám</a>
+                                            <a href="view/benhnhan/xemlichkham.php">Xem Lịch Khám</a>
+                                            <a href="view/benhnhan/xemphieukham.php">Xem Phiếu Khám Bệnh</a>
+                                        </div>
+                                        </li>
+>>>>>>> 4f13eeee26d9246074c8bae8ea3e6b62b5ad6b7a
                                     </ul>
                                 </nav>
                             </div>
                             <div class="header-right-btn f-right d-none d-lg-block ml-30">
-                                <a href="view/dangNhap/" class="btn header-btn">Đăng Nhập</a>
-                            </div>
+                            <?php if (isset($tenBenhNhan)) { ?>
+                                <div class="dropdown">
+                                    <button class="btn header-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <?php echo htmlspecialchars($tenBenhNhan); ?>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li><a class="dropdown-item" href="view/dangxuat/">Đăng xuất</a></li>
+                                    </ul>
+                                </div>
+                            <?php } else { ?>
+                                <a href="view/dangNhap/" class="btn header-btn">Đăng nhập</a>
+                            <?php } ?>
+                        </div>
+
                         </div>
                     </div>   
-                    <!-- Mobile Menu -->
                     <div class="col-12">
                         <div class="mobile_menu d-block d-lg-none"></div>
                     </div>
@@ -65,36 +98,68 @@
             </div>
         </div>
     </div>
-    <!-- Header End -->
 </header>
 <main>
     <!--? slider Area Start-->
-    <div class="slider-area position-relative">
-        <div class="slider-active">
-            <!-- Single Slider -->
-            <div class="single-slider slider-height d-flex align-items-center">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-7 col-lg-9 col-md-8 col-sm-9">
-                            <div class="hero__caption">
-                                <h1 class="cd-headline letters scale">
-                                <img src="assets/images/hero/h1_hero.png" alt="Hero Image" class="full-screen-image">
-                                <style>
-
-                                /* Full-screen image styling */
-                                .full-screen-image {
-                                    width: 100%; /* Image takes up full width of the container */
-                                    height: 100%; /* Image takes up full height of the container */
-                                    object-fit: cover; /* Ensures the image covers the entire container without distortion */
-                                    display: block; /* Removes any space below the image */
-                                }
-                                </style>
-                            </div>
-                        </div>
-                    </div>
-                </div>          
+            <div class="slider-area position-relative">
+            <div class="single-slider">
+                <!-- Hình ảnh nền -->
+                <img src="assets/images/hero/h1_hero.png" alt="Banner Image" class="banner-image">
+                <!-- Nội dung banner -->
+                <div class="hero__caption">
+                    <h1>Chào mừng đến với Smiles Hospital</h1>
+                    <p>Sức khỏe của bạn là ưu tiên hàng đầu của chúng tôi.</p>
+                    
+                </div>
             </div>
-    </div>
+        </div>
+                       <style>
+                
+                .header-area {
+                    position: relative;
+                    z-index: 10;
+                }
+
+                .main-header {
+                    position: sticky;
+                    top: 0;
+                    z-index: 10;
+                    background-color: #fff;
+                    padding: 15px 0; 
+                }
+
+                .slider-area {
+                    margin-top: 60px; 
+                    position: relative;
+                    height: 650px;
+                    overflow: hidden;
+                    background-color: #f5f5f5;
+                    z-index: 1;
+                }
+
+                .hero__caption {
+                    position: relative;
+                    z-index: 2;
+                    text-align: center;
+                    color: #333;
+                    background: rgba(255, 255, 255, 0.8);
+                    padding: 15px 30px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                }
+
+                .banner-image {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    z-index: 1;
+                    filter: brightness(0.8);
+                }
+
+</style>                 
     <!-- slider Area End-->
     <!--? About Start-->
     <div class="about-area section-padding2">
@@ -520,5 +585,9 @@
     <script src="assets/js/vendor/jquery.datetimepicker.full.min.js"></script>
     <script src="assets/js/main.js"></script>
     
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
 </html>

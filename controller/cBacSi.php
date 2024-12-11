@@ -1,18 +1,18 @@
 <?php
     include_once("../../model/mBacSi.php");
     class cBacSi{
-        public function DKCa($manv,$date,$ca){
+        public function DKCa($manv, $date, $ca) {
             $p = new mBacsi();
-            $tbl = $p->DKCa($manv,$date,$ca);
-			if ($tbl) {
-				if ($tbl->num_rows > 0) {
-					return $tbl;
-				} else {
-					return -1; // Không có dữ liệu trong bảng
-				}
-			} else {
-				return false;
-			}
+            
+            $existingShift = $p->kiemTraCaLam($manv, $date, $ca);
+            if ($existingShift) {
+                return [
+                    'status' => false,
+                    'message' => 'Ca làm việc này đã được đăng ký trước đó.'
+                ];
+            }
+            
+            return $p->DKCa($manv, $date, $ca);
         }
 
 		public function hienThiDSLichLamViec($startDate, $endDate, $maNhanVien)
@@ -48,15 +48,15 @@
 
     
     public function hienThiChiTietLK($maLichKham)
-    {
-        $lichKhamModel = new mBacsi();
-        $chiTietLK = $lichKhamModel->layChiTietLichKham($maLichKham);
-        if ($chiTietLK) {
-            return $chiTietLK;
-        } else {
-            return false;
-        }
+{
+    $lichKhamModel = new mBacsi();
+    $chiTietLK = $lichKhamModel->layChiTietLichKham($maLichKham);
+    if ($chiTietLK) {
+        return $chiTietLK;
+    } else {
+        return false;
     }
+<<<<<<< HEAD
 
     // Lấy danh sách lịch làm việc của bác sĩ
     public function layDSLichLamViecBacSi($maNhanVien) {
@@ -81,5 +81,8 @@
             return false;
         }
     }
+=======
+}
+>>>>>>> 4f13eeee26d9246074c8bae8ea3e6b62b5ad6b7a
 
  }

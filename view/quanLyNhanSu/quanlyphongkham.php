@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <html lang="en">
     
     <!--Head Code-->
@@ -40,102 +40,116 @@
                         <!-- end page title --> 
                         <hr style="border-color: black;">
 
+                        <form class="mb-3" method="post">
+                        
                         <div class="row">
                             <div class="col-12 text-center">
-                                <button type="button" class="btn btn-primary mx-2">Thêm</button>
-                                <button type="button" class="btn btn-success mx-2">Cập nhật</button>
-                                <button type="button" class="btn btn-danger mx-2">Hủy</button>
+                                <input type="submit" name="btnadd" class="btn btn-primary mx-2"value="Thêm">
+                                <input type="submit" name="btnupdate"  class="btn btn-success mx-2" value="Cập nhật"> 
+                                <input type="submit" class="btn btn-danger mx-2" value="Hủy">
                             </div>
+                        
                         </div>
+                        <?php
+
+include_once("../../controller/cPhongKham.php");
+$p= new cPhongKham();
+if(isset($_REQUEST['maPhongKham']))
+{
+    $kq= $p->xemthongtinphongkham($_REQUEST['maPhongKham']);
+    if($kq)
+    {
+        while($r=mysqli_fetch_assoc($kq))
+        {
+            $tenPhongKham=$r['tenPhongKham'];
+            $maKhoa=$r['maKhoa'];
+            $chucNang=$r['chucNang'];
+            $trangthai=$r['tinhTrangHoatDong'];
+        }
+    }
+}
+?>
 
                         <hr style="border-color: black;">
 
                         <h4 class="header-title mb-3">Thông tin phòng khám</h4>
 
-                        <form class="mb-3">
-                            <div class="row">
-                                <!-- Left column -->
-                                <div class="col-md-6">
-                                    <!-- Faculty of Management -->
-                                    <div class="row mb-1">
-                                        <div class="col-md-3">
-                                            <label for="khoaQuanLy" class="form-label">Khoa quản lý</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <select class="form-select form-control" id="khoaQuanLy">
-                                                <option selected>Chọn khoa quản lý</option>
-                                                <option value="1">Khoa 1</option>
-                                                <option value="2">Khoa 2</option>
-                                                </select>
-                                        </div>
-                                    </div>
+                        <form class="mb-3" id="formPhongKham">
+    <div class="row">
+        <!-- Left column -->
+        <div class="col-md-6">
+            <!-- Faculty of Management -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="khoaQuanLy" class="form-label">Khoa quản lý</label>
+                </div>
+                <div class="col-md-8">
+                    <select name="khoaQuanLy" class="form-select form-control" id="khoaQuanLy" required>
+                        <option value="" selected disabled>Chọn khoa quản lý</option>
+                        <?php
+                            include("../../controller/cKhoa.php");
+                            $controller = new cKhoa();
+                            $dsKhoa = $controller->layDSKhoa();
+                            $selectedKhoa = isset($_REQUEST['maKhoa']) ? $_REQUEST['maKhoa'] : '';
+                            
+                            if ($dsKhoa) {
+                                while ($loai = $dsKhoa->fetch_assoc()) {
+                                    $selected = ($selectedKhoa == $loai['maKhoa']) ? 'selected' : '';
+                                    echo "<option value='{$loai['maKhoa']}' {$selected}>{$loai['tenKhoa']}</option>";
+                                }
+                            } else {
+                                echo "<option value='' disabled>Không có dữ liệu Khoa</option>";
+                            }
+                        ?>
+                    </select>
+                    <span id="tbKhoaQuanLy" class="text-danger"></span>
+                </div>
+            </div>
 
-                                    <!-- Name of the clinic -->
-                                    <div class="row mb-1">
-                                        <div class="col-md-3">
-                                            <label for="tenPhongKham" class="form-label">Tên phòng khám</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" id="tenPhongKham" placeholder="Nhập tên phòng khám">
-                                        </div>
-                                    </div>
+            <!-- Name of the clinic -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="tenPhongKham" class="form-label">Tên phòng khám</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="tenPhongKham" id="tenPhongKham" placeholder="Nhập tên phòng khám" required>
+                    <span id="tbTenPhongKham" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
 
-                                    <!-- Functions -->
-                                    <div class="row mb-1">
-                                        <div class="col-md-3">
-                                            <label for="chucNang" class="form-label">Chức năng</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" id="chucNang" placeholder="Nhập chức năng">
-                                        </div>
-                                    </div>
+        <!-- Right column -->
+        <div class="col-md-6">
+            <!-- Functions -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="chucNang" class="form-label">Chức năng</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="chucNang" id="chucNang" placeholder="Nhập chức năng" required>
+                    <span id="tbChucNang" class="text-danger"></span>
+                </div>
+            </div>
 
-                                    
-                                </div>
+            <!-- Clinic Status -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="trangthai" class="form-label">Trạng thái phòng khám</label>
+                </div>
+                <div class="col-md-8">
+                    <select name="trangthai" class="form-select form-control" id="trangthai" required>
+                        <option value="" selected disabled>Cập nhật trạng thái</option>
+                        <option value="Đang làm việc">Đang hoạt động</option>
+                        <option value="Nghỉ việc">Ngưng hoạt động</option>
+                    </select>
+                    <span id="tbTrangThai" class="text-danger"></span>
+                </div>
+            </div>  
+        </div>
+    </div>
 
-                                <!-- Right column -->
-                                <div class="col-md-6">
-                                    <!-- Position -->
-                                    <div class="row mb-1">
-                                        <div class="col-md-3">
-                                            <label for="viTri" class="form-label">Vị trí</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control" id="viTri" placeholder="Nhập vị trí">
-                                        </div>
-                                    </div>
-                                    <!-- Doctors -->
-                                    <div class="row mb-1">
-                                        <div class="col-md-3">
-                                            <label for="bacSi" class="form-label">Bác sĩ</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <select class="form-select form-control" id="bacSi">
-                                                <option selected>Chọn bác sĩ</option>
-                                                <option value="1">Bác sĩ 1</option>
-                                                <option value="2">Bác sĩ 2</option>
-                                            </select>
-                                        </div>
-                                        </div>
-
-                                    <!-- Nurses -->
-                                    <div class="row mb-1">
-                                        <div class="col-md-3">
-                                            <label for="yTa" class="form-label">Y tá</label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <select class="form-select form-control" id="yTa">
-                                                <option selected>Chọn y tá</option>
-                                                <option value="1">Y tá 1</option>
-                                                <option value="2">Y tá 2</option>
-                                            </select>
-                                        </div>
-                                    </div>    
-
-                                    
-                                </div>
-                            </div>
-                        </form>
+    
+</form>
 
                         <hr style="border-color: black;">
 
@@ -145,11 +159,13 @@
                                 <div class="card-box">
                                     <h4 class="header-title mb-3">Danh sách phòng khám</h4>
                                     <div class="row mb-3">
-    <div class="col-md-6">
-    <form method="GET" action="controller/PhongKhamController.php">
-    <div class="input-group">
-        <input type="text" class="form-control" name="search" placeholder="Tìm kiếm theo tên hoặc mã phòng khám" value="<?= isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-        <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                                    <div class="col-md-6">
+        <form method="GET" action="">
+            <div class="input-group">
+                <input type="text" class="form-control" name="search" placeholder="Tìm kiếm theo tên hoặc mã phòng khám">
+                <input type="submit" name ="btnsearch"class="btn btn-primary" value="Tìm kiếm">
+            </div>
+        </form>
     </div>
 </form>
     </div>
@@ -160,39 +176,87 @@
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th>STT</th>
-                                                    <th>MÃ PHÒNG KHÁM</th>
                                                     <th>TÊN PHÒNG KHÁM</th>
                                                     <th>KHOA QUẢN LÝ</th>
                                                     <th>CHỨC NĂNG</th>
-                                                    <th>VỊ TRÍ</th>
-                                                    <th>BÁC SĨ</th>
-                                                    <th>Y TÁ</th>
+                                                   
                                                     <th>TRẠNG THÁI HOẠT ĐỘNG</th>
                                                 </tr>
                                             </thead>
-                                           
-                                            <tbody><tr>
+                                            <?php
+    include_once("../../controller/cPhongKham.php");
+    $qk= new cPhongKham();
+    if(isset($_REQUEST['btnsearch']))
+    {
+        $tbl = $qk->timkiempk($_REQUEST['search']);
+        
+    }
+    else{
+        $tbl = $qk->laydanhsachphongkham();
+    }
+    
 
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>    
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
+    if($tbl)
+    {
+        echo ' <tbody>';
+        $stt= 1;
+        while ($r=mysqli_fetch_assoc($tbl))
+        {
+            echo'<tr>
+                                                    <td>'.$stt.'</td>   
+                                                    <td><a href="?maPhongKham='.$r['maPhongKham'].'">'.$r['tenPhongKham'].'</a></td>
+                                                    <td>'.$r['tenKhoa'].'</td>
+                                                    <td>'.$r['chucNang'].'</td>
+                                                
+                                                    <td>'.$r['tinhTrangHoatDong'].'</td>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-                                                </tr>
+                                                </tr>';
+                                                $stt++;
+        }
+
+    }
+    else{
+        echo "Không có kết quả";
+    }
+?>
+     <?php
+if(isset($_REQUEST['btnadd']) && $_REQUEST['btnadd']=='Thêm' )
+
+{
+    
+    $insert= $qk->addphongkham($_REQUEST['tenPhongKham'],$_REQUEST['khoaQuanLy'],$_REQUEST['chucNang'],$_REQUEST['trangthai']);
+    if($insert)
+    {
+        echo "<script>alert('Thêm phòng khám thành công');</script>";
+        echo "<script>window.location.href = 'quanlyphongkham.php';</script>";
+    }
+    else {
+        echo "<script>alert('Thêm nhân viên không thành công');</script>";
+        echo "<script>window.location.href = 'quanlyphongkham.php';</script>";
+    }
+}
+
+?>      
+<?php
+if(isset($_REQUEST['btnupdate']) && $_REQUEST['btnupdate']=='Cập nhật' )
+
+{
+    
+    
+    $update= $qk->updatettpk($_REQUEST['maPhongKham'],$_REQUEST['tenPhongKham'],$_REQUEST['khoaQuanLy'],$_REQUEST['chucNang'],$_REQUEST['trangthai']);
+    if($update)
+    {
+        echo "<script>alert('Cập nhật thông tin phòng khám thành công');</script>";
+        echo "<script>window.location.href = 'quanlyphongkham.php';</script>";
+    }
+    else {
+        echo "<script>alert('Cập nhật thông tin phòng khám không thành công');</script>";
+        echo "<script>window.location.href = 'quanlyphongkham.php';</script>";
+    }
+}
+
+?>                       
+
                                             </tbody>
                                             
                                         </table>
@@ -266,7 +330,51 @@
 
         <!-- App js-->
         <script src="../../assets/js/app.min.js"></script>
-        
+        <script>
+    document.getElementById('formPhongKham').addEventListener('submit', function (event) {
+        let isValid = true;
+        const khoaQuanLy = document.getElementById('khoaQuanLy').value;
+        const tenPhongKham = document.getElementById('tenPhongKham').value;
+        const chucNang = document.getElementById('chucNang').value;
+        const trangthai = document.getElementById('trangthai').value;
+
+        // Validate Khoa Quản lý
+        if (khoaQuanLy === "") {
+            document.getElementById('tbKhoaQuanLy').textContent = "Vui lòng chọn khoa quản lý.";
+            isValid = false;
+        } else {
+            document.getElementById('tbKhoaQuanLy').textContent = "";
+        }
+
+        // Validate Tên phòng khám
+        if (tenPhongKham === "") {
+            document.getElementById('tbTenPhongKham').textContent = "Vui lòng nhập tên phòng khám.";
+            isValid = false;
+        } else {
+            document.getElementById('tbTenPhongKham').textContent = "";
+        }
+
+        // Validate Chức năng
+        if (chucNang === "") {
+            document.getElementById('tbChucNang').textContent = "Vui lòng nhập chức năng.";
+            isValid = false;
+        } else {
+            document.getElementById('tbChucNang').textContent = "";
+        }
+
+        // Validate Trạng thái
+        if (trangthai === "") {
+            document.getElementById('tbTrangThai').textContent = "Vui lòng chọn trạng thái phòng khám.";
+            isValid = false;
+        } else {
+            document.getElementById('tbTrangThai').textContent = "";
+        }
+
+        if (!isValid) {
+            event.preventDefault(); // Ngăn không cho form submit
+        }
+    });
+</script>       
     </body>
 
 </html>

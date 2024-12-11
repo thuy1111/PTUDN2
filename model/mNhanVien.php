@@ -1,36 +1,15 @@
 <?php
-include_once("connect.php");
-
-class modelBaoHiem {
-    public function selectAllBaoHiem() {
-        $p = new clsketnoi();
-        $con = $p->moKetNoi();
-        $truyvan = "SELECT *,k.tenLoai from baohiem p join loaibaohiem k on p.maLoai= k.maLoai";
-        $ketqua = mysqli_query($con, $truyvan);
-        $p->dongKetNoi($con);
-        return $ketqua;
-    }
-
-    public function selectBaoHiemById($maBaoHiem) {
-        $p = new clsketnoi();
-        $con = $p->moKetNoi(); 
-        $truyvan = "SELECT * FROM baohiem WHERE maBaoHiem = ?";
-        $stmt = mysqli_prepare($con, $truyvan);
-        mysqli_stmt_bind_param($stmt, "i", $maBaoHiem); 
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        $p->dongKetNoi($con);
-        return $result;
-    }
-    
-        public function thembaohiem($tenBaoHiem,$maLoai,$quyenLoi,$soTheBaoHiem,$ngayBatDau,$ngayHetHan,$noiDangKyKham,$trangthai)
+    include_once("connect.php");
+    class mNhanVien{
+        public function xemdanhsachnhanvien()
         {
             $p = new clsKetNoi();
 			$conn = $p->moketnoi();
 			$conn ->set_charset("utf8");
-            if ($conn) {
-				$str = "INSERT INTO `baohiem` (`maBaoHiem`, `tenBaoHiem`, `maLoai`, `quyenLoi`, `soTheBaoHiem`, `ngayBatDau`, `ngayHetHan`, `noiDangKyKham`, `trangthai`) 
-                VALUES (NULL, '$tenBaoHiem', '$maLoai', '$quyenLoi', '$soTheBaoHiem',  '$ngayBatDau', '$ngayHetHan', '$noiDangKyKham', '$trangthai');";
+			if ($conn) {
+				$str = "Select 
+                        v.maNhanVien, v.hoTen, v.ngaySinh, v.gioiTinh, v.soDienThoai,v.email, v.diaChi, v.tinhTrangNhanVien, k.tenKhoa, c.tenChucVu, k.trangThaiKhoa
+                        from nhanvien v join khoa k on v.maKhoa= k.maKhoa join chucvu c on c.maChucVu=v.maChucVu  ORDER BY v.maNhanVien ASC";
 				$tbl = $conn->query($str);
 				$p->dongketnoi($conn);
 				return $tbl;
@@ -38,13 +17,28 @@ class modelBaoHiem {
 				return false;
 			}
         }
-        public function capnhatthongtinbh($maBaoHiem,$tenBaoHiem,$maLoai,$quyenLoi,$soTheBaoHiem,$ngayBatDau,$ngayHetHan,$noiDangKyKham,$trangthai)
+        public function themnhanvien($hoTen,$ngaySinh,$gioiTinh,$tenDangNhap,$matKhau,$soDienThoai,$email,$diachi,$maChucVu,$maKhoa)
         {
             $p = new clsKetNoi();
 			$conn = $p->moketnoi();
 			$conn ->set_charset("utf8");
             if ($conn) {
-				$str = "UPDATE `baohiem` SET `tenBaoHiem` = '$tenBaoHiem', `maLoai` = '$maLoai', `quyenLoi` = '$quyenLoi', `soTheBaoHiem` = '$soTheBaoHiem',`ngayBatDau`='$ngayBatDau', `maChucVu` = $maChucVu, `maKhoa` = $maKhoa WHERE `nhanvien`.`maNhanVien` = $maNhanVien;";
+				$str = "INSERT INTO `nhanvien` (`maNhanVien`, `hoTen`, `ngaySinh`, `gioiTinh`, `tenDangNhap`, `matKhau`, `soDienThoai`, `email`, `diaChi`,  `maChucVu`, `maKhoa`) 
+                VALUES (NULL, '$hoTen', '$ngaySinh', '$gioiTinh', '$tenDangNhap', MD5('$matKhau'), '$soDienThoai', '$email', '$diachi', '$maChucVu', '$maKhoa');";
+				$tbl = $conn->query($str);
+				$p->dongketnoi($conn);
+				return $tbl;
+			} else {
+				return false;
+			}
+        }
+        public function capnhatthongtinnv($maNhanVien,$hoTen,$ngaySinh,$soDienThoai,$email,$diachi,$trangthai,$maChucVu,$maKhoa)
+        {
+            $p = new clsKetNoi();
+			$conn = $p->moketnoi();
+			$conn ->set_charset("utf8");
+            if ($conn) {
+				$str = "UPDATE `nhanvien` SET `hoTen` = '$hoTen', `ngaySinh` = '$ngaySinh', `email` = '$email', `diaChi` = '$diachi',`tinhTrangNhanVien`='$trangthai', `maChucVu` = $maChucVu, `maKhoa` = $maKhoa WHERE `nhanvien`.`maNhanVien` = $maNhanVien;";
 				$tbl = $conn->query($str);
 				$p->dongketnoi($conn);
 				return $tbl;
@@ -100,7 +94,6 @@ class modelBaoHiem {
 			}
 
         }
+    }
 
-}
 ?>
-

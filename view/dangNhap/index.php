@@ -49,7 +49,7 @@ if (isset($_POST["btndk"])) {
                         $_SESSION["loginBN"] = true;
                         $_SESSION["customer"] = [$row["maBenhNhan"], $row["hoTen"]];
                         $foundBN = true;
-                        echo "<script>window.location.href = '../benhNhan/';</script>";
+                        echo "<script>window.location.href = '../../index.php';</script>";
                         break;
                     }
                 }

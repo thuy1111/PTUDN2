@@ -48,24 +48,16 @@ $chiTietLK = $controller->hienThiChiTietLK($maLichKham);
                         <td><?php echo $chiTietLK['vanDeKham']; ?></td>
                     </tr>
                     <tr>
-                        <th>Giá Dịch Vụ</th>
-                        <td><?php echo number_format($chiTietLK['giaDichVuKham'], 0, ',', '.'); ?> VND</td>
-                    </tr>
-                    <tr>
-                        <th>Mã Nhân Viên</th>
-                        <td><?php echo $chiTietLK['maNhanVien']; ?></td>
-                    </tr>
-                    <tr>
-                        <th>Mã Bệnh Nhân</th>
-                        <td><?php echo $chiTietLK['maBenhNhan']; ?></td>
+                        <th>Bệnh Nhân</th>
+                        <td><?php echo $chiTietLK['TenBenhNhan']; ?></td>
                     </tr>
                     <tr>
                         <th>Mã Bảo Hiểm</th>
                         <td><?php echo $chiTietLK['maBaoHiem']; ?></td>
                     </tr>
                     <tr>
-                        <th>Mã Khoa</th>
-                        <td><?php echo $chiTietLK['maKhoa']; ?></td>
+                        <th>Khoa</th>
+                        <td><?php echo $chiTietLK['TenKhoa']; ?></td>
                     </tr>
                 </table>
             </div>

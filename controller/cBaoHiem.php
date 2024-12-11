@@ -1,8 +1,10 @@
 <?php
+
+
 include_once("../../model/mBaoHiem.php");
 
 class controlBaoHiem {
-
+	
     public function getAllBaoHiem() {
         $p = new modelBaoHiem();
         $tbl = $p->selectAllBaoHiem();
@@ -23,3 +25,4 @@ class controlBaoHiem {
     }
 }
 ?>
+

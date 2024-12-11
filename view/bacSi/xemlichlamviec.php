@@ -4,24 +4,63 @@
     <?php include("../../assets/inc/head.php"); ?>
     <title>Lịch Làm Việc - Quản Lý Ca</title>
     <style>
-        .shift-time {
-            font-size: 0.8em;
-            color: #6c757d;
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
         }
-        .shift-notes {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
+
+        /* Header and Page Title */
+        h2 {
+            font-size: 1.8em;
+            margin-bottom: 1rem;
         }
-        .shift-notes span {
-            margin: 0 10px;
-        }
+
+        /* Week Navigation */
         .week-navigation {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
         }
+
+        .week-navigation button {
+            padding: 0.5rem 1rem;
+            font-size: 1em;
+        }
+
+        #weekDateRange {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        /* Shift Table */
+        .shift-table th, .shift-table td {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .shift-table th {
+            background-color: #f4f4f4;
+        }
+
+        .shift-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .shift-notes {
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            font-size: 1em;
+            color: #555;
+        }
+
+        .shift-notes span {
+            margin: 0 10px;
+        }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -30,28 +69,47 @@
             top: 0;
             width: 100%;
             height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
             overflow: auto;
-            background-color: rgba(0,0,0,0.4);
         }
+
         .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 2rem;
             border: 1px solid #888;
             width: 80%;
             max-width: 500px;
         }
+
         .close {
             color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
+
         .close:hover,
         .close:focus {
             color: black;
-            text-decoration: none;
             cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .week-navigation {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .shift-notes {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .shift-notes span {
+                margin-bottom: 0.5rem;
+            }
         }
     </style>
 </head>
@@ -60,15 +118,14 @@
         <?php include('../../assets/inc/nav.php'); ?>
 
         <div class="left-side-menu">
-        <div class="slimscroll-menu">
+            <div class="slimscroll-menu">
                 <div id="sidebar-menu">
                     <ul class="metismenu" id="side-menu">
-                        <li><a href=".php"><i class="fe-airplay"></i><span>Dashboard</span></a></li>
+                        <li><a href="index.php"><i class="fe-airplay"></i><span>Dashboard</span></a></li>
                         <li><a href="xemphieukham.php"><i class="fas fa-user-tie"></i><span>Xem phiếu khám bệnh</span><span class="menu-arrow"></span></a></li>
                         <li><a href="xemlichkham.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch khám</span><span class="menu-arrow"></span></a></li>
                         <li><a href="dangkicalamviec.php"><i class="mdi mdi-hospital-building"></i><span>Đăng ký ca</span><span class="menu-arrow"></span></a></li>
                         <li><a href="xemlichlamviec.php"><i class="mdi mdi-hospital-building"></i><span>Xem lịch làm việc</span><span class="menu-arrow"></span></a></li>
-                        
                     </ul>
                 </div>
             </div>
@@ -83,6 +140,8 @@
                         <button class="btn btn-secondary" id="prevWeekBtn">Tuần Trước</button>
                         <span id="weekDateRange" class="h5"></span>
                         <button class="btn btn-secondary" id="nextWeekBtn">Tuần Sau</button>
+                        <!-- Add the "Current Week" button -->
+                        <button class="btn btn-primary" id="currentWeekBtn">Tuần Hiện Tại</button>
                     </div>
 
                     <div class="card">
@@ -162,7 +221,7 @@
                 if (xhr.status === 200) {
                     // Update the schedule table
                     document.getElementById("scheduleBody").innerHTML = xhr.responseText;
-                    
+
                     // Add click event listeners to shift buttons
                     const shiftButtons = document.querySelectorAll('.shift-button');
                     shiftButtons.forEach(button => {
@@ -210,8 +269,13 @@
             }
         });
 
+        // Add event listener for "Current Week" button
+        document.getElementById('currentWeekBtn').addEventListener('click', function() {
+            currentDate = new Date(); // Reset to current date
+            updateWeekDisplay(); // Refresh the week display
+        });
+
         updateWeekDisplay(); // Initial call
     </script>
 </body>
 </html>
-
