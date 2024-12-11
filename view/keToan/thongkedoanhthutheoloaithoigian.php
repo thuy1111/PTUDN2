@@ -51,25 +51,25 @@ $hasData = false; // Check if data exists
 $doanhThu = [];
 $jsonDoanhThu = "";
 
-if (isset($_REQUEST['submit'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     $startDate = $_REQUEST['startDate'] ?? null;
     $endDate = $_REQUEST['endDate'] ?? null;
     $loaiTG = $_REQUEST['loaiTG'] ?? "0";
     $khoangTG = $_REQUEST['timeRange'] ?? null;
     $year = $_REQUEST['year'] ?? null;
 
-    // Validate input
-    if ($loaiTG == "0") {
-        $alert = 'Vui lòng chọn loại thời gian.';
-    } elseif ($loaiTG == "1" && $khoangTG == "4") {
-        if (empty($startDate) || empty($endDate)) {
-            $alert = 'Vui lòng chọn đầy đủ thời gian bắt đầu và kết thúc.';
-        } elseif ($startDate > $endDate) {
-            $alert = 'Thời gian bắt đầu không thể lớn hơn thời gian kết thúc.';
-        }
-    } elseif (($loaiTG == "2" || $loaiTG == "3") && empty($year)) {
-        $alert = 'Vui lòng chọn năm.';
-    }
+    // // Validate input
+    // if ($loaiTG == "0") {
+    //     $alert = 'Vui lòng chọn loại thời gian.';
+    // } elseif ($loaiTG == "1" && $khoangTG == "4") {
+    //     if (empty($startDate) || empty($endDate)) {
+    //         $alert = 'Vui lòng chọn đầy đủ thời gian bắt đầu và kết thúc.';
+    //     } elseif ($startDate > $endDate) {
+    //         $alert = 'Thời gian bắt đầu không thể lớn hơn thời gian kết thúc.';
+    //     }
+    // } elseif (($loaiTG == "2" || $loaiTG == "3") && empty($year)) {
+    //     $alert = 'Vui lòng chọn năm.';
+    // }
 
     if (!empty($alert)) {
         echo "<script>alert('$alert'); window.location.href='thongkedoanhthutheoloaithoigian.php';</script>";
@@ -89,7 +89,12 @@ if (isset($_REQUEST['submit'])) {
 
 ?>
 
-
+<?php
+if (isset($_POST['reset'])) {
+    // Hủy bỏ toàn bộ dữ liệu trong $_POST
+    $_POST = [];
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -195,16 +200,16 @@ if (isset($_REQUEST['submit'])) {
 
                         <hr style="border-color: black;">
 
-                        <form class="mb-3" method="POST">
+                        <form class="mb-3" method="POST" id="statisticsForm">
                             <div class="row mb-3">
                                 <div class="col-md-2 text-start">
                                     <label for="loaiTG" class="form-label">LOẠI THỜI GIAN</label>
                                 </div>
                                 <div class="col-md-3">
-                                    <select class="form-select form-control" id="loaiTG" name="loaiTG">
-                                        <option value='1' <?= isset($_POST['loaiTG']) && $_POST['loaiTG'] == '1' ? 'selected' : '' ?>>Ngày</option>
-                                        <option value='2' <?= isset($_POST['loaiTG']) && $_POST['loaiTG'] == '2' ? 'selected' : '' ?>>Tháng</option>
-                                        <option value='3' <?= isset($_POST['loaiTG']) && $_POST['loaiTG'] == '3' ? 'selected' : '' ?>>Quý</option>
+                                    <select class="form-control" id="loaiTG" name="loaiTG" data-default="1">
+                                        <option value="1" <?= isset($_POST['loaiTG']) && $_POST['loaiTG'] == '1' ? 'selected' : '' ?>>Ngày</option>
+                                        <option value="2" <?= isset($_POST['loaiTG']) && $_POST['loaiTG'] == '2' ? 'selected' : '' ?>>Tháng</option>
+                                        <option value="3" <?= isset($_POST['loaiTG']) && $_POST['loaiTG'] == '3' ? 'selected' : '' ?>>Quý</option>
                                     </select>
                                 </div>
                             </div>
@@ -217,11 +222,11 @@ if (isset($_REQUEST['submit'])) {
                                                 <label for="timeRange">KHOẢNG THỜI GIAN</label>
                                             </div>
                                             <div class="col-md-4">
-                                                <select class="form-control timeRange" id="timeRange" name="timeRange">
-                                                    <option value='1' <?= isset($_POST['timeRange']) && $_POST['timeRange'] == '1' ? 'selected' : '' ?>>Hôm nay</option>
-                                                    <option value='2' <?= isset($_POST['timeRange']) && $_POST['timeRange'] == '2' ? 'selected' : '' ?>>Trong 7 ngày</option>
-                                                    <option value='3' <?= isset($_POST['timeRange']) && $_POST['timeRange'] == '3' ? 'selected' : '' ?>>Trong tháng</option>
-                                                    <option value='4' <?= isset($_POST['timeRange']) && $_POST['timeRange'] == '4' ? 'selected' : '' ?>>Tùy chọn</option>
+                                                <select class="form-control timeRange" id="timeRange" name="timeRange" data-default="1">
+                                                    <option value="1" <?= isset($_POST['timeRange']) && $_POST['timeRange'] == '1' ? 'selected' : '' ?>>Hôm nay</option>
+                                                    <option value="2" <?= isset($_POST['timeRange']) && $_POST['timeRange'] == '2' ? 'selected' : '' ?>>Trong 7 ngày</option>
+                                                    <option value="3" <?= isset($_POST['timeRange']) && $_POST['timeRange'] == '3' ? 'selected' : '' ?>>Trong tháng</option>
+                                                    <option value="4" <?= isset($_POST['timeRange']) && $_POST['timeRange'] == '4' ? 'selected' : '' ?>>Tùy chọn</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -233,10 +238,25 @@ if (isset($_REQUEST['submit'])) {
                                                 <label for="year">NĂM</label>
                                             </div>
                                             <div class="col-md-4">
-                                                <input type="text" class="yearpicker" name="year" value="<?= htmlspecialchars($_POST['year'] ?? '') ?>" />
+                                                <?php
+                                                // Xác định giá trị năm
+                                                $selectedYear = date('Y'); // Mặc định là năm hiện tại
+                                                
+                                                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                                                    if (isset($_POST['submit'])) {
+                                                        // Nếu bấm nút submit, giữ lại giá trị từ input 'year'
+                                                        $selectedYear = !empty($_POST['year']) ? htmlspecialchars($_POST['year']) : $selectedYear;
+                                                    } elseif (isset($_POST['reset'])) {
+                                                        // Nếu bấm nút reset, trả về năm hiện tại
+                                                        $selectedYear = date('Y');
+                                                    }
+                                                }
+                                                ?>
+                                                <input type="text" class="yearpicker" name="year" value="<?= $selectedYear ?>" />
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
 
                                 <div class="col-md-6">
@@ -248,7 +268,7 @@ if (isset($_REQUEST['submit'])) {
                                             <div class="col-md-3">
                                                 <input type="date" id="startDate" name="startDate" class="form-control" 
                                                     value="<?= htmlspecialchars($_POST['startDate'] ?? date('Y-m-d')) ?>" 
-                                                    min="2023-03-08" max="<?= date('Y-m-d') ?>">
+                                                    min="2023-03-08" max="<?= date('Y-m-d') ?>" data-default="<?= date('Y-m-d') ?>">
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="endDate">NGÀY KẾT THÚC</label>
@@ -256,7 +276,7 @@ if (isset($_REQUEST['submit'])) {
                                             <div class="col-md-3">
                                                 <input type="date" id="endDate" name="endDate" class="form-control" 
                                                     value="<?= htmlspecialchars($_POST['endDate'] ?? date('Y-m-d')) ?>" 
-                                                    min="2023-03-08" max="<?= date('Y-m-d') ?>">
+                                                    min="2023-03-08" max="<?= date('Y-m-d') ?>" data-default="<?= date('Y-m-d') ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -265,8 +285,8 @@ if (isset($_REQUEST['submit'])) {
 
                             <div class="row text-center">
                                 <div class="col-md-12">
-                                    <button type="reset" class="btn btn-primary mx-2" id="reset" name="reset">RESET</button>
-                                    <button type="submit" class="btn btn-primary mx-2" id="submit" name="submit">XÁC NHẬN</button>
+                                    <input name='reset' type="submit" value='RESET' class="btn btn-primary" />
+                                    <input name='submit' type="submit" value='XÁC NHẬN' class="btn btn-success" />
                                 </div>
                             </div>
                         </form>
@@ -276,16 +296,18 @@ if (isset($_REQUEST['submit'])) {
                     <h4 class="header-title mb-3">DOANH THU BỆNH VIỆN</h4>
                     <div class="row">
                         <!-- Thông báo -->
-                        <?php if (!empty($alert)): ?>
-                            <div class="alert alert-warning text-center" role="alert">
-                                <?php echo htmlspecialchars($alert); ?>
-                            </div>
-                        <?php endif; ?>
+                        <div id="alert">
+                            <?php if (!empty($alert)): ?>
+                                <div class="alert alert-warning text-center" role="alert" style="font-size: 16px; background-color: #fff3cd; color: #856404; border-color: #ffeeba; padding: 10px;">
+                                    <?php echo htmlspecialchars($alert); ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
 
                         <!-- Hiển thị bảng doanh thu -->
                         <?php if ($hasData): ?>
                             <div class="col-6">
-                                <div class="card-box">
+                                <div class="card-box" id="statisticsTable">
                                     <div class="table-responsive">
                                         <table class='table table-borderless table-hover table-centered m-0'>
                                             <thead class='thead-light'>
@@ -317,7 +339,7 @@ if (isset($_REQUEST['submit'])) {
 
                             <!-- Hiển thị biểu đồ -->
                             <div class="col-6">
-                                <div class="card-box">
+                                <div class="card-box" id="chartContainer">
                                     <canvas id="revenueChart" width="500" height="500"></canvas>
                                 </div>
                             </div>
@@ -380,15 +402,23 @@ if (isset($_REQUEST['submit'])) {
 
                     <script>
                         $(function () {
-                            // Lấy năm hiện tại
+                            // Lấy giá trị năm từ PHP
                             const currentYear = new Date().getFullYear();
 
-                            // Khởi tạo YearPicker
+                            // Đảm bảo selectedYear là giá trị hợp lệ
+                            let selectedYear = <?= isset($selectedYear) ? json_encode($selectedYear) : 'null' ?>;
+
+                            // Kiểm tra nếu selectedYear không rỗng hoặc không hợp lệ, gán giá trị mặc định
+                            if (!selectedYear || isNaN(selectedYear)) {
+                                selectedYear = currentYear;  // Gán năm hiện tại nếu không có giá trị hợp lệ
+                            }
+
+                            // Khởi tạo YearPicker với giá trị từ PHP
                             $('.yearpicker').yearpicker({
                                 autoHide: true,             // Ẩn sau khi chọn năm
-                                year: currentYear,          // Mặc định hiển thị năm hiện tại
-                                startYear: 2000,            // Năm bắt đầu hiển thị
-                                endYear: currentYear + 10,  // Năm kết thúc hiển thị
+                                year: selectedYear,         // Hiển thị năm từ PHP
+                                startYear: 2021,            // Năm bắt đầu hiển thị
+                                endYear: currentYear + 10, // Năm kết thúc hiển thị
                                 itemTag: 'li',              // Tag của danh sách năm
                                 selectedClass: 'selected',  // Lớp CSS cho năm được chọn
                                 disabledClass: 'disabled',  // Lớp CSS cho năm bị vô hiệu hóa
@@ -400,22 +430,6 @@ if (isset($_REQUEST['submit'])) {
                             $('.yearpicker').on('change', function () {
                                 console.log("Năm đã chọn:", $(this).val());
                             });
-                        });
-                    </script>
-
-                    <script>
-                        // Xử lý khi nhấn nút RESET
-                        document.getElementById('reset').addEventListener('click', function () {
-                            // Đặt lại Loại thời gian về "Ngày"
-                            document.getElementById('loaiTG').value = "1";
-
-                            // Hiển thị khoảng thời gian cho "Ngày"
-                            $('.time-range').removeClass('d-none'); // Hiển thị trường khoảng thời gian
-                            $('.custom-date-range').addClass('d-none'); // Ẩn ngày bắt đầu/kết thúc
-                            $('.year').addClass('d-none'); // Ẩn trường Năm
-
-                            // Đặt lại giá trị cho khoảng thời gian
-                            document.getElementById('timeRange').value = "1"; // Mặc định "Hôm nay"
                         });
                     </script>
 
@@ -484,6 +498,7 @@ if (isset($_REQUEST['submit'])) {
                             }
                         });
                     </script>
+
                 </div> <!-- container -->
 
             </div> <!-- content -->

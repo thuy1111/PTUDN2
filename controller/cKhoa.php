@@ -16,5 +16,15 @@
 				return false;
 			}
 		}
+
+		public function layDSBSTheoKhoa($maKhoa){
+			$p = new mKhoa();
+			$dsBS = $p->layDSBSTheoKhoa($maKhoa);
+			if ($dsBS) {
+				return $dsBS;
+			} else {
+				return false;
+			}
+		}
 	}
 ?>

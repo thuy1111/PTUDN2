@@ -1,7 +1,7 @@
-<!doctype html>
-<html class="no-js" lang="zxx">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
-    <meta charset="utf-8">
+<meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title> Đăng ký lịch khám</title>
     <meta name="description" content="">
@@ -59,7 +59,7 @@
         }
 
         .btn-primary {
-            width: 50%;
+            width: 30%;
             font-weight: bold;
             background-color: #0056b3;
             border: none;
@@ -93,7 +93,6 @@
         
     </style>
 </head>
-<body>
 <header>
     <!--? Header Start -->
     <div class="header-area">
@@ -122,7 +121,7 @@
                                 </nav>
                             </div>
                             <div class="header-right-btn f-right d-none d-lg-block ml-30">
-                                <a href="../dangNhap/" class="btn header-btn">Đăng Nhập</a>
+                                <a href="../../view/dangNhap/" class="btn header-btn">Đăng Nhập</a>
                             </div>
                         </div>
                     </div>   
@@ -135,52 +134,130 @@
         </div>
     </div>
     <!-- Header End -->
-     
+
 </header>
 <body>
-<div class="form-container">
+    <div class="form-container">
         <h1 class="text-center mb-20" style="color: #0056b3; font-weight: bolder;">ĐĂNG KÝ KHÁM BỆNH</h1>
-        <form>
+        <form method="POST" action="dangkylichkham.php">
+            <!-- Chọn dịch vụ -->
+            <div class="mb-5">
+                <label for="dich-vu" class="form-label mb-3">* Chọn dịch vụ</label>
+                <select id="dich-vu" class="form-select mb-5" name="dichvu" onchange="this.form.submit()" required>
+                    <option value="" disabled selected>Chọn dịch vụ</option>
+                    <option value="1" <?php echo (isset($_POST['dichvu']) && $_POST['dichvu'] == '1') ? 'selected' : ''; ?>>Khám trong giờ</option>
+                    <option value="2" <?php echo (isset($_POST['dichvu']) && $_POST['dichvu'] == '2') ? 'selected' : ''; ?>>Khám ngoài giờ</option>
+                </select>
+            </div>
+
+            <!-- Chọn chuyên khoa -->
             <div class="mb-5">
                 <label for="chuyen-khoa" class="form-label mb-3">* Chọn chuyên khoa</label>
-                <select id="chuyen-khoa" class="form-select mb-5" required>
+                <select id="chuyen-khoa" class="form-select mb-5" name="khoa" onchange="this.form.submit()" required>
                     <option value="" disabled selected>Chọn chuyên khoa</option>
-                    <option value="khoa1">Khoa Nội</option>
-                    <option value="khoa2">Khoa Ngoại</option>
+                    <?php
+                    include_once("../../controller/cKhoa.php");
+                    $p = new cKhoa();
+                    $tbl = $p->layDSKhoa();
+                    if (!$tbl) {
+                        echo "<option>Không thể kết nối cơ sở dữ liệu</option>";
+                    } elseif ($tbl == -1) {
+                        echo "<option>Chưa có dữ liệu</option>";
+                    } else {
+                        while ($row = $tbl->fetch_assoc()) {
+                            $selected = (isset($_POST['khoa']) && $_POST['khoa'] == $row['maKhoa']) ? 'selected' : '';
+                            echo "<option value='{$row["maKhoa"]}' $selected>{$row["tenKhoa"]}</option>";
+                        }
+                    }
+                    ?>
                 </select>
             </div>
 
+            <!-- Chọn bác sĩ -->
             <div class="mb-5">
                 <label for="bac-si" class="form-label mb-3">* Chọn bác sĩ</label>
-                <select id="bac-si" class="form-select mb-5" required>
+                <select id="bac-si" class="form-select mb-5" name="bacsi" required>
                     <option value="" disabled selected>Chọn bác sĩ</option>
-                    <option value="bacsi1">Bác sĩ A</option>
-                    <option value="bacsi2">Bác sĩ B</option>
+                    <?php
+                    if (isset($_POST['khoa']) && !empty($_POST['khoa'])) {
+                        $maKhoa = $_POST['khoa'];
+                        $tbl = $p->layDSBSTheoKhoa($maKhoa);
+                        if (!$tbl) {
+                            echo "<option value=''>Không thể kết nối</option>";
+                        } elseif ($tbl == -1) {
+                            echo "<option value=''>Chưa có dữ liệu</option>";
+                        } else {
+                            while ($row = $tbl->fetch_assoc()) {
+                                echo "<option value='{$row["maNhanVien"]}'>{$row["hoTen"]}</option>";
+                            }
+                        }
+                    }
+                    ?>
                 </select>
             </div>
 
+            <!-- Chọn ngày khám -->
             <div class="mb-5">
                 <label for="ngay-kham" class="form-label mb-3">* Chọn ngày muốn khám</label>
-                <input type="date" id="ngay-kham" class="form-control mb-5" style = "height: 40px;"required>
+                <input type="date" id="ngay-kham" name="ngay_kham" class="form-control mb-5" style="height: 40px;" required>
+                <?php
+                    include_once("../../controller/cBacSi.php");
+                    $p = new cBacSi();
+                    if(isset($_REQUEST['bacsi']) && !empty($_REQUEST['bacsi'])){
+                        $maNhanVien = $_REQUEST['bacsi'];
+                        $startDate = date('Y-m-01');
+                        $endDate = date('Y-m-t');
+                        $dsLichLamViec = $p->layDSLichLamViecBacSi($maNhanVien);
+                        if ($dsLichLamViec) {
+                            echo "<div class='date-time-row'>";
+                            echo "<input type='date' name='ngay_kham' class='form-control b=mb-5' placeholder='Chọn ngày khám' style='height: 40px; required>";
+                            echo "<input type='time' name='gio_kham_ket_thuc' class='form-control' placeholder='Giờ kết thúc' required>";
+                            echo "</div>";
+                        } else {
+                            echo "<p>Không có lịch làm việc</p>";
+                        }
+                    }
+                ?>
             </div>
 
+            <!-- Chọn khung giờ -->
             <div class="mb-5">
-                <label for="ngay-kham" class="form-label mb-3">* Chọn giờ muốn khám</label>
-                <input type="time" id="gio-kham" class="form-control mb-5" style = "height: 40px;" required>
+                <label for="gio-kham" class="form-label mb-3">* Chọn khung giờ muốn khám</label>
+                <select id="gio-kham" class="form-select mb-5" name="giokham" required>
+                    <option value="" disabled selected>Chọn khung giờ muốn khám</option>
+                    <?php
+                    if (isset($_POST['dichvu']) && !empty($_POST['dichvu'])) {
+                        $dichvu = $_POST['dichvu'];
+                        if ($dichvu == '1') {
+                            echo "<option value='1'>Sáng</option>";
+                            echo "<option value='2'>Trưa</option>";
+                            echo "<option value='3'>Chiều</option>";
+                        } elseif ($dichvu == '2') {
+                            echo "<option value='4'>16:00-19:00</option>";
+                        }
+                    }
+                    ?>
+                </select>
             </div>
 
+            <!-- Mô tả vấn đề sức khỏe -->
             <div class="mb-5">
                 <label for="suc-khoe" class="form-label">* Nhập vấn đề sức khỏe cần khám</label>
-                <textarea id="suc-khoe" class="form-control" rows="5" placeholder="Nhập tình trạng sức khỏe của bạn, câu hỏi dành cho bác sĩ và các vấn đề sức khỏe cần khám" required></textarea>
+                <textarea id="suc-khoe" name="suc_khoe" class="form-control" rows="5" placeholder="Nhập tình trạng sức khỏe của bạn, câu hỏi dành cho bác sĩ và các vấn đề sức khỏe cần khám" required></textarea>
             </div>
 
-            <div class="btn-container text-center">
-                <button type="submit" class="btn btn-primary">ĐĂNG KÝ</button>
+            <!-- Nút bấm -->
+            <div class="btn-container text-center justify-content-around">
+                <button type="submit" name="dangky" class="btn btn-primary">ĐĂNG KÝ</button>
+                <button type="reset" name="huy" class="btn btn-secondary">HỦY</button>
             </div>
         </form>
+
+
     </div>
 </body>
-    <footer>
+
+<footer>
         <!--? Footer Start-->
         <div class="footer-area section-bg" data-background="../../assets/images/gallery/footer_bg.jpg">
             <div class="container">
@@ -290,6 +367,4 @@
     <script src="../../assets/libs/YearPicker-master/docs/yearpicker.js" async></script>
     <script src="../../assets/js/vendor/jquery.datetimepicker.full.min.js"></script>
     <script src="../../assets/js/main.js"></script>
-    
-    </body>
 </html>

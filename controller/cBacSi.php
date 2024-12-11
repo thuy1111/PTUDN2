@@ -57,4 +57,29 @@
             return false;
         }
     }
+
+    // Lấy danh sách lịch làm việc của bác sĩ
+    public function layDSLichLamViecBacSi($maNhanVien) {
+        $model = new mBacSi();
+        $dsLichLamViec = $model->layDSLichLamViecBacSi($maNhanVien);
+
+        if ($dsLichLamViec) {
+            return $dsLichLamViec;
+        } else {
+            return false;
+        }
+    }
+
+    // Lấy danh sách lịch khám của bác sĩ
+    public function layDSLichKhamBacSi($maNhanVien) {
+        $model = new mBacSi();
+        $dsLichKham = $model->layDSLichKhamBacSi($maNhanVien);
+
+        if ($dsLichKham) {
+            return $dsLichKham;
+        } else {
+            return false;
+        }
+    }
+
  }
