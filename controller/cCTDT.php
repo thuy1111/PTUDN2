@@ -23,13 +23,15 @@ class controlCTDT {
         }
     }
 
-    public function updateCTDT($maChiTietDT,$tinhTrang)
+    public function updateCTDT($maChiTietDT, $tinhTrang)
     {
         $p = new modelCTDT();
-        $tbl = $p->capnhatCTDT($maChiTietDT,$tinhTrang);
-            return $tbl;
-            
         
+        // Pass the parameters to the capnhatCTDT method to update the database
+        $tbl = $p->capnhatCTDT($maChiTietDT, $tinhTrang);
+        
+        return $tbl;  // Return the result of the update query (true/false or affected rows)
     }
+    
 }
 ?>

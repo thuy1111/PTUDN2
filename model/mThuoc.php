@@ -62,31 +62,40 @@
 			}
         }
 		public function searchthuoc($timkiem)
-        {
-            $p = new clsKetNoi();
+		{
+			$p = new clsKetNoi();
 			$conn = $p->moketnoi();
-			$conn ->set_charset("utf8");
+			$conn->set_charset("utf8");
+		
 			if ($conn) {
-				// Kiểm tra nếu $timkiem là chuỗi rỗng
+				// Default query if no search term is provided
 				if (empty($timkiem)) {
-					$str = "SELECT *,l.tenLoaiThuoc from thuoc t join loaithuoc l on l.maLoaiThuoc= t.maLoaiThuoc";
+					$str = "SELECT *, l.tenLoaiThuoc 
+							FROM thuoc t 
+							JOIN loaithuoc l 
+							ON l.maLoaiThuoc = t.maLoaiThuoc";
 				} else {
-					// Kiểm tra nếu timkiem là một số
-					if (is_numeric($timkiem)) {
-						$str = "SELECT *,l.tenLoaiThuoc from thuoc t join loaithuoc l on l.maLoaiThuoc= t.maLoaiThuoc
-								WHERE maThuoc = $timkiem";
-					} else {
-						// Nếu không phải số, thì tìm theo tên loại thuốc 
-						$str = "SELECT *,l.tenLoaiThuoc from thuoc t join loaithuoc l on l.maLoaiThuoc= t.maLoaiThuoc
-								WHERE tenLoaiThuoc LIKE '%$timkiem%'";
-					}}
+					// Escaping the input to prevent SQL Injection
+					$timkiem = mysqli_real_escape_string($conn, $timkiem);
+		
+					// Build the search query to check multiple fields
+					$str = "SELECT *, l.tenLoaiThuoc 
+							FROM thuoc t 
+							JOIN loaithuoc l 
+							ON l.maLoaiThuoc = t.maLoaiThuoc
+							WHERE t.tenThuoc LIKE '%$timkiem%'
+							OR l.tenLoaiThuoc LIKE '%$timkiem%'
+							OR t.cachDung LIKE '%$timkiem%'";
+				}
+		
+				// Execute the query
 				$tbl = $conn->query($str);
 				$p->dongketnoi($conn);
 				return $tbl;
 			} else {
 				return false;
 			}
-
-        }
+		}
+		
 	}
 ?>

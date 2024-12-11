@@ -7,7 +7,8 @@ $p = new cThuoc();
 if (isset($_REQUEST['maThuoc'])) {
     $kq = $p->xemthongtinthuoc($_REQUEST['maThuoc']);
     if ($kq) {
-        while ($r = mysqli_fetch_assoc($kq)) {
+        $r = mysqli_fetch_assoc($kq);
+        if ($r) {
             $tenThuoc = $r['tenThuoc'];
             $soLuong = $r['soLuong'];
             $donViCungCap = $r['donViCungCap'];
@@ -15,14 +16,48 @@ if (isset($_REQUEST['maThuoc'])) {
             $donViTinh = $r['donViTinh'];
             $cachDung = $r['cachDung'];
             $trangThai = $r['trangThai'];
-            $maThuoc = $r['maThuoc'];  // Save maThuoc to update the right record later
+            $maLoaiThuoc = $r['maLoaiThuoc'];
+            $maThuoc = $r['maThuoc']; // Save maThuoc to update the right record later
         }
     }
 }
 
 // Handle the form submission for update
 if (isset($_POST['btnupdate'])) {
-    // Get the updated values from the form
+    // Sanitize the input data
+    $tenThuoc = htmlspecialchars(trim($_POST['tenThuoc']));
+    $soLuong = intval($_POST['soLuongTon']);  // Assuming it's a number
+    $donViCungCap = htmlspecialchars(trim($_POST['donViCungCap']));
+    $donGia = floatval($_POST['donGia']); // Assuming it's a float
+    $donViTinh = htmlspecialchars(trim($_POST['donViTinh']));
+    $cachDung = htmlspecialchars(trim($_POST['cachDung']));
+    $trangThai = htmlspecialchars(trim($_POST['trangThai']));
+    $loaiThuoc = htmlspecialchars(trim($_POST['loaiThuoc']));
+
+    // Validate that the necessary fields are not empty
+    if (empty($tenThuoc) || empty($soLuong) || empty($donViCungCap) || empty($donGia) || empty($donViTinh) || empty($cachDung) || empty($trangThai) || empty($loaiThuoc)) {
+        echo "<script>alert('Vui lòng điền đầy đủ thông tin.');</script>";
+        exit;
+    }
+
+    // Call the update method from the controller
+    $updateResult = $p->capnhatThuoc($tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $trangThai, $loaiThuoc);
+
+
+
+    if ($updateResult) {
+        echo "<script>alert('Cập nhật thuốc thành công');</script>";
+        echo "<script>window.location.href = 'quanlythuoc.php';</script>";
+        exit;
+    } else {
+        // Log the error for debugging purposes
+        error_log("Update failed: " . $p->getLastError());  // Assuming your controller has a getLastError method
+        echo "<script>alert('Cập nhật thuốc thất bại');</script>";
+    }
+}
+
+    // Handle form submission for adding a new medicine
+if (isset($_POST['btnadd'])) {
     $tenThuoc = $_POST['tenThuoc'];
     $soLuong = $_POST['soLuongTon'];
     $donViCungCap = $_POST['donViCungCap'];
@@ -32,15 +67,23 @@ if (isset($_POST['btnupdate'])) {
     $trangThai = $_POST['trangThai'];
     $loaiThuoc = $_POST['loaiThuoc'];
 
-    // Call the update method from the controller
-    $updateResult = $p->capnhatThuoc($maThuoc, $tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $loaiThuoc, $trangThai);
-
-    if ($updateResult) {
-        echo "<script>alert('Cập nhật thuốc thành công');</script>";
+    // Check for duplicate medicine
+    if ($p->thuocTonTai($tenThuoc)) {
+        echo "<script>alert('Thuốc đã tồn tại! Không thể thêm mới.');</script>";
+        echo "<script>window.location.href = 'quanlythuoc.php';</script>";
     } else {
-        echo "<script>alert('Cập nhật thuốc thất bại');</script>";
+        $addResult = $p->addthuoc($tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $trangThai, $loaiThuoc);
+
+        if ($addResult) {
+            echo "<script>alert('Thêm thuốc mới thành công');</script>";
+            echo "<script>window.location.href = 'quanlythuoc.php';</script>";
+            exit;
+        } else {
+            echo "<script>alert('Thêm thuốc mới thất bại');</script>";
+        }
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -51,18 +94,11 @@ if (isset($_POST['btnupdate'])) {
 <body>
     <!-- Begin page -->
     <div id="wrapper">
-
         <!-- Topbar Start -->
         <?php include('../../assets/inc/nav.php');?>
         <!-- end Topbar -->
-
-        <!-- Left Sidebar Start -->
         <?php include('../../assets/inc/sidebarthuoc.php');?>
         <!-- Left Sidebar End -->
-
-        <!-- ============================================================== -->
-        <!-- Start Page Content here -->
-        <!-- ============================================================== -->
 
         <div class="content-page">
             <div class="content">
@@ -85,7 +121,6 @@ if (isset($_POST['btnupdate'])) {
                             <div class="col-12 text-center">
                                 <input type="submit" name="btnadd" class="btn btn-primary mx-2" value="Thêm">
                                 <input type="submit" name="btnupdate" class="btn btn-success mx-2" value="Cập nhật"> 
-                                <input type="submit" class="btn btn-danger mx-2" value="Hủy">
                             </div>
                         </div>
                         

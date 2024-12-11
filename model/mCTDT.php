@@ -29,21 +29,28 @@ class modelCTDT {
 		$p->dongKetNoi($con);
 		return $ketqua;
     }
-
-    public function capnhatCTDT($maChiTietDT,$tinhTrang)
+    public function capnhatCTDT($maChiTietDT, $tinhTrang)
     {
         $p = new clsKetNoi();
         $conn = $p->moketnoi();
-        $conn ->set_charset("utf8");
+        $conn->set_charset("utf8");
+        
         if ($conn) {
-            $str = "UPDATE `chitietdonthuoc` SET  `tinhTrang` = $tinhTrang WHERE `chitietdonthuoc`.`maChiTietDT` = $maChiTietDT;";
+            // Enclose the string value in quotes
+            $tinhTrang = "'" . $conn->real_escape_string($tinhTrang) . "'";
+
+            $str = "UPDATE `chitietdonthuoc` SET `tinhTrang` = $tinhTrang WHERE `chitietdonthuoc`.`maChiTietDT` = $maChiTietDT;";
+            
+            // Execute the query
             $tbl = $conn->query($str);
+            
+            // Close the connection
             $p->dongketnoi($conn);
+            
             return $tbl;
         } else {
             return false;
         }
     }
-    
-}
+}    
 ?>
