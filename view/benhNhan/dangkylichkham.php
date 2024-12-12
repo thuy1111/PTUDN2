@@ -357,6 +357,8 @@ if (isset($_POST['huy'])) {
                             } elseif ($dichVu == '2') { // Khám ngoài giờ
                                 if ($row['caLamViec'] == 'Ca 3') {
                                     echo "<option value='18:30 - 21:30'>Tối: 18:30 - 21:30</option>";
+                                }else{
+                                    echo "<option value='' disabled>Không có ca làm việc ngoài giờ</option>";
                                 }
                             }
                         }
