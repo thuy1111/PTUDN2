@@ -114,6 +114,7 @@
             <th>Chuẩn Đoán</th>
             <th>Tình Trạng</th>
             <th>Chi Tiết Đơn Thuốc</th>
+            <th>Thay Đổi Trạng Thái</th> <!-- Thêm cột cho nút thay đổi trạng thái -->
         </tr>';
         while ($r = mysqli_fetch_assoc($kq)) {
             echo '<tr>';
@@ -121,12 +122,23 @@
             echo '<td>' . $r["hoTen"] . '</td>';
             echo '<td>' . $r["chuanDoan"] . '</td>';
             echo '<td>' . $r["tinhTrang"] . '</td>';
-            echo "<td><a href='chitietdonthuoc.php?id=" . $r['maDonThuoc'] . "' class='btn btn-sm btn-outline-primary btn-view'>Xem chi tiết</a></td>";
+            echo '<td><a href="chitietdonthuoc.php?id=' . $r["maDonThuoc"] . '">Chi Tiết</a></td>';
+            echo '<td>';
+            if ($r["tinhTrang"] === "Chưa Thanh Toán") {
+                echo '<form method="POST" action="changestatus.php">';
+                echo '<input type="hidden" name="id" value="' . $r["maDonThuoc"] . '">';
+                echo '<button type="submit" name="changeStatus" class="btn-change-status">Xác nhận thanh toán</button>';
+                echo '</form>';
+            } else {
+                echo '<span class="status-paid">Đã Thanh Toán</span>';
+            }
+            echo '</td>';
             echo '</tr>';
         }
         echo '</table>';
     }
 ?>
+
         <!-- Vendor js -->
         <script src="../../assets/js/vendor.min.js"></script>
         <!-- Plugins js-->

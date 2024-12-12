@@ -1,6 +1,18 @@
 <?php
     include_once("../../model/mNhanVien.php");
     class cNhanVien{
+		private $conn;
+	
+		// Constructor to initialize the database connection
+		public function __construct() {
+			// Use correct username, password, and database name
+			$this->conn = mysqli_connect("localhost", "root", "", "hospital_db");
+	
+			// Check the connection
+			if (!$this->conn) {
+				die("Connection failed: " . mysqli_connect_error());
+			}
+		}
         public function laydanhsachnhanvien(){
             $p = new   mNhanVien();
 			
@@ -51,15 +63,11 @@
 				return $tbl;
         }
 		public function nhanvienTonTai($hoTen) {
-			// Sử dụng prepared statement để bảo vệ khỏi SQL injection
-			$query = "SELECT * FROM nhanvien WHERE hoTen = ?";
-			$stmt = $this->conn->prepare($query);
-			$stmt->bind_param("s", $hoTen);  // "s" là kiểu dữ liệu string
-			$stmt->execute();
-			$result = $stmt->get_result();
-		
-			// Trả về true nếu tìm thấy nhân viên, false nếu không có
-			return $result->num_rows > 0;
+			$query = "SELECT * FROM nhanvien WHERE hoTen = '$hoTen'";
+			$result = mysqli_query($this->conn, $query);
+
+			// Return true if a record exists, false otherwise
+			return mysqli_num_rows($result) > 0;
 		}
         public function updatettnv($maNhanVien,$hoTen,$ngaySinh,$soDienThoai,$email,$diachi,$trangthai,$maChucVu,$maKhoa)
         {

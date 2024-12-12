@@ -16,6 +16,7 @@
         }
 
 		public function hienThiDSLichLamViec($startDate, $endDate, $maNhanVien)
+<<<<<<< HEAD
         {
             $lichKhamModel = new mBacsi();
             $chiTietLK = $lichKhamModel->layChiTietLichKham($maLichKham);
@@ -36,8 +37,19 @@
             } else {
                 return [];
             }
+=======
+    {
+        $model = new mBacsi();
+        $dsLichLamViec = $model->layDSLichLamViec($startDate, $endDate, $maNhanVien);
+
+        if ($dsLichLamViec) {
+            return $dsLichLamViec;
+        } else {
+            return [];
+>>>>>>> b753148d0e1c7528eaef4367e86cb25e857149f5
         }
 
+<<<<<<< HEAD
         public function layCaLamViecTheoNgay($bacSi, $ngayKham) {
             $p = new mBacSi();
             $tbl = $p->layCaLamViecTheoNgay($bacSi, $ngayKham);
@@ -47,8 +59,40 @@
             } else {
                 return false;
             }
+=======
+    public function chiTietLichLamViec($maLichLamViec, $maNhanVien)
+    {
+        $model = new mBacSi();
+        $chiTiet = $model->layChiTietLichLamViec($maLichLamViec, $maNhanVien);
+
+        return $chiTiet ? $chiTiet : null;
+    }
+    
+	public function hienThiLichKham($maNhanVien)
+    {
+        $lichKhamModel = new mBacsi();
+        $dsLichKham = $lichKhamModel->layDSLichKham($maNhanVien);
+        if ($dsLichKham) {
+            return $dsLichKham;
+        } else {
+            return false;
+>>>>>>> b753148d0e1c7528eaef4367e86cb25e857149f5
         }
 
+<<<<<<< HEAD
+=======
+    
+    public function hienThiChiTietLK($maLichKham)
+{
+    $lichKhamModel = new mBacsi();
+    $chiTietLK = $lichKhamModel->layChiTietLichKham($maLichKham);
+    if ($chiTietLK) {
+        return $chiTietLK;
+    } else {
+        return false;
+    }
+}
+>>>>>>> b753148d0e1c7528eaef4367e86cb25e857149f5
     private $model;
 
     public function __construct() {

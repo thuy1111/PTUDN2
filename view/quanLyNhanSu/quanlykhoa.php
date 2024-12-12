@@ -1,4 +1,22 @@
+<?php
+session_start();
 
+if (isset($_SESSION['user'][0])) {
+    $maNhanVien = $_SESSION['user'][0];
+    $tenNhanVien = $_SESSION['user'][1];
+    $maChucVu = $_SESSION['user'][2];
+    
+    if ($maChucVu != 3) {
+        echo "<script>alert('Bạn không có quyền truy cập vào trang này!');</script>";
+        echo "<script>window.location.href = '../../index.php';</script>";
+        exit();
+    }
+} else {
+    echo "<script>alert('Vui lòng đăng nhập để truy cập!');</script>";
+    echo "<script>window.location.href = '../dangnhap';</script>";
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -37,7 +55,7 @@
                             </div>
                         </div>     
                         <!-- end page title -->             
-                        <form class="mb-3" method="post">
+                        <form class="mb-3" method="POST">
                         <hr style="border-color: black;">
                         <div class="row">
                             <div class="col-12 text-center">
@@ -220,11 +238,11 @@ if(isset($_REQUEST['maKhoa']))
             var errorMsg = document.getElementById('tbtenKhoa');
             
             // Kiểm tra tên khoa chỉ chứa chữ cái và không vượt quá 30 ký tự
-            var regex = /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàạáâãèéêìíòọóôõùúăđĩũơớƯĂẮẶẰẲẴÂẤẬẦẨẪÊẾỆỀỂỄÔỐỘỒỔỖƠỚỢỜỞỠƯỨỰỪỬỮỲỴỶỸÝỳỵỷỹý\s]+$/;
+            var regex = /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàạéáệâãèéêìíòọóôõùúăđĩũơớƯĂẮẶẰẲẴÂẤẬẦẨẪÊẾỆỀỂỄÔỐỘỒỔỖƠỚỢỜỞỠƯỨỰỪỬỮỲỴỶỸÝỳỵỷỹý\s]+$/;
             if (tenKhoa.length > 30) {
                 errorMsg.textContent = 'Tên khoa không được quá 30 ký tự';
             } else if (!regex.test(tenKhoa)) {
-                errorMsg.textContent = 'Tên phòng khám chỉ được chứa chữ cái tiếng Việt và khoảng trắng';
+                errorMsg.textContent = 'Tên khoa chỉ được chứa chữ cái tiếng Việt và khoảng trắng';
             } else {
                 errorMsg.textContent = ''; // Xóa thông báo lỗi nếu hợp lệ
             }
@@ -297,17 +315,27 @@ if(isset($_REQUEST['maKhoa']))
     }
 ?>
      <?php
-if(isset($_REQUEST['btnadd']) && $_REQUEST['btnadd']=='Thêm' )
+if (isset($_REQUEST['btnadd']) && $_REQUEST['btnadd'] == 'Thêm') {
+    // Lấy dữ liệu từ form
+    $tenKhoa = trim($_REQUEST['tenKhoa']);
+    $truongKhoa = trim($_REQUEST['truongKhoa']);
+    $soDienThoai = trim($_REQUEST['soDienThoai']);
+    $email = trim($_REQUEST['eMail']);
+    $trangThai = $_REQUEST['trangthai'];
+    if ($qk->khoaTonTai($tenKhoa)) {
+        echo "<script>alert('Tên khoa đã tồn tại.');</script>";
+        echo "<script>window.location.href = 'quanlykhoa.php';</script>";
+        exit;
+    }
 
-{
-    $insert= $qk->addkhoa($_REQUEST['tenKhoa'],$_REQUEST['truongKhoa'],$_REQUEST['soDienThoai'],$_REQUEST['eMail'],$_REQUEST['trangthai']);
-    if($insert)
-    {
+    // Thực hiện thêm khoa
+    $insert = $qk->addkhoa($tenKhoa, $truongKhoa, $soDienThoai, $email, $trangThai);
+
+    if ($insert) {
         echo "<script>alert('Thêm khoa thành công');</script>";
         echo "<script>window.location.href = 'quanlykhoa.php';</script>";
-    }
-    else {
-        echo "<script>alert('Thêm khoa không thành công');</script>";
+    } else {
+        echo "<script>alert('Thêm khoa không thành công. Vui lòng thử lại.');</script>";
         echo "<script>window.location.href = 'quanlykhoa.php';</script>";
     }
 }
