@@ -198,7 +198,18 @@ if (isset($_POST['huy'])) {
                                 </nav>
                             </div>
                             <div class="header-right-btn f-right d-none d-lg-block ml-30">
-                                <a href="../" class="btn header-btn">Đăng Nhập</a>
+                                <?php if (isset($tenBenhNhan)) { ?>
+                                    <div class="dropdown">
+                                        <button class="btn header-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <?php echo htmlspecialchars($tenBenhNhan); ?>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="../dangxuat/">Đăng xuất</a></li>
+                                        </ul>
+                                    </div>
+                                <?php } else { ?>
+                                    <a href="../dangNhap/" class="btn header-btn">Đăng nhập</a>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>   

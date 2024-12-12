@@ -16,77 +16,39 @@
         }
 
 		public function hienThiDSLichLamViec($startDate, $endDate, $maNhanVien)
-    {
-<<<<<<< HEAD
-        $lichKhamModel = new mBacsi();
-        $chiTietLK = $lichKhamModel->layChiTietLichKham($maLichKham);
-        if ($chiTietLK) {
-            return $chiTietLK;
-        } else {
-            return false;
+        {
+            $lichKhamModel = new mBacsi();
+            $chiTietLK = $lichKhamModel->layChiTietLichKham($maLichKham);
+            if ($chiTietLK) {
+                return $chiTietLK;
+            } else {
+                return false;
+            }
         }
-    }
 
     // Lấy danh sách lịch làm việc của bác sĩ
-    public function layLichLamViecTheoBS($bacSi) {
-        $p = new mBacSi();
-        $tbl = $p->layLichLamViecTheoBS($bacSi);
-=======
-        $model = new mBacsi();
-        $dsLichLamViec = $model->layDSLichLamViec($startDate, $endDate, $maNhanVien);
->>>>>>> 183b6be5915e6dff4390bef5555735fe78f6bde5
+        public function layLichLamViecTheoBS($bacSi) {
+            $p = new mBacSi();
+            $tbl = $p->layLichLamViecTheoBS($bacSi);
 
-        if ($tbl) {
-            return $tbl;
-        } else {
-            return [];
+            if ($tbl) {
+                return $tbl;
+            } else {
+                return [];
+            }
         }
-    }
 
-<<<<<<< HEAD
-    public function layCaLamViecTheoNgay($bacSi, $ngayKham) {
-        $p = new mBacSi();
-        $tbl = $p->layCaLamViecTheoNgay($bacSi, $ngayKham);
+        public function layCaLamViecTheoNgay($bacSi, $ngayKham) {
+            $p = new mBacSi();
+            $tbl = $p->layCaLamViecTheoNgay($bacSi, $ngayKham);
 
-        if ($tbl) {
-            return $tbl;
-=======
-    public function chiTietLichLamViec($maLichLamViec, $maNhanVien)
-    {
-        $model = new mBacSi();
-        $chiTiet = $model->layChiTietLichLamViec($maLichLamViec, $maNhanVien);
-
-        return $chiTiet ? $chiTiet : null;
-    }
-    
-	public function hienThiLichKham($maNhanVien)
-    {
-        $lichKhamModel = new mBacsi();
-        $dsLichKham = $lichKhamModel->layDSLichKham($maNhanVien);
-        if ($dsLichKham) {
-            return $dsLichKham;
->>>>>>> 183b6be5915e6dff4390bef5555735fe78f6bde5
-        } else {
-            return false;
+            if ($tbl) {
+                return $tbl;
+            } else {
+                return false;
+            }
         }
-    }
 
-<<<<<<< HEAD
-
-
-=======
-    
-    public function hienThiChiTietLK($maLichKham)
-{
-    $lichKhamModel = new mBacsi();
-    $chiTietLK = $lichKhamModel->layChiTietLichKham($maLichKham);
-    if ($chiTietLK) {
-        return $chiTietLK;
-    } else {
-        return false;
-    }
->>>>>>> 183b6be5915e6dff4390bef5555735fe78f6bde5
-}
     private $model;
 
     public function __construct() {
