@@ -4,18 +4,18 @@
     <?php include("../../assets/inc/head.php"); ?>
     <title>Lịch Làm Việc - Quản Lý Ca</title>
     <style>
-        /* General Styles */
+      
         body {
             font-family: Arial, sans-serif;
         }
 
-        /* Header and Page Title */
+
         h2 {
             font-size: 1.8em;
             margin-bottom: 1rem;
         }
 
-        /* Week Navigation */
+      
         .week-navigation {
             display: flex;
             justify-content: space-between;
@@ -95,7 +95,6 @@
             cursor: pointer;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
             .week-navigation {
                 flex-direction: column;
@@ -140,7 +139,6 @@
                         <button class="btn btn-secondary" id="prevWeekBtn">Tuần Trước</button>
                         <span id="weekDateRange" class="h5"></span>
                         <button class="btn btn-secondary" id="nextWeekBtn">Tuần Sau</button>
-                        <!-- Add the "Current Week" button -->
                         <button class="btn btn-primary" id="currentWeekBtn">Tuần Hiện Tại</button>
                     </div>
 
@@ -210,7 +208,7 @@
             const weekRange = `Tuần từ: ${formatDate(startOfWeek)} đến ${formatDate(endOfWeek)}`;
             document.getElementById('weekDateRange').textContent = weekRange;
 
-            // Update the displayed work schedule
+           
             loadSchedule(formatDate(startOfWeek), formatDate(endOfWeek));
         }
 
@@ -219,10 +217,10 @@
             xhr.open("GET", "getLich.php?start=" + startDate + "&end=" + endDate, true);
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    // Update the schedule table
+                  
                     document.getElementById("scheduleBody").innerHTML = xhr.responseText;
 
-                    // Add click event listeners to shift buttons
+                   
                     const shiftButtons = document.querySelectorAll('.shift-button');
                     shiftButtons.forEach(button => {
                         button.addEventListener('click', function() {
@@ -257,25 +255,24 @@
             updateWeekDisplay();
         });
 
-        // Close modal when clicking on <span> (x)
+
         document.querySelector('.close').addEventListener('click', function() {
             document.getElementById('shiftModal').style.display = "none";
         });
 
-        // Close modal when clicking outside of it
         window.addEventListener('click', function(event) {
             if (event.target == document.getElementById('shiftModal')) {
                 document.getElementById('shiftModal').style.display = "none";
             }
         });
 
-        // Add event listener for "Current Week" button
+        
         document.getElementById('currentWeekBtn').addEventListener('click', function() {
-            currentDate = new Date(); // Reset to current date
-            updateWeekDisplay(); // Refresh the week display
+            currentDate = new Date(); 
+            updateWeekDisplay(); 
         });
 
-        updateWeekDisplay(); // Initial call
+        updateWeekDisplay(); 
     </script>
 </body>
 </html>

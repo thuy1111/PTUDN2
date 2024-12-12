@@ -3,10 +3,8 @@ include_once("../../controller/cPhieuKham.php");
 
 $controller = new cPhieuKhamBenh();
 
-// Lấy mã bệnh nhân từ URL
 $maBenhNhan = isset($_GET['maBenhNhan']) ? $_GET['maBenhNhan'] : "";
 
-// Lấy danh sách phiếu khám bệnh (có tìm kiếm theo mã bệnh nhân)
 $dsPKB = $controller->hienThiDanhSachPKB("", $maBenhNhan);
 ?>
 
@@ -18,11 +16,9 @@ $dsPKB = $controller->hienThiDanhSachPKB("", $maBenhNhan);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phiếu Khám Bệnh</title>
 
-    <!-- Include Head Resources -->
     <?php include("../../assets/inc/head.php"); ?>
 
     <style>
-        /* Custom styles for shift registration page */
         .shift-time {
             font-size: 0.8em;
             color: #6c757d;
@@ -87,7 +83,7 @@ $dsPKB = $controller->hienThiDanhSachPKB("", $maBenhNhan);
                                     </thead>
                                     <tbody>
                                         <?php
-                                        // Hiển thị dữ liệu lịch khám
+                        
                                         if ($dsPKB && $dsPKB->num_rows > 0) {
                                             while ($row = $dsPKB->fetch_assoc()) {
                                                 echo "<tr>";
@@ -116,16 +112,15 @@ $dsPKB = $controller->hienThiDanhSachPKB("", $maBenhNhan);
 
         <!-- Footer -->
         <footer>
-            <!-- You can add footer content here -->
+
         </footer>
     </div>
 
-    <!-- Scroll to Top Button -->
+
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Scripts -->
     <script src="../../assets/js/vendor.min.js"></script>
     <script src="../../assets/libs/flatpickr/flatpickr.min.js"></script>
     <script src="../../assets/libs/jquery-knob/jquery.knob.min.js"></script>

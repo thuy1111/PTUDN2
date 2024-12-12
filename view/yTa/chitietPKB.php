@@ -1,14 +1,9 @@
 <?php
-// Gọi Controller
+
 include_once("../../controller/cPhieuKham.php");
 
-// Khởi tạo Controller
 $controller = new cPhieuKhamBenh();
-
-// Lấy mã phiếu khám từ URL
 $maPhieuKhamBenh = isset($_GET['id']) ? $_GET['id'] : null;
-
-// Lấy chi tiết phiếu khám từ Controller
 $chiTietPKB = $controller->hienThiChiTietPKB($maPhieuKhamBenh);
 ?>
 

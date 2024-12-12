@@ -74,10 +74,6 @@ $chiTietLK = $controller->hienThiChiTietLKTheoBenhNhan($maLichKham, $maBenhNhan)
                         <td><?php echo htmlspecialchars($chiTietLK['tenBenhNhan']); ?></td>
                     </tr>
                     <tr>
-                        <th>Mã Bảo Hiểm</th>
-                        <td><?php echo htmlspecialchars($chiTietLK['maBaoHiem']); ?></td>
-                    </tr>
-                    <tr>
                         <th>Khoa</th>
                         <td><?php echo htmlspecialchars($chiTietLK['tenKhoa']); ?></td>
                     </tr>
