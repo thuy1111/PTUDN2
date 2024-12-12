@@ -196,7 +196,7 @@ if(isset($_REQUEST['maPhongKham']))
     var errorMsg = document.getElementById('tbTenPhongKham');
     
     // Biểu thức chính quy hỗ trợ tiếng Việt có dấu và khoảng trắng, không chứa số
-    var regex = /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàạáâãèéêìíòọóôõùúăđĩũơớƯĂẮẶẰẲẴÂẤẬẦẨẪÊẾỆỀỂỄÔỐỘỒỔỖƠỚỢỜỞỠƯỨỰỪỬỮỲỴỶỸÝỳỵỷỹý\s]+$/;
+    var regex = /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàạáâãèéẫêìíòấọóôõùúăđĩũơớƯĂẮẶẰẲẴÂẤẬẦẨẪÊẾỆỀỂỄÔỐỘỒỔỖƠỚỢỜỞỠƯỨỰỪỬỮỲỴỶỸÝỳỵỷỹý\s]+$/;
 
     if (tenPhongKham.length > 30) {
         errorMsg.textContent = 'Tên phòng khám không được quá 30 ký tự';
@@ -247,18 +247,28 @@ if(isset($_REQUEST['maPhongKham']))
     }
 ?>
      <?php
-if(isset($_REQUEST['btnadd']) && $_REQUEST['btnadd']=='Thêm' )
+if (isset($_REQUEST['btnadd']) && $_REQUEST['btnadd'] == 'Thêm') {
+    // Lấy dữ liệu từ form
+    $tenPhongKham = trim($_REQUEST['tenPhongKham']);
+    $khoaQuanLy = trim($_REQUEST['khoaQuanLy']);
+    $chucNang = trim($_REQUEST['chucNang']);
+    $trangThai = $_REQUEST['trangthai'];
 
-{
-    
-    $insert= $qk->addphongkham($_REQUEST['tenPhongKham'],$_REQUEST['khoaQuanLy'],$_REQUEST['chucNang'],$_REQUEST['trangthai']);
-    if($insert)
-    {
+    // Kiểm tra nếu tên phòng khám đã tồn tại
+    if ($qk->phongKhamTonTai($tenPhongKham)) {
+        echo "<script>alert('Phòng khám đã tồn tại. Vui lòng nhập tên khác.');</script>";
+        echo "<script>window.location.href = 'quanlyphongkham.php';</script>";
+        exit;
+    }
+
+    // Thực hiện thêm phòng khám
+    $insert = $qk->addphongkham($tenPhongKham, $khoaQuanLy, $chucNang, $trangThai);
+
+    if ($insert) {
         echo "<script>alert('Thêm phòng khám thành công');</script>";
         echo "<script>window.location.href = 'quanlyphongkham.php';</script>";
-    }
-    else {
-        echo "<script>alert('Thêm nhân viên không thành công');</script>";
+    } else {
+        echo "<script>alert('Thêm phòng khám không thành công. Vui lòng thử lại.');</script>";
         echo "<script>window.location.href = 'quanlyphongkham.php';</script>";
     }
 }

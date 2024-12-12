@@ -279,7 +279,7 @@ if(isset($_REQUEST['maNhanVien']))
                                                     <th>SỐ ĐIỆN THOẠI</th>
                                                     <th>EMAIL</th>
                                                     <th>ĐỊA CHỈ</th>
-                                                    <th>BỘ PHẬN</th>
+                                                    <th>THUỘC KHOA</th>
                                                     <th>CHỨC VỤ</th>
                                                     <th>TÌNH TRẠNG LÀM VIỆC</th>
                                                 </tr>
@@ -290,7 +290,7 @@ if(isset($_REQUEST['maNhanVien']))
     var errorMsg = document.getElementById('tbtenNV');
     
     // Biểu thức chính quy hỗ trợ tiếng Việt có dấu và khoảng trắng, không chứa số
-    var regex = /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàạáâầãèéêìịíòọóôõùúăđĩũơớƯĂẮẶẰẲẴÂẤẬẦẨẪÊẾỆỀỂỄÔỐỘỒỔỖƠỚỢỜỞỠƯỨỰỪỬỮỲỴỶỸÝỳỵỷỹý\s]+$/;
+    var regex = /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàạáâầãèéêìịíễòọóôõùúăýđĩũơớƯĂẮẶẰẲẴÂẤẬẦẨẪÊẾỆỀỂỄÔỐỘỒỔỖƠỚỢỜỞỠƯỨỰỪỬỮỲỴỶỸÝỳỵỷỹý\s]+$/;
 
     if (tenNhanVien.length > 50) {
         errorMsg.textContent = 'Tên nhân viên không được quá 50 ký tự';
@@ -361,19 +361,37 @@ function validateSoDienThoai() {
 ?>
      <?php
     
-if(isset($_REQUEST['btnadd']) && $_REQUEST['btnadd']=='Thêm' )
+    
 
-{
-    $ngaysinh=$_REQUEST['ngaySinh'];
-    $ngaysinh = date('Y/m/d', strtotime($ngaysinh));
-    $insert= $qk->addnhanvien($_REQUEST['tenNhanVien'],$ngaysinh,$_REQUEST['gioiTinh'],$_REQUEST['tdn'],$_REQUEST['mk'],$_REQUEST['sDT'],$_REQUEST['eMail'],$_REQUEST['diaChi'], $_REQUEST['chucVu'],$_REQUEST['boPhan'],$_REQUEST['trangthai']);
-    if($insert)
-    {
+if (isset($_REQUEST['btnadd']) && $_REQUEST['btnadd'] == 'Thêm') {
+    // Lấy dữ liệu từ form
+    $tenNhanVien = trim($_REQUEST['tenNhanVien']);
+    $ngaySinh = date('Y/m/d', strtotime($_REQUEST['ngaySinh']));
+    $gioiTinh = $_REQUEST['gioiTinh'];
+    $tenDangNhap = trim($_REQUEST['tdn']);
+    $matKhau = password_hash($_REQUEST['mk'], PASSWORD_BCRYPT); // Mã hóa mật khẩu
+    $soDienThoai = trim($_REQUEST['sDT']);
+    $email = trim($_REQUEST['eMail']);
+    $diaChi = trim($_REQUEST['diaChi']);
+    $chucVu = $_REQUEST['chucVu'];
+    $boPhan = $_REQUEST['boPhan'];
+    $trangThai = $_REQUEST['trangthai'];
+
+    // Kiểm tra nếu tên nhân viên đã tồn tại
+    if ($qk->nhanVienTonTai($tenNhanVien)) {
+        echo "<script>alert('Tên nhân viên đã tồn tại.');</script>";
+        echo "<script>window.location.href = 'quanlythongtinnhanvien.php';</script>";
+        exit;
+    }
+
+    // Thực hiện thêm nhân viên
+    $insert = $qk->addnhanvien($tenNhanVien, $ngaySinh, $gioiTinh, $tenDangNhap, $matKhau, $soDienThoai, $email, $diaChi, $chucVu, $boPhan, $trangThai);
+
+    if ($insert) {
         echo "<script>alert('Thêm nhân viên thành công');</script>";
         echo "<script>window.location.href = 'quanlythongtinnhanvien.php';</script>";
-    }
-    else {
-        echo "<script>alert('Thêm nhân viên không thành công');</script>";
+    } else {
+        echo "<script>alert('Thêm nhân viên không thành công. Vui lòng thử lại.');</script>";
         echo "<script>window.location.href = 'quanlythongtinnhanvien.php';</script>";
     }
 }

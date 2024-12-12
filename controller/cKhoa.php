@@ -2,6 +2,18 @@
 	include_once("../../model/mKhoa.php");
 	class cKhoa
 	{
+		private $conn;
+	
+		// Constructor to initialize the database connection
+		public function __construct() {
+			// Use correct username, password, and database name
+			$this->conn = mysqli_connect("localhost", "root", "", "hospital_db");
+	
+			// Check the connection
+			if (!$this->conn) {
+				die("Connection failed: " . mysqli_connect_error());
+			}
+		}
 		public function layDSKhoa()
 		{
 			$p = new mKhoa();
@@ -61,6 +73,14 @@
 				
 				return $tbl;	
         }
+		public function khoaTonTai($tenKhoa) {
+			$query = "SELECT * FROM khoa WHERE tenKhoa = '$tenKhoa'";
+			$result = mysqli_query($this->conn, $query);
+
+			// Return true if a record exists, false otherwise
+			return mysqli_num_rows($result) > 0;
+		}
+
 		
 
         public function updatettkhoa($maKhoa,$tenKhoa,$truongKhoa,$soDienThoai,$email,$trangthai)

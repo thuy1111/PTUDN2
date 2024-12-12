@@ -44,14 +44,7 @@
 
                             </li>
                 
-                            <li>
-                                <a href="../../view/quanLyNhanSu/quanlybaohiem.php">
-                                    <i class="mdi mdi-shield-check"></i>
-                                    <span>Quản lý bảo hiểm</span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                
-                            </li>
+                            
                         </ul>
 
                     </div>

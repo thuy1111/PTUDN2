@@ -1,6 +1,18 @@
 <?php
     include_once("../../model/mPhongKham.php");
     class cPhongKham{
+		private $conn;
+	
+		// Constructor to initialize the database connection
+		public function __construct() {
+			// Use correct username, password, and database name
+			$this->conn = mysqli_connect("localhost", "root", "", "hospital_db");
+	
+			// Check the connection
+			if (!$this->conn) {
+				die("Connection failed: " . mysqli_connect_error());
+			}
+		}
         public function laydanhsachphongkham(){
             $p = new mPhongKham();
            
@@ -52,6 +64,13 @@
 				
 			
         }
+		public function phongkhamTonTai($tenPhongKham) {
+			$query = "SELECT * FROM phongkham WHERE tenPhongKham = '$tenPhongKham'";
+			$result = mysqli_query($this->conn, $query);
+
+			// Return true if a record exists, false otherwise
+			return mysqli_num_rows($result) > 0;
+		}
         public function updatettpk($maPhongKham,$tenPhongKham,$maKhoa,$chucNang,$trangthai)
         {
             $p = new   mPhongKham();
