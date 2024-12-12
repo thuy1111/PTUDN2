@@ -17,40 +17,16 @@
 
 		public function hienThiDSLichLamViec($startDate, $endDate, $maNhanVien)
     {
-<<<<<<< HEAD
-        $lichKhamModel = new mBacsi();
-        $chiTietLK = $lichKhamModel->layChiTietLichKham($maLichKham);
-        if ($chiTietLK) {
-            return $chiTietLK;
-        } else {
-            return false;
-        }
-    }
-
-    // Lấy danh sách lịch làm việc của bác sĩ
-    public function layLichLamViecTheoBS($bacSi) {
-        $p = new mBacSi();
-        $tbl = $p->layLichLamViecTheoBS($bacSi);
-=======
         $model = new mBacsi();
         $dsLichLamViec = $model->layDSLichLamViec($startDate, $endDate, $maNhanVien);
->>>>>>> 183b6be5915e6dff4390bef5555735fe78f6bde5
 
-        if ($tbl) {
-            return $tbl;
+        if ($dsLichLamViec) {
+            return $dsLichLamViec;
         } else {
             return [];
         }
     }
 
-<<<<<<< HEAD
-    public function layCaLamViecTheoNgay($bacSi, $ngayKham) {
-        $p = new mBacSi();
-        $tbl = $p->layCaLamViecTheoNgay($bacSi, $ngayKham);
-
-        if ($tbl) {
-            return $tbl;
-=======
     public function chiTietLichLamViec($maLichLamViec, $maNhanVien)
     {
         $model = new mBacSi();
@@ -65,16 +41,11 @@
         $dsLichKham = $lichKhamModel->layDSLichKham($maNhanVien);
         if ($dsLichKham) {
             return $dsLichKham;
->>>>>>> 183b6be5915e6dff4390bef5555735fe78f6bde5
         } else {
             return false;
         }
     }
 
-<<<<<<< HEAD
-
-
-=======
     
     public function hienThiChiTietLK($maLichKham)
 {
@@ -85,7 +56,6 @@
     } else {
         return false;
     }
->>>>>>> 183b6be5915e6dff4390bef5555735fe78f6bde5
 }
     private $model;
 
