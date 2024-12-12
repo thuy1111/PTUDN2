@@ -17,14 +17,14 @@
 				return false;
 			}
         }
-        public function themnhanvien($hoTen,$ngaySinh,$gioiTinh,$tenDangNhap,$matKhau,$soDienThoai,$email,$diachi,$maChucVu,$maKhoa)
+        public function themnhanvien($hoTen,$ngaySinh,$gioiTinh,$tenDangNhap,$matKhau,$soDienThoai,$email,$diachi,$maChucVu,$maKhoa,$trangthai)
         {
             $p = new clsKetNoi();
 			$conn = $p->moketnoi();
 			$conn ->set_charset("utf8");
             if ($conn) {
-				$str = "INSERT INTO `nhanvien` (`maNhanVien`, `hoTen`, `ngaySinh`, `gioiTinh`, `tenDangNhap`, `matKhau`, `soDienThoai`, `email`, `diaChi`,  `maChucVu`, `maKhoa`) 
-                VALUES (NULL, '$hoTen', '$ngaySinh', '$gioiTinh', '$tenDangNhap', MD5('$matKhau'), '$soDienThoai', '$email', '$diachi', '$maChucVu', '$maKhoa');";
+				$str = "INSERT INTO `nhanvien` (`maNhanVien`, `hoTen`, `ngaySinh`, `gioiTinh`, `tenDangNhap`, `matKhau`, `soDienThoai`, `email`, `diaChi`,  `maChucVu`, `maKhoa`,`tinhTrangNhanVien`) 
+                VALUES (NULL, '$hoTen', '$ngaySinh', '$gioiTinh', '$tenDangNhap', MD5('$matKhau'), '$soDienThoai', '$email', '$diachi', '$maChucVu', '$maKhoa','$trangthai')";
 				$tbl = $conn->query($str);
 				$p->dongketnoi($conn);
 				return $tbl;
@@ -94,6 +94,6 @@
 			}
 
         }
-		}
+    }
 
 ?>

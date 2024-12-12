@@ -46,14 +46,16 @@
                             <div class="col-12 text-center">
                                 <input type="submit" name="btnadd" class="btn btn-primary mx-2"value="Thêm">
                                 <input type="submit" name="btnupdate"  class="btn btn-success mx-2" value="Cập nhật"> 
-                                <input type="submit" class="btn btn-danger mx-2" value="Hủy">
+                                <input type="reset" class="btn btn-danger mx-2" value="Hủy">
                             </div>
                         
                         </div>
-                        <?php
-
+<?php
+error_reporting(0);
 include_once("../../controller/cPhongKham.php");
+$id = $_GET['$id'];
 $p= new cPhongKham();
+$phongkham= $p->xemthongtinphongkham($id);
 if(isset($_REQUEST['maPhongKham']))
 {
     $kq= $p->xemthongtinphongkham($_REQUEST['maPhongKham']);
@@ -74,7 +76,7 @@ if(isset($_REQUEST['maPhongKham']))
 
                         <h4 class="header-title mb-3">Thông tin phòng khám</h4>
 
-                        <form class="mb-3" id="formPhongKham">
+                        <form class="mb-3" onsubmit="return validateForm() ;">
     <div class="row">
         <!-- Left column -->
         <div class="col-md-6">
@@ -112,7 +114,9 @@ if(isset($_REQUEST['maPhongKham']))
                     <label for="tenPhongKham" class="form-label">Tên phòng khám</label>
                 </div>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" name="tenPhongKham" id="tenPhongKham" placeholder="Nhập tên phòng khám" required>
+                    <input type="text" class="form-control" name="tenPhongKham" id="tenPhongKham" placeholder="Nhập tên phòng khám" value="<?= isset($tenPhongKham) ? $tenPhongKham : '' ?>" 
+                    required maxlength="30"
+                    oninput="validateTenPhongKham()">
                     <span id="tbTenPhongKham" class="text-danger"></span>
                 </div>
             </div>
@@ -126,7 +130,7 @@ if(isset($_REQUEST['maPhongKham']))
                     <label for="chucNang" class="form-label">Chức năng</label>
                 </div>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" name="chucNang" id="chucNang" placeholder="Nhập chức năng" required>
+                    <input type="text" class="form-control" name="chucNang" id="chucNang" placeholder="Nhập chức năng" value="<?= isset($chucNang) ? $chucNang : '' ?>"  required>
                     <span id="tbChucNang" class="text-danger"></span>
                 </div>
             </div>
@@ -134,17 +138,21 @@ if(isset($_REQUEST['maPhongKham']))
             <!-- Clinic Status -->
             <div class="row mb-3">
                 <div class="col-md-3">
-                    <label for="trangthai" class="form-label">Trạng thái phòng khám</label>
+                    <label for="trangthai" class="form-label">Trạng thái khoa</label>
                 </div>
-                <div class="col-md-8">
-                    <select name="trangthai" class="form-select form-control" id="trangthai" required>
-                        <option value="" selected disabled>Cập nhật trạng thái</option>
-                        <option value="Đang làm việc">Đang hoạt động</option>
-                        <option value="Nghỉ việc">Ngưng hoạt động</option>
+                <div class="col-md-9">
+                    <select 
+                        name="trangthai" 
+                        class="form-select" 
+                        id="trangthai" 
+                        required>
+                        <option value="">Chọn trạng thái khoa</option>
+                        <option value="Đang hoạt động">Đang hoạt động</option>
+                        <option value="Tạm nghỉ">Tạm nghỉ</option>
                     </select>
-                    <span id="tbTrangThai" class="text-danger"></span>
+                    <span id="tbtrangthai" class="text-danger"></span>
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
 
@@ -182,6 +190,25 @@ if(isset($_REQUEST['maPhongKham']))
                                                    
                                                     <th>TRẠNG THÁI HOẠT ĐỘNG</th>
                                                 </tr>
+<script>
+        function validateTenPhongKham() {
+    var tenPhongKham = document.getElementById('tenPhongKham').value;
+    var errorMsg = document.getElementById('tbTenPhongKham');
+    
+    // Biểu thức chính quy hỗ trợ tiếng Việt có dấu và khoảng trắng, không chứa số
+    var regex = /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàạáâãèéêìíòọóôõùúăđĩũơớƯĂẮẶẰẲẴÂẤẬẦẨẪÊẾỆỀỂỄÔỐỘỒỔỖƠỚỢỜỞỠƯỨỰỪỬỮỲỴỶỸÝỳỵỷỹý\s]+$/;
+
+    if (tenPhongKham.length > 30) {
+        errorMsg.textContent = 'Tên phòng khám không được quá 30 ký tự';
+    } else if (!regex.test(tenPhongKham)) {
+        errorMsg.textContent = 'Tên phòng khám chỉ được chứa chữ cái tiếng Việt và khoảng trắng, không được chứa số';
+    } else {
+        errorMsg.textContent = ''; // Xóa thông báo lỗi nếu hợp lệ
+    }
+}
+        
+        
+    </script>
                                             </thead>
                                             <?php
     include_once("../../controller/cPhongKham.php");

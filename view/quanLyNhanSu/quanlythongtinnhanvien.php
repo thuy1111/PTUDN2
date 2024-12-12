@@ -43,14 +43,16 @@
                             <div class="col-12 text-center">
                                 <input type="submit" name="btnadd" class="btn btn-primary mx-2"value="Thêm">
                                 <input type="submit" name="btnupdate"  class="btn btn-success mx-2" value="Cập nhật"> 
-                                <input type="submit" class="btn btn-danger mx-2" value="Hủy">
+                                <input type="reset" class="btn btn-danger mx-2" value="Hủy">
                             </div>
                         
                         </div>
 <?php
-
+error_reporting(0);
 include_once("../../controller/cNhanVien.php");
+$id = $_GET['$id'];
 $p= new cNhanVien();
+$nhanvien= $p->xemthongtinnv($id);
 if(isset($_REQUEST['maNhanVien']))
 {
     $kq= $p->xemthongtinnv($_REQUEST['maNhanVien']);
@@ -59,11 +61,16 @@ if(isset($_REQUEST['maNhanVien']))
         while($r=mysqli_fetch_assoc($kq))
         {
             $tennv=$r['hoTen'];
-            $ngaysinh=$r['ngaySinh'];
+            $ngaySinh=$r['ngaySinh'];
             $diachi=$r['diaChi'];
             $sdt=$r['soDienThoai'];
+            $gioiTinh=$r['gioiTinh'];
             $email=$r['email'];
-            $tinhtrang=$r['tinhTrangNhanVien'];
+            $soDienThoai=$r['soDienThoai'];
+            $tdn=$r['tenDangNhap'];
+            $tdn=$r['tenDangNhap'];
+            $mk=$r['matKhau'];
+            $trangthai=$r['tinhTrangNhanVien'];
             $machucvu=$r['maChucVu'];
             $maChucVu=$r['maChucVu'];
         }
@@ -83,7 +90,9 @@ if(isset($_REQUEST['maNhanVien']))
                     <label for="tenNhanVien" class="col-md-3 col-form-label">Tên nhân viên</label>
                     <div class="col-md-9">
                         <input type="text" class="form-control" id="tenNhanVien" name="tenNhanVien" 
-                               placeholder="Nhập tên nhân viên" aria-label="Tên nhân viên" required>
+                               placeholder="Nhập tên nhân viên" aria-label="Tên nhân viên" value="<?= isset($tennv) ? $tennv : '' ?>" 
+                               required maxlength="50"
+                               oninput="validatetenNhanVien()">
                         <span id="tbtenNV" class="text-danger"></span>
                     </div>
                 </div>
@@ -94,7 +103,7 @@ if(isset($_REQUEST['maNhanVien']))
                     <label for="ngaySinh" class="col-md-3 col-form-label">Ngày sinh</label>
                     <div class="col-md-9">
                         <input type="date" class="form-control" id="ngaySinh" name="ngaySinh" 
-                               placeholder="Chọn ngày sinh" aria-label="Ngày sinh" required>
+                               placeholder="Chọn ngày sinh" aria-label="Ngày sinh" value="<?= isset($ngaySinh) ? $ngaySinh : '' ?>" required>
                         <span id="tbngaySinh" class="text-danger"></span>
                     </div>
                 </div>
@@ -106,7 +115,7 @@ if(isset($_REQUEST['maNhanVien']))
                     <label for="diaChi" class="col-md-3 col-form-label">Địa chỉ</label>
                     <div class="col-md-9">
                         <input type="text" class="form-control" id="diaChi" name="diaChi" 
-                               placeholder="Nhập địa chỉ" aria-label="Địa chỉ" required>
+                               placeholder="Nhập địa chỉ" aria-label="Địa chỉ" value="<?= isset($diachi) ? $diachi : '' ?>" required>
                         <span id="tbdiaChi" class="text-danger"></span>
                     </div>
                 </div>
@@ -117,8 +126,8 @@ if(isset($_REQUEST['maNhanVien']))
                     <div class="col-md-9">
                         <select name="gioiTinh" id="gioiTinh" class="form-select" aria-label="Giới tính" required>
                             <option value="" selected disabled>Chọn giới tính</option>
-                            <option value="1">Nam</option>
-                            <option value="2">Nữ</option>
+                            <option value="Nam" <?= isset($gioiTinh) && $gioiTinh == 'Nam' ? 'selected' : '' ?>>Nam</option>
+                            <option value="Nữ" <?= isset($gioiTinh) && $gioiTinh == 'Nữ' ? 'selected' : '' ?>>Nữ</option>
                         </select>
                         <span id="tbgioiTinh" class="text-danger"></span>
                     </div>
@@ -126,10 +135,10 @@ if(isset($_REQUEST['maNhanVien']))
 
                 <!-- Bộ phận -->
                 <div class="row mb-3">
-                <label for="boPhan" class="col-md-3 col-form-label">Bộ phận</label>
+                <label for="boPhan" class="col-md-3 col-form-label">Khoa</label>
                 <div class="col-md-9">
                     <select name="boPhan" id="boPhan" class="form-select" aria-label="Bộ phận" required>
-                        <option value="" selected disabled>Chọn bộ phận</option>
+                        <option value="" selected disabled>Chọn khoa</option>
                         <?php
                             include("../../controller/cKhoa.php");
                             $controller = new cKhoa();
@@ -158,8 +167,9 @@ if(isset($_REQUEST['maNhanVien']))
                     <label for="sDT" class="col-md-3 col-form-label">Số điện thoại</label>
                     <div class="col-md-9">
                     <input type="text" class="form-control" id="sDT" name="sDT" 
-                    placeholder="Nhập số điện thoại" maxlength="10" pattern="(03|08|09)\d{8}" 
-                    title="Số điện thoại phải bắt đầu bằng 03, 08 hoặc 09 và có đúng 10 chữ số" required>
+                    placeholder="Nhập số điện thoại"  
+                    value="<?= isset($soDienThoai) ? $soDienThoai : '' ?>" 
+                    required maxlength="10" oninput="validateSoDienThoai()">
                     <span id="tbSDT" class="text-danger"></span>
                     </div>
                 </div>
@@ -169,7 +179,7 @@ if(isset($_REQUEST['maNhanVien']))
                     <label for="eMail" class="col-md-3 col-form-label">Email</label>
                     <div class="col-md-9">
                         <input type="email" class="form-control" id="eMail" name="eMail" 
-                               placeholder="Nhập email" aria-label="Email" required>
+                               placeholder="Nhập email" aria-label="Email" value="<?= isset($email) ? $email : '' ?>"  required>
                         <span id="tbEmail" class="text-danger"></span>
                     </div>
                 </div>
@@ -179,7 +189,7 @@ if(isset($_REQUEST['maNhanVien']))
                     <label for="tdn" class="col-md-3 col-form-label">Tên đăng nhập</label>
                     <div class="col-md-9">
                         <input type="text" class="form-control" id="tdn" name="tdn" 
-                               placeholder="Nhập tên đăng nhập" required>
+                               placeholder="Nhập tên đăng nhập" value="<?= isset($tdn) ? $tdn : '' ?>" required>
                     </div>
                 </div>
 
@@ -188,7 +198,7 @@ if(isset($_REQUEST['maNhanVien']))
                     <label for="mk" class="col-md-3 col-form-label">Mật khẩu</label>
                     <div class="col-md-9">
                         <input type="password" class="form-control" id="mk" name="mk" 
-                               placeholder="Nhập mật khẩu" required>
+                               placeholder="Nhập mật khẩu" value="<?= isset($mk) ? $mk : '' ?>" required>
                     </div>
                 </div>
 
@@ -216,18 +226,27 @@ if(isset($_REQUEST['maNhanVien']))
                     </div>
                 </div>
 
+                
                 <!-- Trạng thái làm việc -->
-                <div class="row mb-3">
-                    <label for="trangthai" class="col-md-3 col-form-label">Trạng thái</label>
-                    <div class="col-md-9">
-                        <select name="trangthai" id="trangthai" class="form-select" required>
-                            <option selected disabled>Cập nhật trạng thái</option>
-                            <option value="Đang làm việc">Đang làm việc</option>
-                            <option value="Nghỉ việc">Nghỉ việc</option>
-                            <option value="Tạm nghỉ">Tạm nghỉ</option>
-                        </select>
-                    </div>
+                
+                <div class="col-md-3">
+                    <label for="trangthai" class="form-label">Trạng thái nhân viên</label>
                 </div>
+                <div class="col-md-9">
+                    <select 
+                        name="trangthai" 
+                        class="form-select" 
+                        id="trangthai" 
+                        required>
+                        <option value="">Chọn trạng thái nhân viên</option>
+                        <option value="Đang làm việc">Đang làm việc</option>
+                        <option value="Tạm nghỉ">Tạm nghỉ</option>
+                        <option value="Nghỉ việc">Nghỉ việc</option>
+                    </select>
+                    <span id="tbtrangthai" class="text-danger"></span>
+                </div>
+                
+            
             </div>
         </div>
                         </form>
@@ -264,6 +283,41 @@ if(isset($_REQUEST['maNhanVien']))
                                                     <th>CHỨC VỤ</th>
                                                     <th>TÌNH TRẠNG LÀM VIỆC</th>
                                                 </tr>
+
+                                                <script>
+        function validatetenNhanVien() {
+    var tenNhanVien = document.getElementById('tenNhanVien').value;
+    var errorMsg = document.getElementById('tbtenNV');
+    
+    // Biểu thức chính quy hỗ trợ tiếng Việt có dấu và khoảng trắng, không chứa số
+    var regex = /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàạáâầãèéêìịíòọóôõùúăđĩũơớƯĂẮẶẰẲẴÂẤẬẦẨẪÊẾỆỀỂỄÔỐỘỒỔỖƠỚỢỜỞỠƯỨỰỪỬỮỲỴỶỸÝỳỵỷỹý\s]+$/;
+
+    if (tenNhanVien.length > 50) {
+        errorMsg.textContent = 'Tên nhân viên không được quá 50 ký tự';
+    } else if (!regex.test(tenNhanVien)) {
+        errorMsg.textContent = 'Tên nhân viên chỉ được chứa chữ cái tiếng Việt và khoảng trắng, không được chứa số';
+    } else {
+        errorMsg.textContent = ''; // Xóa thông báo lỗi nếu hợp lệ
+    }   
+}
+function validateSoDienThoai() {
+    // Lấy giá trị từ trường input
+    var soDienThoai = document.getElementById('sDT').value.trim();
+    var errorMsg = document.getElementById('tbSDT');
+    
+    // Biểu thức kiểm tra số điện thoại hợp lệ
+    var regex = /^(03|08|09)\d{8}$/;
+    
+    // Kiểm tra hợp lệ
+    if (!regex.test(soDienThoai)) {
+        errorMsg.textContent = 'Số điện thoại phải bắt đầu bằng 03, 08, hoặc 09 và có 10 chữ số';
+    } else {
+        errorMsg.textContent = ''; // Xóa thông báo lỗi nếu hợp lệ
+    }
+}
+
+
+</script>
                                             </thead>
 <?php
     include_once("../../controller/cNhanVien.php");
@@ -306,12 +360,13 @@ if(isset($_REQUEST['maNhanVien']))
     }
 ?>
      <?php
+    
 if(isset($_REQUEST['btnadd']) && $_REQUEST['btnadd']=='Thêm' )
 
 {
     $ngaysinh=$_REQUEST['ngaySinh'];
     $ngaysinh = date('Y/m/d', strtotime($ngaysinh));
-    $insert= $qk->addnhanvien($_REQUEST['tenNhanVien'],$ngaysinh,$_REQUEST['gioiTinh'],$_REQUEST['tdn'],$_REQUEST['mk'],$_REQUEST['sDT'],$_REQUEST['eMail'],$_REQUEST['diaChi'], $_REQUEST['chucVu'],$_REQUEST['boPhan']);
+    $insert= $qk->addnhanvien($_REQUEST['tenNhanVien'],$ngaysinh,$_REQUEST['gioiTinh'],$_REQUEST['tdn'],$_REQUEST['mk'],$_REQUEST['sDT'],$_REQUEST['eMail'],$_REQUEST['diaChi'], $_REQUEST['chucVu'],$_REQUEST['boPhan'],$_REQUEST['trangthai']);
     if($insert)
     {
         echo "<script>alert('Thêm nhân viên thành công');</script>";
@@ -344,99 +399,7 @@ if(isset($_REQUEST['btnupdate']) && $_REQUEST['btnupdate']=='Cập nhật' )
 }
 
 ?>                                    
-                                           
-                                           
-    <script>
-    function validateForm() {
-        let isValid = true;
-
-        // Lấy giá trị của các trường
-        const tenNhanVien = document.getElementById("tenNhanVien").value.trim();
-        const ngaySinh = document.getElementById("ngaySinh").value.trim();
-        const gioiTinh = document.getElementById("gioiTinh").value;
-        const diaChi = document.getElementById("diaChi").value.trim();
-        const sDT = document.getElementById("sDT").value.trim();
-        const eMail = document.getElementById("eMail").value.trim();
-        const boPhan = document.getElementById("boPhan").value;
-        const chucVu = document.getElementById("chucVu").value;
-        const trangthai = document.getElementById("trangthai").value;
-
-        // Xóa thông báo lỗi cũ
-        document.getElementById("tbtenNV").textContent = "";
-        document.getElementById("tbngaySinh").textContent = "";
-        document.getElementById("tbgioiTinh").textContent = "";
-        document.getElementById("tbdiaChi").textContent = "";
-        document.getElementById("tbSDT").textContent = "";
-        document.getElementById("tbEmail").textContent = "";
-
-        // Kiểm tra tên nhân viên
-        if (tenNhanVien === "") {
-            document.getElementById("tbtenNV").textContent = "Tên nhân viên không được để trống.";
-            isValid = false;
-        }
-
-        // Kiểm tra ngày sinh
-        if (ngaySinh === "") {
-            document.getElementById("tbngaySinh").textContent = "Ngày sinh không được để trống.";
-            isValid = false;
-        }
-
-        // Kiểm tra giới tính
-        if (gioiTinh === "Chọn giới tính") {
-            document.getElementById("tbgioiTinh").textContent = "Vui lòng chọn giới tính.";
-            isValid = false;
-        }
-
-        // Kiểm tra địa chỉ
-        if (diaChi === "") {
-            document.getElementById("tbdiaChi").textContent = "Địa chỉ không được để trống.";
-            isValid = false;
-        }
-
-        // Kiểm tra số điện thoại
-        // Kiểm tra số điện thoại
-const sdtRegex = /^(03|08|09)\d{8}$/; // Bắt đầu bằng 03, 08, hoặc 09 và có đúng 10 chữ số
-if (sDT === "") {
-    document.getElementById("tbSDT").textContent = "Số điện thoại không được để trống.";
-    isValid = false;
-} else if (!sdtRegex.test(sDT)) {
-    document.getElementById("tbSDT").textContent = "Số điện thoại không hợp lệ. Số điện thoại phải bắt đầu bằng 03, 08 hoặc 09 và có đúng 10 chữ số.";
-    isValid = false;
-} else {
-    document.getElementById("tbSDT").textContent = ""; // Xóa lỗi nếu hợp lệ
-}
-
-        // Kiểm tra email
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Định dạng email cơ bản
-        if (eMail === "") {
-            document.getElementById("tbEmail").textContent = "Email không được để trống.";
-            isValid = false;
-        } else if (!emailRegex.test(eMail)) {
-            document.getElementById("tbEmail").textContent = "Email không hợp lệ.";
-            isValid = false;
-        }
-
-        // Kiểm tra bộ phận
-        if (boPhan === "") {
-            alert("Vui lòng chọn bộ phận.");
-            isValid = false;
-        }
-
-        // Kiểm tra chức vụ
-        if (chucVu === "") {
-            alert("Vui lòng chọn chức vụ.");
-            isValid = false;
-        }
-
-        // Kiểm tra trạng thái
-        if (trangthai === "Cập nhật trạng thái") {
-            alert("Vui lòng chọn trạng thái làm việc.");
-            isValid = false;
-        }
-
-        return isValid; // Trả về kết quả kiểm tra
-    }
-</script>                                               
+                                                                   
                                             </tbody>
                                             
                                         </table>

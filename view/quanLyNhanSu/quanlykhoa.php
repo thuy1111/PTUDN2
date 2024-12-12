@@ -43,16 +43,19 @@
                             <div class="col-12 text-center">
                                 <input type="submit" name="btnadd" class="btn btn-primary mx-2"value="Thêm">
                                 <input type="submit" name="btnupdate"  class="btn btn-success mx-2" value="Cập nhật"> 
-                                <input type="submit" class="btn btn-danger mx-2" value="Hủy">
+                                <input type="reset" class="btn btn-danger mx-2" value="Hủy">
                             </div>
                         
                         </div>
 <?php
+error_reporting(0);
 include_once("../../controller/cKhoa.php");
+$id = $_GET['$id'];
 $p= new cKhoa();
+$khoa= $p->xemthongtinkhoa($id);
 if(isset($_REQUEST['maKhoa']))
 {
-    $kq= $p->layDSKhoa($_REQUEST['maKhoa']);
+    $kq= $p->xemthongtinkhoa($_REQUEST['maKhoa']);
     if($kq)
     {
         while($r=mysqli_fetch_assoc($kq))
@@ -82,39 +85,43 @@ if(isset($_REQUEST['maKhoa']))
         <div class="col-md-6">
             <!-- Tên khoa -->
             <div class="row mb-3">
-                <div class="col-md-3">
-                    <label for="tenKhoa" class="form-label">Tên khoa</label>
+                    <div class="col-md-3">
+                        <label for="tenKhoa" class="form-label">Tên khoa</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input 
+                            type="text" 
+                            name="tenKhoa" 
+                            class="form-control" 
+                            id="tenKhoa" 
+                            placeholder="Nhập tên khoa" 
+                            value="<?= isset($tenKhoa) ? $tenKhoa : '' ?>"
+                            required 
+                            maxlength="30"
+                            oninput="validateTenKhoa()">
+                        <span id="tbtenKhoa" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="col-md-9">
-                    <input 
-                        type="text" 
-                        name="tenKhoa" 
-                        class="form-control" 
-                        id="tenKhoa" 
-                        placeholder="Nhập tên khoa" 
-                        required 
-                        maxlength="100">
-                    <span id="tbtenKhoa" class="text-danger"></span>
-                </div>
-            </div>
 
             <!-- Số điện thoại -->
             <div class="row mb-3">
-                <div class="col-md-3">
-                    <label for="sDT" class="form-label">Số điện thoại</label>
-                </div>
-                <div class="col-md-9">
-                    <input 
-                        type="text" 
-                        name="sDT" 
-                        class="form-control" 
-                        id="sDT" 
-                        placeholder="Nhập số điện thoại" 
-                        required 
-                        pattern="[0-9]{10,11}">
-                    <span id="tbsDT" class="text-danger"></span>
-                </div>
+            <div class="col-md-3">
+                <label for="soDienThoai" class="form-label">Số điện thoại</label>
             </div>
+            <div class="col-md-9">
+                <input 
+                    type="text" 
+                    name="soDienThoai" 
+                    class="form-control" 
+                    id="soDienThoai" 
+                    placeholder="Nhập số điện thoại" 
+                    value="<?= isset($soDienThoai) ? htmlspecialchars($soDienThoai) : '' ?>"
+                    required 
+                    maxlength="10"
+                    oninput="validateSoDienThoai()"> <!-- Gọi hàm khi người dùng nhập dữ liệu -->
+                <span id="tbSoDienThoai" class="text-danger"></span> <!-- Hiển thị thông báo lỗi nếu có -->
+            </div>
+        </div>
         </div>
 
         <!-- Right column -->
@@ -130,7 +137,7 @@ if(isset($_REQUEST['maKhoa']))
                         name="eMail" 
                         class="form-control" 
                         id="eMail" 
-                        placeholder="Nhập email" 
+                        placeholder="Nhập email" value="<?= isset($email) ? $email : '' ?>"
                         required>
                     <span id="tbeMail" class="text-danger"></span>
                 </div>
@@ -147,12 +154,13 @@ if(isset($_REQUEST['maKhoa']))
                         name="truongKhoa" 
                         class="form-control" 
                         id="truongKhoa" 
-                        placeholder="Nhập trưởng khoa" 
-                        required>
+                        placeholder="Nhập trưởng khoa" value="<?= isset($truongKhoa) ? $truongKhoa : '' ?>"
+                        required maxlength="50"
+                        oninput="validateTruongKhoa()">
                     <span id="tbtruongKhoa" class="text-danger"></span>
                 </div>
             </div>
-
+            
             <!-- Trạng thái khoa -->
             <div class="row mb-3">
                 <div class="col-md-3">
@@ -165,8 +173,8 @@ if(isset($_REQUEST['maKhoa']))
                         id="trangthai" 
                         required>
                         <option value="">Chọn trạng thái khoa</option>
-                        <option value="1">Đang hoạt động</option>
-                        <option value="2">Tạm nghỉ</option>
+                        <option value="Đang hoạt động">Đang hoạt động</option>
+                        <option value="Tạm nghỉ">Tạm nghỉ</option>
                     </select>
                     <span id="tbtrangthai" class="text-danger"></span>
                 </div>
@@ -206,6 +214,49 @@ if(isset($_REQUEST['maKhoa']))
                                                     <th>EMAIL</th>
                                                     <th>TRẠNG THÁI HOẠT ĐỘNG</th>
                                                 </tr>
+    <script>
+        function validateTenKhoa() {
+            var tenKhoa = document.getElementById('tenKhoa').value;
+            var errorMsg = document.getElementById('tbtenKhoa');
+            
+            // Kiểm tra tên khoa chỉ chứa chữ cái và không vượt quá 30 ký tự
+            var regex = /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàạáâãèéêìíòọóôõùúăđĩũơớƯĂẮẶẰẲẴÂẤẬẦẨẪÊẾỆỀỂỄÔỐỘỒỔỖƠỚỢỜỞỠƯỨỰỪỬỮỲỴỶỸÝỳỵỷỹý\s]+$/;
+            if (tenKhoa.length > 30) {
+                errorMsg.textContent = 'Tên khoa không được quá 30 ký tự';
+            } else if (!regex.test(tenKhoa)) {
+                errorMsg.textContent = 'Tên phòng khám chỉ được chứa chữ cái tiếng Việt và khoảng trắng';
+            } else {
+                errorMsg.textContent = ''; // Xóa thông báo lỗi nếu hợp lệ
+            }
+        }
+        function validateSoDienThoai() {
+            var soDienThoai = document.getElementById('soDienThoai').value;
+            var errorMsg = document.getElementById('tbSoDienThoai');
+            
+            // Biểu thức chính quy kiểm tra số điện thoại bắt đầu bằng 03, 08, 09 và có 10 chữ số
+            var regex = /^(03|08|09)\d{8}$/;
+            if (!regex.test(soDienThoai)) {
+                errorMsg.textContent = 'Số điện thoại phải bắt đầu bằng 03, 08, hoặc 09 và có 10 chữ số';
+            } else {
+                errorMsg.textContent = ''; // Xóa thông báo lỗi nếu hợp lệ
+            }
+        }
+        function validateTruongKhoa() {
+            var TruongKhoa = document.getElementById('truongKhoa').value;
+            var errorMsg = document.getElementById('tbtruongKhoa');
+            
+            // Kiểm tra trưởng khoa chỉ chứa chữ cái và không vượt quá 30 ký tự
+            var regex = /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàạáâãèéêìíòọóôõùúăđĩũơớƯĂẮẶẰẲẴÂẤẬẦẨẪÊẾỆỀỂỄÔỐỘỒỔỖƠỚỢỜỞỠƯỨỰỪỬỮỲỴỶỸÝỳỵỷỹý\s]+$/;
+            if (TruongKhoa.length > 50) {
+                errorMsg.textContent = 'Tên trưởng khoa không được quá 30 ký tự';
+            } else if (!regex.test(TruongKhoa)) {
+                errorMsg.textContent = 'Tên trưởng khoa chỉ được chứa chữ cái và khoảng trắng';
+            } else {
+                errorMsg.textContent = ''; // Xóa thông báo lỗi nếu hợp lệ
+            }
+        }
+    </script>
+
                                             </thead>
                                             <?php
     include_once("../../controller/cKhoa.php");
@@ -249,7 +300,7 @@ if(isset($_REQUEST['maKhoa']))
 if(isset($_REQUEST['btnadd']) && $_REQUEST['btnadd']=='Thêm' )
 
 {
-    $insert= $qk->addkhoa($_REQUEST['tenKhoa'],$_REQUEST['truongKhoa'],$_REQUEST['sDT'],$_REQUEST['eMail'],$_REQUEST['trangthai']);
+    $insert= $qk->addkhoa($_REQUEST['tenKhoa'],$_REQUEST['truongKhoa'],$_REQUEST['soDienThoai'],$_REQUEST['eMail'],$_REQUEST['trangthai']);
     if($insert)
     {
         echo "<script>alert('Thêm khoa thành công');</script>";
@@ -268,7 +319,7 @@ if(isset($_REQUEST['btnupdate']) && $_REQUEST['btnupdate']=='Cập nhật' )
 {
     
     
-    $update= $qk->updatettkhoa($_REQUEST['maKhoa'],$_REQUEST['tenKhoa'],$_REQUEST['truongKhoa'],$_REQUEST['sDT'],$_REQUEST['eMail'],$_REQUEST['trangthai']);
+    $update= $qk->updatettkhoa($_REQUEST['maKhoa'],$_REQUEST['tenKhoa'],$_REQUEST['truongKhoa'],$_REQUEST['soDienThoai'],$_REQUEST['eMail'],$_REQUEST['trangthai']);
     if($update)
     {
         echo "<script>alert('Cập nhật thông tin khoa thành công');</script>";
@@ -281,65 +332,7 @@ if(isset($_REQUEST['btnupdate']) && $_REQUEST['btnupdate']=='Cập nhật' )
 }
 
 ?>
-<script>
-    function validateForm() {
-        let isValid = true;
 
-        // Lấy các giá trị từ form
-        const tenKhoa = document.getElementById("tenKhoa").value.trim();
-        const sDT = document.getElementById("sDT").value.trim();
-        const eMail = document.getElementById("eMail").value.trim();
-        const truongKhoa = document.getElementById("truongKhoa").value.trim();
-        const trangthai = document.getElementById("trangthai").value;
-
-        // Xóa các thông báo lỗi cũ
-        document.getElementById("tbtenKhoa").textContent = "";
-        document.getElementById("tbsDT").textContent = "";
-        document.getElementById("tbeMail").textContent = "";
-        document.getElementById("tbtruongKhoa").textContent = "";
-        document.getElementById("tbtrangthai").textContent = "";
-
-        // Kiểm tra Tên khoa
-        if (tenKhoa === "") {
-            document.getElementById("tbtenKhoa").textContent = "Tên khoa không được để trống.";
-            isValid = false;
-        }
-
-        // Kiểm tra SDT (số điện thoại)
-        const sdtRegex = /^[0-9][]{10}$/; // Chỉ cho phép 10-11 chữ số
-        if (sDT === "") {
-            document.getElementById("tbsDT").textContent = "Số điện thoại không được để trống.";
-            isValid = false;
-        } else if (!sdtRegex.test(sDT)) {
-            document.getElementById("tbsDT").textContent = "Số điện thoại không hợp lệ.";
-            isValid = false;
-        }
-
-        // Kiểm tra Email
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Định dạng email cơ bản
-        if (eMail === "") {
-            document.getElementById("tbeMail").textContent = "Email không được để trống.";
-            isValid = false;
-        } else if (!emailRegex.test(eMail)) {
-            document.getElementById("tbeMail").textContent = "Email không hợp lệ.";
-            isValid = false;
-        }
-
-        // Kiểm tra Trưởng khoa
-        if (truongKhoa === "") {
-            document.getElementById("tbtruongKhoa").textContent = "Tên trưởng khoa không được để trống.";
-            isValid = false;
-        }
-
-        // Kiểm tra Trạng thái khoa
-        if (trangthai === "Trạng thái khoa") {
-            document.getElementById("tbtrangthai").textContent = "Vui lòng chọn trạng thái khoa.";
-            isValid = false;
-        }
-
-        return isValid; // Trả về kết quả kiểm tra
-    }
-</script>
                                             </tbody>
                                             
                                         </table>
