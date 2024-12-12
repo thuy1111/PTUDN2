@@ -1,8 +1,8 @@
 <?php
-    include_once("../../model/mXuly.php");
-    class cXuly{
+    include_once("../../model/mDonThuoc.php");
+    class cDonThuoc{
         public function getAllDonThuoc(){
-            $p = new mXuly();
+            $p = new mDonThuoc();
             $tbl = $p->selectAllDonThuoc();
 			if(mysqli_num_rows($tbl)){
 				return $tbl;

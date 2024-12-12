@@ -1,7 +1,7 @@
 <?php
 //xử lý đơn thuốc
     include_once("connect.php");
-    class mXuly{
+    class mDonThuoc{
         public function SelectAllDonThuoc(){
             $p=new clsketnoi();
             $con=$p->moKetNoi();
@@ -11,7 +11,7 @@
             return $tbl;  
         }
         public function get01DT($maDonThuoc){
-            $p = new mXuLy();
+            $p = new mDonThuoc();
             $kq = $p -> select01DT($maDonThuoc);
             if(mysqli_num_rows($kq)>0){
                 return $kq;
@@ -20,7 +20,7 @@
             }
         }
         public function updateDonThuoc($maDonThuoc,$tinhTrang){
-            $p = new mXuly();
+            $p = new mDonThuoc();
             $kq = $p -> updateDonThuoc($maDonThuoc,$tinhTrang);
             if($kq){
                 return $kq;

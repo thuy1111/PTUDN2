@@ -103,30 +103,30 @@
                     </style>
 </div>
 <?php
-                include_once("../../controller/cXuly.php");
-                $p = new cXuly();
-                $kq=$p ->getAllDonThuoc();
-                if($kq){
-                    echo'<table>
-                    <tr>
-                        <th>Mã Đơn Thuốc</th>
-                        <th>Tên Bệnh Nhân</th>
-                        <th>Chuẩn Đoán</th>
-                        <th>Tình Trạng</th>
-                        <th>Chi Tiết Đơn Thuốc</th>
-                    </tr>';
-                    while($r=mysqli_fetch_assoc($kq)){
-                        echo"<tr>";
-                        echo'<td>'.$r["maDonThuoc"].'</td>';
-                        echo'<td>'.$r["hoTen"].'</td>';
-                        echo'<td>'.$r["chuanDoan"].'</td>';
-                        echo'<td>'.$r["tinhTrang"].'</td>';            
-                        echo "<td><a href='chitietdonthuoc.php'=".$r['maDonThuoc']."'>Chi Tiết</a></td>";
-                        echo"</tr>";
-                    }
-                    echo'</table>';
-                }
-            ?>
+    include_once("../../controller/cDonThuoc.php");
+    $p = new cDonThuoc();
+    $kq = $p->getAllDonThuoc();
+    if ($kq) {
+        echo '<table>
+        <tr>
+            <th>Mã Đơn Thuốc</th>
+            <th>Tên Bệnh Nhân</th>
+            <th>Chuẩn Đoán</th>
+            <th>Tình Trạng</th>
+            <th>Chi Tiết Đơn Thuốc</th>
+        </tr>';
+        while ($r = mysqli_fetch_assoc($kq)) {
+            echo '<tr>';
+            echo '<td>' . $r["maDonThuoc"] . '</td>';
+            echo '<td>' . $r["hoTen"] . '</td>';
+            echo '<td>' . $r["chuanDoan"] . '</td>';
+            echo '<td>' . $r["tinhTrang"] . '</td>';
+            echo "<td><a href='chitietdonthuoc.php?id=" . $r['maDonThuoc'] . "' class='btn btn-sm btn-outline-primary btn-view'>Xem chi tiết</a></td>";
+            echo '</tr>';
+        }
+        echo '</table>';
+    }
+?>
         <!-- Vendor js -->
         <script src="../../assets/js/vendor.min.js"></script>
         <!-- Plugins js-->

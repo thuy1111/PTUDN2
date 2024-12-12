@@ -1,3 +1,23 @@
+<?php
+// Include necessary files
+include("../../controller/cCTDT.php");
+
+// Get the ID from the URL
+$maChiTietDT = $_GET['id'];
+$tinhTrang = "thanh toan"; // Setting the status to "thanh toán"
+
+// Create an instance of the controlCTDT class and update the status
+$p = new controlCTDT();
+$updateResult = $p->updateCTDT($maChiTietDT, $tinhTrang);
+
+if ($updateResult) {
+    // Redirect to a success page or show a success message
+    header('Location: xulythuoc.php?status=success');
+} else {
+    // Handle failure
+    echo "Cập nhật trạng thái thất bại!";
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -172,7 +192,7 @@
                             </style>
 
                             <!-- Update Status Button -->
-                            <button class="btn btn-custom-blue" onclick="window.location.href='updateDT.php?id='">Cập Nhật Trạng Thái</button>
+                            <button class="btn btn-custom-blue" onclick="window.location.href='updateStatus.php?id=<?php echo $r['maChiTietDT']; ?>'">Cập Nhật Trạng Thái</button>
 
                             <button class="btn btn-danger" onclick="window.location.href='xulythuoc.php';">Quay Lại</button>
 

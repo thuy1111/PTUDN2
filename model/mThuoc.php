@@ -17,6 +17,21 @@
 				return false;
 			}
 		}
+		public function xem1thuoc($maThuoc)
+        {
+            $p = new clsKetNoi();
+			$conn = $p->moketnoi();
+			$conn ->set_charset("utf8");
+			if ($conn) {
+				$str = "Select * from thuoc where maThuoc ='$maThuoc'";
+				$tbl = $conn->query($str);
+				$p->dongketnoi($conn);
+				return $tbl;
+			} else {
+				return false;
+			}
+
+        }
 		public function themthuoc($tenThuoc,$soLuong,$donViCungCap,$donGia,$donViTinh,$cachDung,$trangThai,$maLoaiThuoc)
         {
             $p = new clsKetNoi();
@@ -32,61 +47,79 @@
 				return false;
 			}
         }
-        public function capnhatthongtinthuoc($maThuoc,$tenThuoc,$soLuong,$donViCungCap,$donGia,$donViTinh,$cachDung,$trangThai,$maLoaiThuoc)
-        {
-            $p = new clsKetNoi();
-			$conn = $p->moketnoi();
-			$conn ->set_charset("utf8");
-            if ($conn) {
-				$str = "UPDATE `thuoc` SET `tenThuoc` = '$tenThuoc', `soLuong` = '$soLuong', `donViCungCap` = '$donViCungCap', `donGia` = '$donGia',`donViTinh`='$donViTinh', `cachDung` = $cachDung,`maLoaiThuoc` = $maLoaiThuoc, `trangThai` = $trangThai WHERE `thuoc`.`maThuoc` = $maThuoc;";
-				$tbl = $conn->query($str);
-				$p->dongketnoi($conn);
-				return $tbl;
-			} else {
-				return false;
-			}
-        }
-        public function xem1thuoc($maThuoc)
-        {
-            $p = new clsKetNoi();
-			$conn = $p->moketnoi();
-			$conn ->set_charset("utf8");
-			if ($conn) {
-				$str = "Select * from thuoc where maThuoc ='$maThuoc'";
-				$tbl = $conn->query($str);
-				$p->dongketnoi($conn);
-				return $tbl;
-			} else {
-				return false;
-			}
+        public function capnhatthongtinthuoc($maThuoc, $tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $trangThai, $maLoaiThuoc)
+{
+    $p = new clsKetNoi();
+    $conn = $p->moketnoi();
+    $conn->set_charset("utf8");
 
-        }
+    if ($conn) {
+        // Sanitize inputs to prevent SQL injection
+        $maThuoc = mysqli_real_escape_string($conn, $maThuoc);
+        $tenThuoc = mysqli_real_escape_string($conn, $tenThuoc);
+        $soLuong = mysqli_real_escape_string($conn, $soLuong);
+        $donViCungCap = mysqli_real_escape_string($conn, $donViCungCap);
+        $donGia = mysqli_real_escape_string($conn, $donGia);
+        $donViTinh = mysqli_real_escape_string($conn, $donViTinh);
+        $cachDung = mysqli_real_escape_string($conn, $cachDung);
+        $trangThai = mysqli_real_escape_string($conn, $trangThai);
+        $maLoaiThuoc = mysqli_real_escape_string($conn, $maLoaiThuoc);
+
+        // Build the update query
+        $str = "UPDATE thuoc SET 
+                tenThuoc = '$tenThuoc', 
+                soLuong = '$soLuong', 
+                donViCungCap = '$donViCungCap', 
+                donGia = '$donGia', 
+                donViTinh = '$donViTinh', 
+                cachDung = '$cachDung', 
+                trangThai = '$trangThai', 
+                maLoaiThuoc = '$maLoaiThuoc'
+                WHERE maThuoc = '$maThuoc'";
+
+        $tbl = $conn->query($str);
+        $p->dongketnoi($conn);
+        return $tbl;
+    } else {
+        return false;
+    }
+}
+
 		public function searchthuoc($timkiem)
-        {
-            $p = new clsKetNoi();
+		{
+			$p = new clsKetNoi();
 			$conn = $p->moketnoi();
-			$conn ->set_charset("utf8");
+			$conn->set_charset("utf8");
+		
 			if ($conn) {
-				// Kiểm tra nếu $timkiem là chuỗi rỗng
+				// Default query if no search term is provided
 				if (empty($timkiem)) {
-					$str = "SELECT *,l.tenLoaiThuoc from thuoc t join loaithuoc l on l.maLoaiThuoc= t.maLoaiThuoc";
+					$str = "SELECT *, l.tenLoaiThuoc 
+							FROM thuoc t 
+							JOIN loaithuoc l 
+							ON l.maLoaiThuoc = t.maLoaiThuoc";
 				} else {
-					// Kiểm tra nếu timkiem là một số
-					if (is_numeric($timkiem)) {
-						$str = "SELECT *,l.tenLoaiThuoc from thuoc t join loaithuoc l on l.maLoaiThuoc= t.maLoaiThuoc
-								WHERE maThuoc = $timkiem";
-					} else {
-						// Nếu không phải số, thì tìm theo tên nhân viên
-						$str = "SELECT *,l.tenLoaiThuoc from thuoc t join loaithuoc l on l.maLoaiThuoc= t.maLoaiThuoc
-								WHERE tenThuoc LIKE '%$timkiem%'";
-					}}
+					// Escaping the input to prevent SQL Injection
+					$timkiem = mysqli_real_escape_string($conn, $timkiem);
+		
+					// Build the search query to check multiple fields
+					$str = "SELECT *, l.tenLoaiThuoc 
+							FROM thuoc t 
+							JOIN loaithuoc l 
+							ON l.maLoaiThuoc = t.maLoaiThuoc
+							WHERE t.tenThuoc LIKE '%$timkiem%'
+							OR l.tenLoaiThuoc LIKE '%$timkiem%'
+							OR t.cachDung LIKE '%$timkiem%'";
+				}
+		
+				// Execute the query
 				$tbl = $conn->query($str);
 				$p->dongketnoi($conn);
 				return $tbl;
 			} else {
 				return false;
 			}
-
-        }
+		}
+		
 	}
 ?>

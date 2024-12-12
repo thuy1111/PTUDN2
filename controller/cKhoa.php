@@ -59,10 +59,10 @@
 			$tbl = $p->themKhoa($tenKhoa,$truongKhoa,$soDienThoai,$email,$trangthai);
 			
 				
-				return $tbl;
-				
-			
+				return $tbl;	
         }
+		
+
         public function updatettkhoa($maKhoa,$tenKhoa,$truongKhoa,$soDienThoai,$email,$trangthai)
         {
             $p = new   mKhoa();

@@ -2,13 +2,13 @@
 session_start();
 include_once("../../controller/cYTa.php");
 
-// Check if user is logged in and is a nurse
+
 if (!isset($_SESSION['user']) || !isset($_SESSION['user'][2]) || $_SESSION['user'][2] != 2) {
     echo "Vui lòng đăng nhập với tài khoản y tá!";
     exit;
 }
 
-$maNhanVien = $_SESSION['user'][0]; // Assuming maNhanVien is stored at index 0
+$maNhanVien = $_SESSION['user'][0]; 
 
 $startDate = $_GET['start'] ?? date('Y-m-d', strtotime('monday this week'));
 $endDate = $_GET['end'] ?? date('Y-m-d', strtotime('sunday this week'));
@@ -50,7 +50,7 @@ foreach ($shifts as $shift) {
     $html .= '</tr>';
 }
 
-// Xuất HTML ra trình duyệt
+
 echo $html;
 ?>
 

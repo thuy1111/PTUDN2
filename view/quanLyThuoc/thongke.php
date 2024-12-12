@@ -39,7 +39,6 @@
 
                         <div class="row">
                             <div class="col-12 text-center">
-                                <a href="thongkethuoctheobaohiem.php" class="btn btn-success mx-2">Theo loại bảo hiểm</a>
                                 <a href="thongkethuoctheobacsi.php" class="btn btn-danger mx-2">Theo bác sĩ</a>
                             </div>
                         </div>

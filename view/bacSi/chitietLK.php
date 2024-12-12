@@ -52,8 +52,8 @@ $chiTietLK = $controller->hienThiChiTietLK($maLichKham);
                         <td><?php echo $chiTietLK['TenBenhNhan']; ?></td>
                     </tr>
                     <tr>
-                        <th>Mã Bảo Hiểm</th>
-                        <td><?php echo $chiTietLK['maBaoHiem']; ?></td>
+                        <th>Bác sĩ phụ trách</th>
+                        <td><?php echo $chiTietLK['TenNhanVien']; ?></td>
                     </tr>
                     <tr>
                         <th>Khoa</th>
