@@ -1,4 +1,22 @@
+<?php
+session_start();
 
+if (isset($_SESSION['user'][0])) {
+    $maNhanVien = $_SESSION['user'][0];
+    $tenNhanVien = $_SESSION['user'][1];
+    $maChucVu = $_SESSION['user'][2];
+    
+    if ($maChucVu != 3) {
+        echo "<script>alert('Bạn không có quyền truy cập vào trang này!');</script>";
+        echo "<script>window.location.href = '../../index.php';</script>";
+        exit();
+    }
+} else {
+    echo "<script>alert('Vui lòng đăng nhập để truy cập!');</script>";
+    echo "<script>window.location.href = '../dangnhap';</script>";
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">

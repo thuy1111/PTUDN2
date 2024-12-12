@@ -10,7 +10,7 @@
                             <!--<li class="menu-title">Navigation</li>-->
 
                             <li>
-                                <a href="#">
+                                <a href="../../view/quanLyNhanSu/index.php">
                                     <i class="fe-airplay"></i>
                                     <span> Dashboard </span>
                                 </a>
