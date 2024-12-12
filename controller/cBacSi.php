@@ -59,26 +59,28 @@
     }
 
     // Lấy danh sách lịch làm việc của bác sĩ
-    public function layDSLichLamViecBacSi($maNhanVien) {
-        $model = new mBacSi();
-        $dsLichLamViec = $model->layDSLichLamViecBacSi($maNhanVien);
+    public function layLichLamViecTheoBS($bacSi) {
+        $p = new mBacSi();
+        $tbl = $p->layLichLamViecTheoBS($bacSi);
 
-        if ($dsLichLamViec) {
-            return $dsLichLamViec;
+        if ($tbl) {
+            return $tbl;
         } else {
             return false;
         }
     }
 
-    // Lấy danh sách lịch khám của bác sĩ
-    public function layDSLichKhamBacSi($maNhanVien) {
-        $model = new mBacSi();
-        $dsLichKham = $model->layDSLichKhamBacSi($maNhanVien);
+    public function layCaLamViecTheoNgay($bacSi, $ngayKham) {
+        $p = new mBacSi();
+        $tbl = $p->layCaLamViecTheoNgay($bacSi, $ngayKham);
 
-        if ($dsLichKham) {
-            return $dsLichKham;
+        if ($tbl) {
+            return $tbl;
         } else {
             return false;
         }
     }
+
+
+
 }

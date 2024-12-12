@@ -45,6 +45,37 @@ class cBenhNhan {
 			return null; 
 		}
 	}
+
+    public function capNhatLichKham($maLichKham, $ngayKham, $gioKham, $vanDeKham, $gia, $maBS, $maBN, $maKhoa){
+        $p = new mBenhNhan();
+        $result = $p->capNhatLichKham($maLichKham, $ngayKham, $gioKham, $vanDeKham, $gia, $maBS, $maBN, $maKhoa);
+
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function capNhatHoaDon($maBenhNhan, $maLichKham){
+        $p = new mBenhNhan();
+        $result = $p->capNhatHoaDon($maBenhNhan, $maLichKham);
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function capNhatTrangThaiLichKham($maBenhNhan, $maLichKham){
+        $p = new mBenhNhan();
+        $result = $p->capNhatTrangThaiLichKham($maBenhNhan, $maLichKham);
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
 	
 }
 ?>

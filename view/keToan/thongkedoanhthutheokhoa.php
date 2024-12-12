@@ -332,6 +332,7 @@ if (isset($_POST['reset'])) {
                         <hr style="border-color: black;">
 
                         <h4 class="header-title mb-3">DOANH THU BỆNH VIỆN</h4>
+
                         <div id="alert">
                             <?php if (!empty($alert)): ?>
                                 <div class="alert alert-warning text-center" role="alert" style="font-size: 16px; background-color: #fff3cd; color: #856404; border-color: #ffeeba; padding: 10px;">
@@ -341,12 +342,56 @@ if (isset($_POST['reset'])) {
                         </div>
 
                         <div class="row">
-                            <!-- Revenue chart -->
+                            <!-- Hiển thị bảng doanh thu -->
+                            <?php if ($hasData): ?>
+                                <div class="col-6">
+                                    <div class="card-box" id="statisticsTable">
+                                        <div class="table-responsive">
+                                            <table class='table table-borderless table-hover table-centered m-0'>
+                                                <thead class='thead-light'>
+                                                    <tr>
+                                                        <th>Khoa</th>
+                                                        <th>Thời gian</th>
+                                                        <th>Doanh thu</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach ($doanhThu as $row): ?>
+                                                        <tr>
+                                                            <td><?= $row['tenKhoa'] ?></td>
+                                                            <td>
+                                                                <?php if ($loaiTG == "1"): ?>
+                                                                    <?= $row['ngayKham'] ?>
+                                                                <?php elseif ($loaiTG == "2"): ?>
+                                                                    T<?= $row['thang'] . '/' . $row['nam'] ?>
+                                                                <?php else: ?>
+                                                                    Q<?= $row['quy'] . '/' . $row['nam'] ?>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                            <td><?= $row['doanhThu'] ?> VND</td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="card-box" id="statisticsChart">
+                                        <div class="table-responsive">
+                                            <canvas id="revenueChart" width="1000" height="600"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                            <!-- Revenue chart
                             <div class="card-box" id="chartContainer">
                                 <div class="table-responsive">
                                     <canvas id="revenueChart" width="1000" height="600"></canvas>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
 
@@ -413,7 +458,7 @@ if (isset($_POST['reset'])) {
                             // Khởi tạo YearPicker với giá trị từ PHP
                             $('.yearpicker').yearpicker({
                                 autoHide: true,             // Ẩn sau khi chọn năm
-                                year: selectedYear,         // Hiển thị năm từ PHP
+                                year: currentYear,         // Hiển thị năm từ PHP
                                 startYear: 2021,            // Năm bắt đầu hiển thị
                                 endYear: currentYear + 10, // Năm kết thúc hiển thị
                                 itemTag: 'li',              // Tag của danh sách năm

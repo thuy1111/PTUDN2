@@ -294,16 +294,15 @@ if (isset($_POST['reset'])) {
                     <hr style="border-color: black;">
 
                     <h4 class="header-title mb-3">DOANH THU BỆNH VIỆN</h4>
+                                            <!-- Thông báo -->
+                    <div id="alert">
+                        <?php if (!empty($alert)): ?>
+                            <div class="alert alert-warning text-center" role="alert" style="font-size: 16px; background-color: #fff3cd; color: #856404; border-color: #ffeeba; padding: 10px;">
+                                <?php echo htmlspecialchars($alert); ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
                     <div class="row">
-                        <!-- Thông báo -->
-                        <div id="alert">
-                            <?php if (!empty($alert)): ?>
-                                <div class="alert alert-warning text-center" role="alert" style="font-size: 16px; background-color: #fff3cd; color: #856404; border-color: #ffeeba; padding: 10px;">
-                                    <?php echo htmlspecialchars($alert); ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-
                         <!-- Hiển thị bảng doanh thu -->
                         <?php if ($hasData): ?>
                             <div class="col-6">
@@ -402,11 +401,10 @@ if (isset($_POST['reset'])) {
 
                     <script>
                         $(function () {
-                            // Lấy giá trị năm từ PHP
-                            const currentYear = new Date().getFullYear();
-
                             // Đảm bảo selectedYear là giá trị hợp lệ
-                            let selectedYear = <?= isset($selectedYear) ? json_encode($selectedYear) : 'null' ?>;
+                            const selectedYear = <?= isset($selectedYear) ? json_encode($selectedYear) : 'null' ?>;
+
+                            const currentYear = new Date().getFullYear();
 
                             // Kiểm tra nếu selectedYear không rỗng hoặc không hợp lệ, gán giá trị mặc định
                             if (!selectedYear || isNaN(selectedYear)) {
@@ -416,7 +414,7 @@ if (isset($_POST['reset'])) {
                             // Khởi tạo YearPicker với giá trị từ PHP
                             $('.yearpicker').yearpicker({
                                 autoHide: true,             // Ẩn sau khi chọn năm
-                                year: selectedYear,         // Hiển thị năm từ PHP
+                                year: currentYear,         // Hiển thị năm từ PHP
                                 startYear: 2021,            // Năm bắt đầu hiển thị
                                 endYear: currentYear + 10, // Năm kết thúc hiển thị
                                 itemTag: 'li',              // Tag của danh sách năm

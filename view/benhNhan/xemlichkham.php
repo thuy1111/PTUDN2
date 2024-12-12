@@ -246,7 +246,7 @@ if (isset($_SESSION['customer'][0])) {
                                         <li class="dropdown">
                                         <a class="dropbtn" href="#">Chức năng</a>
                                         <div class="dropdown-content">
-                                            <a href="dangkylichkhambenh.php.php">Đăng ký lịch khám</a>
+                                            <a href="dangkylichkham.php">Đăng ký lịch khám</a>
                                             <a href="xemlichkham.php">Xem Lịch Khám</a>
                                             <a href="xemphieukham.php">Xem Phiếu Khám Bệnh</a>
                                         </div>

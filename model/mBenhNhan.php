@@ -99,45 +99,104 @@
 
 		
 		
-public function layDSPKB($keyword = "", $maBenhNhan = "")
-{
-    
-    $p = new clsKetNoi();
-    $conn = $p->moketnoi();
-    $conn->set_charset("utf8");
-    
-    if ($conn) {
+    public function layDSPKB($keyword = "", $maBenhNhan = "")
+    {
         
-        $str = "SELECT pkb.*, bn.hoTen as tenBenhNhan, nv.hoTen as tenNhanVien 
-                FROM phieukhambenh pkb
-                JOIN benhnhan bn ON pkb.maBenhNhan = bn.maBenhNhan
-                JOIN nhanvien nv ON pkb.maNhanVien = nv.maNhanVien
-                WHERE pkb.maBenhNhan = ?";
+        $p = new clsKetNoi();
+        $conn = $p->moketnoi();
+        $conn->set_charset("utf8");
         
-        $params = array($maBenhNhan); 
-        $types = "s";  
+        if ($conn) {
+            
+            $str = "SELECT pkb.*, bn.hoTen as tenBenhNhan, nv.hoTen as tenNhanVien 
+                    FROM phieukhambenh pkb
+                    JOIN benhnhan bn ON pkb.maBenhNhan = bn.maBenhNhan
+                    JOIN nhanvien nv ON pkb.maNhanVien = nv.maNhanVien
+                    WHERE pkb.maBenhNhan = ?";
+            
+            $params = array($maBenhNhan); 
+            $types = "s";  
 
-       
-        if ($keyword != "") {
-            $str .= " AND (pkb.maPhieuKhamBenh LIKE ? OR bn.hoTen LIKE ? OR nv.hoTen LIKE ? OR pkb.ngayKham LIKE ?)";
-            $search = "%$keyword%";
-            $params = array_merge($params, array($search, $search, $search, $search));
-            $types .= "ssss";
+        
+            if ($keyword != "") {
+                $str .= " AND (pkb.maPhieuKhamBenh LIKE ? OR bn.hoTen LIKE ? OR nv.hoTen LIKE ? OR pkb.ngayKham LIKE ?)";
+                $search = "%$keyword%";
+                $params = array_merge($params, array($search, $search, $search, $search));
+                $types .= "ssss";
+            }
+
+            
+            $stmt = $conn->prepare($str);
+            $stmt->bind_param($types, ...$params);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            
+            $p->dongketnoi($conn);
+            return $result;
+        } else {
+            return false;
         }
+    }
 
-        
-        $stmt = $conn->prepare($str);
-        $stmt->bind_param($types, ...$params);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    public function capNhatLichKham($maLichKham, $ngayKham, $gioKham, $vanDeKham, $gia, $maBS, $maBN, $maKhoa) {
+        $p = new clsKetNoi();
+        $conn = $p->moketnoi();
+        $conn->set_charset("utf8");
 
-        
-        $p->dongketnoi($conn);
-        return $result;
-    } else {
-        return false;
+        if ($conn) {
+            // Tạo chuỗi SQL trực tiếp (không sử dụng prepared statement)
+            $vanDeKham = $conn->real_escape_string($vanDeKham); // Xử lý dữ liệu từ textarea để tránh lỗi SQL Injection
+            $str = "INSERT INTO lichkham (maLichKham, ngayKham, gioKham, vanDeKham, giaDichVuKham, maNhanVien, maBenhNhan, maKhoa) 
+                    VALUES ('$maLichKham', '$ngayKham', '$gioKham', '$vanDeKham', $gia, '$maBS', '$maBN', '$maKhoa')";
+
+            // Thực thi truy vấn
+            $result = $conn->query($str);
+
+            // Đóng kết nối
+            $p->dongketnoi($conn);
+
+            // Trả về kết quả
+            return $result;
+        } else {
+            // Trả về false nếu không kết nối được
+            return false;
+        }
+    }
+
+
+    
+    public function capNhatHoaDon($maBenhNhan, $maLichKham){
+        $p = new clsKetNoi();
+        $conn = $p->moketnoi();
+        $conn->set_charset("utf8");
+        if($conn){
+            $str = "INSERT into hoadon (ngayKham, tongTienKham)
+                    SELECT ngayKham, giaDichVuKham
+                    FROM lichkham
+                    WHERE maBenhNhan = '$maBenhNhan' AND maLichKham = '$maLichKham'";
+            $result = $conn->query($str);
+            $p->dongketnoi($conn);
+            return $result;
+        }else{
+            return false;
+        }
+    }
+
+    public function capNhatTrangThaiLichKham($maBenhNhan, $maLichKham){
+        $p = new clsKetNoi();
+        $conn = $p->moketnoi();
+        $conn->set_charset("utf8");
+        if($conn){
+            $str = "UPDATE lichkham 
+                    SET trangThaiThanhToan = 'Đã thanh toán'
+                    WHERE maBenhNhan = $maBenhNhan AND maLichKham = $maLichKham";
+            $result = $conn->query($str);
+            $p->dongketnoi($conn);
+            return $result;
+        }else{
+            return false;
+        }
     }
 }
-
-    }
 ?>

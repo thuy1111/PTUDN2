@@ -290,6 +290,64 @@ class mBacsi{
         }
     }
 
+    public function getThuocTheoBaoHiem() {
+        $p = new clsketnoi();
+        $con = $p->moKetNoi();
+        
+        $query = "SELECT bh.maBaoHiem, COUNT(dt.maDonThuoc) AS soLuongThuoc
+                  FROM donthuoc dt
+                  JOIN chitietdonthuoc ctdt ON dt.maDonThuoc = ctdt.maDonThuoc
+                  JOIN baohiem bh ON ctdt.maBaoHiem = bh.maBaoHiem
+                  GROUP BY bh.tenBaoHiem";
+        
+        $result = mysqli_query($con, $query);
+        $p->dongKetNoi($con);
+        
+        return $result;
+    }
+
+    public function layLichLamViecTheoBS($bacSi) {
+        $p = new clsKetNoi();
+			$conn = $p->moketnoi();
+			$conn->set_charset("utf8");
+			if ($conn) {
+				$str = "SELECT DISTINCT(lam.ngayLamViec)
+                        FROM lichlamviec lam 
+                        JOIN nhanvien nv ON lam.maNhanVien = nv.maNhanVien 
+                        JOIN lichkham kham ON nv.maNhanVien = kham.maNhanVien 
+                        WHERE nv.maNhanVien = $bacSi
+                        AND lam.ngayLamViec BETWEEN CURDATE() AND LAST_DAY(CURDATE());";
+				$tbl = $conn->query($str);
+				$p->dongketnoi($conn);
+				return $tbl;
+			} else {
+				return false;
+			}
+    }
+
+    public function layCaLamViecTheoNgay($bacSi, $ngayKham){
+        $p = new clsKetNoi();
+        $conn = $p->moketnoi();
+        $conn->set_charset("utf8");
+        
+        if ($conn) {
+            $str = "SELECT distinct lam.caLamViec
+                    FROM lichlamviec lam
+                    JOIN nhanvien nv ON lam.maNhanVien = nv.maNhanVien
+                    JOIN lichkham kham ON nv.maNhanVien = kham.maNhanVien
+                    WHERE nv.maNhanVien = $bacSi
+                    AND lam.ngayLamViec = '$ngayKham';
+                    ";
+
+            $tbl = $conn->query($str);
+
+            $p->dongketnoi($conn);
+            return $tbl;
+        } else {
+            return false;
+        }
+    }
+
 	public function __destruct() {
         if ($this->conn) {
             $p = new clsKetNoi();

@@ -74,12 +74,12 @@ $chiTietLK = $controller->hienThiChiTietLKTheoBenhNhan($maLichKham, $maBenhNhan)
                         <td><?php echo htmlspecialchars($chiTietLK['tenBenhNhan']); ?></td>
                     </tr>
                     <tr>
-                        <th>Mã Bảo Hiểm</th>
-                        <td><?php echo htmlspecialchars($chiTietLK['maBaoHiem']); ?></td>
-                    </tr>
-                    <tr>
                         <th>Khoa</th>
                         <td><?php echo htmlspecialchars($chiTietLK['tenKhoa']); ?></td>
+                    </tr>
+                    <tr>
+                        <th>Trạng Thái Thanh Toán</th>
+                        <td><?php echo htmlspecialchars($chiTietLK['trangThaiThanhToan']); ?></td>
                     </tr>
                 </table>
             </div>
@@ -93,6 +93,18 @@ $chiTietLK = $controller->hienThiChiTietLKTheoBenhNhan($maLichKham, $maBenhNhan)
     <div class="text-center mt-4">
         <a href="xemlichkham.php" class="btn btn-secondary">Quay lại danh sách</a>
     </div>
+
+    <?php if ($chiTietLK && $chiTietLK['trangThaiThanhToan'] === 'Chưa thanh toán') { ?>
+        <form action="thanhtoan_vnp.php" method="post">
+            <input type="hidden" name="maBenhNhan" value="<?php echo htmlspecialchars($chiTietLK['maBenhNhan']); ?>">
+            <input type="hidden" name="maLichKham" value="<?php echo htmlspecialchars($chiTietLK['maLichKham']); ?>">
+            <input type="hidden" name="tienKham" value="<?php echo htmlspecialchars($chiTietLK['giaDichVuKham']); ?>">
+            <div class="text-center mt-4">
+                <button type="submit" name="btnThanhToan" class="btn btn-primary">Thanh toán</button>
+            </div>
+        </form>
+    <?php } ?>
 </div>
 </body>
 </html>
+
