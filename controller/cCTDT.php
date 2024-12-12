@@ -3,34 +3,35 @@
 include_once("../../model/mCTDT.php");
 
 class controlCTDT {
+    // Lấy tất cả chi tiết đơn thuốc
     public function getAllCTDT() {
         $p = new modelCTDT();
         $tbl = $p->selectAllCTDT();
-        if (mysqli_num_rows($tbl)) {
+
+        if ($tbl && mysqli_num_rows($tbl) > 0) {
             return $tbl;
         } else {
             return false;
         }
     }
 
-    public function get01CTDT($mactdt) {
+    // Lấy một chi tiết đơn thuốc
+    public function get01CTDT($madt) {
         $p = new modelCTDT();
-        $tbl = $p->selectAllCTDT($mactdt);
-        if (mysqli_num_rows($tbl)) {
+        $tbl = $p->select01CTDT($madt); // Gọi đúng phương thức từ modelCTDT
+
+        if ($tbl && mysqli_num_rows($tbl) > 0) {
             return $tbl;
         } else {
             return false;
         }
     }
 
-    public function updateCTDT($maChiTietDT, $tinhTrang)
-    {
+    // Cập nhật chi tiết đơn thuốc
+    public function updateCTDT($maChiTietDT, $tinhTrang) {
         $p = new modelCTDT();
-        
-        // Pass the parameters to the capnhatCTDT method to update the database
-        $tbl = $p->capnhatCTDT($maChiTietDT, $tinhTrang);
-        
-        return $tbl;  // Return the result of the update query (true/false or affected rows)
+        $result = $p->capnhatCTDT($maChiTietDT, $tinhTrang);
+        return $result ? true : false;
     }
     
 }

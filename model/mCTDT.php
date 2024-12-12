@@ -15,42 +15,71 @@ class modelCTDT {
             JOIN thuoc t ON ct.maThuoc = t.maThuoc
         ";
         $ketqua = mysqli_query($con, $truyvan);
+
         if (!$ketqua) {
             die("Error fetching data: " . mysqli_error($con));
         }
+
         $p->dongKetNoi($con);
         return $ketqua;
     }
-    public function select01CTDT($mactdt){
-        $p=new clsketnoi();
-		$con=$p->moKetNoi();
-		$truyvan="select * from chitietdonthuoc where maChiTietDT=$mactdt";
-		$ketqua=mysqli_query($con,$truyvan);
-		$p->dongKetNoi($con);
-		return $ketqua;
-    }
-    public function capnhatCTDT($maChiTietDT, $tinhTrang)
-    {
-        $p = new clsKetNoi();
-        $conn = $p->moketnoi();
-        $conn->set_charset("utf8");
-        
-        if ($conn) {
-            // Enclose the string value in quotes
-            $tinhTrang = "'" . $conn->real_escape_string($tinhTrang) . "'";
 
-            $str = "UPDATE `chitietdonthuoc` SET `tinhTrang` = $tinhTrang WHERE `chitietdonthuoc`.`maChiTietDT` = $maChiTietDT;";
-            
-            // Execute the query
-            $tbl = $conn->query($str);
-            
-            // Close the connection
-            $p->dongketnoi($conn);
-            
-            return $tbl;
-        } else {
+    // Select one detail from chitietdonthuoc$mactdt
+    public function select01CTDT($madt) {
+        $p = new clsketnoi();
+        $con = $p->moKetNoi();
+    
+        // Truy vấn SQL để lấy chi tiết đơn thuốc
+        $truyvan = "
+            SELECT ct.*, 
+                   p.hoTen AS hoTenBacSi, 
+                   bn.hoTen AS hoTenBenhNhan, 
+                   t.tenThuoc
+            FROM chitietdonthuoc ct
+            JOIN nhanvien p ON ct.maBacSi = p.maNhanVien
+            JOIN benhnhan bn ON ct.maBenhNhan = bn.maBenhNhan
+            JOIN thuoc t ON ct.maThuoc = t.maThuoc
+            WHERE ct.maDonThuoc = '$madt'
+        ";
+    
+        // Thực hiện truy vấn
+        $ketqua = mysqli_query($con, $truyvan);
+    
+        // Kiểm tra kết quả truy vấn
+        if (!$ketqua) {
+            die("Error fetching data: " . mysqli_error($con));
+        }
+    
+        // Đóng kết nối
+        $p->dongKetNoi($con);
+    
+        // Trả về kết quả
+        return $ketqua;
+    }
+    
+    
+
+    // Update tinhTrang in chitietdonthuoc
+    public function capnhatCTDT($maChiTietDT, $tinhTrang) {
+        $p = new clsketnoi();
+        $con = $p->moKetNoi();
+
+        // Escape user input to avoid SQL Injection
+        $maChiTietDT = mysqli_real_escape_string($con, $maChiTietDT);
+        $tinhTrang = mysqli_real_escape_string($con, $tinhTrang);
+
+        $truyvan = "UPDATE chitietdonthuoc SET tinhTrang = '$tinhTrang' WHERE maChiTietDT = '$maChiTietDT'";
+
+        $ketqua = mysqli_query($con, $truyvan);
+
+        if (!$ketqua) {
+            echo "Error updating data: " . mysqli_error($con);
+            $p->dongKetNoi($con);
             return false;
         }
+
+        $p->dongKetNoi($con);
+        return true; // Cập nhật thành công
     }
-}    
+}
 ?>

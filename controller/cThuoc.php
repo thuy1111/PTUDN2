@@ -1,5 +1,14 @@
 <?php
+enum TrangThaiThuoc: string {
+    case ConHang = '1'; // Còn hàng
+    case HetHang = '2'; // Hết hàng
+    case TamNgung = '3'; // Tạm ngưng
+}
+?>
+
+<?php
 	include_once("../../model/mThuoc.php");
+
 	class cThuoc {
 		private $conn;
 	
@@ -48,7 +57,7 @@
 		public function timkiemthuoc($timkiem) {
 			$p = new mThuoc();
 			$tbl = $p->searchthuoc($timkiem);
-			if ($tbl->num_rows > 0) {
+			if ($tbl && $tbl->num_rows > 0) {
 				return $tbl;
 			} else {
 				return false; // No data found
@@ -56,25 +65,19 @@
 		}
 	
 		// Function to add a new medicine
-		public function addthuoc($tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $trangThai, $maLoaiThuoc) {
-			$p = new mThuoc();
-			$tbl = $p->themthuoc($tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $trangThai, $maLoaiThuoc);
-			return $tbl;
-		}
-		// Function to check if a medicine already exists
-		public function thuocTonTai($tenThuoc) {
-			$query = "SELECT * FROM thuoc WHERE tenThuoc = '$tenThuoc'";
-			$result = mysqli_query($this->conn, $query);
+	// Function to add a new medicine
+	public function addthuoc($tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $trangThai, $maLoaiThuoc) {
+		$p = new mThuoc();
+		$tbl = $p->themthuoc($tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $trangThai, $maLoaiThuoc);
+		return $tbl;
+	}
+// Kiểm tra thuốc đã tồn tại
+public function thuocTonTai($tenThuoc) {
+    $p = new mThuoc();
+    return $p->thuocTonTai($tenThuoc);
+}
 
-			// Return true if a record exists, false otherwise
-			return mysqli_num_rows($result) > 0;
-		}
-
-	
-		// Function to update medicine details
-		public function capnhatThuoc($maThuoc, $tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $trangThai, $loaiThuoc)
-{
-    // Open database connection
+public function capnhatThuoc($maThuoc, $tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $trangThai, $loaiThuoc) {
     $p = new clsKetNoi();
     $conn = $p->moketnoi();
     $conn->set_charset("utf8");
@@ -91,8 +94,15 @@
     $donGia = mysqli_real_escape_string($conn, $donGia);
     $donViTinh = mysqli_real_escape_string($conn, $donViTinh);
     $cachDung = mysqli_real_escape_string($conn, $cachDung);
-    $trangThai = mysqli_real_escape_string($conn, $trangThai);
     $loaiThuoc = mysqli_real_escape_string($conn, $loaiThuoc);
+
+    // Validate trangThai as Enum
+    try {
+        $trangThaiEnum = TrangThaiThuoc::from($trangThai);
+        $trangThaiValue = $trangThaiEnum->value;
+    } catch (ValueError $e) {
+        $trangThaiValue = TrangThaiThuoc::ConHang->value; // Default to "Còn hàng"
+    }
 
     // Build the update query
     $query = "UPDATE thuoc 
@@ -103,7 +113,7 @@
                   donGia = '$donGia',
                   donViTinh = '$donViTinh',
                   cachDung = '$cachDung',
-                  trangThai = '$trangThai',
+                  trangThai = '$trangThaiValue',
                   maLoaiThuoc = '$loaiThuoc'
               WHERE 
                   maThuoc = '$maThuoc'";
@@ -114,10 +124,8 @@
     // Close the connection
     $p->dongketnoi($conn);
 
-    // Return the result (true for success, false for failure)
+    // Return result (true for success, false for failure)
     return $result;
 }
-
-		
 	}
 ?>

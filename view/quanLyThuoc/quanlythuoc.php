@@ -52,34 +52,6 @@ if (isset($_POST['btnupdate'])) {
     }
 }
 
-// Handle form submission for adding a new medicine
-if (isset($_POST['btnadd'])) {
-    $tenThuoc = $_POST['tenThuoc'];
-    $soLuong = $_POST['soLuongTon'];
-    $donViCungCap = $_POST['donViCungCap'];
-    $donGia = $_POST['donGia'];
-    $donViTinh = $_POST['donViTinh'];
-    $cachDung = $_POST['cachDung'];
-    $trangThai = $_POST['trangThai'];
-    $loaiThuoc = $_POST['loaiThuoc'];
-
-    // Check for duplicate medicine
-    if ($p->thuocTonTai($tenThuoc)) {
-        echo "<script>alert('Thuốc đã tồn tại! Không thể thêm mới.');</script>";
-        echo "<script>window.location.href = 'quanlythuoc.php';</script>";
-    } else {
-        $addResult = $p->addthuoc($tenThuoc, $soLuong, $donViCungCap, $donGia, $donViTinh, $cachDung, $trangThai, $loaiThuoc);
-
-        if ($addResult) {
-            echo "<script>alert('Thêm thuốc mới thành công');</script>";
-            echo "<script>window.location.href = 'quanlythuoc.php';</script>";
-            exit;
-        } else {
-            echo "<script>alert('Thêm thuốc mới thất bại');</script>";
-        }
-    }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -116,7 +88,7 @@ if (isset($_POST['btnadd'])) {
                         <hr style="border-color: black;">
                         <div class="row">
                             <div class="col-12 text-center">
-                                <input type="submit" name="btnadd" class="btn btn-primary mx-2" value="Thêm">
+                            <button class="btn btn-danger" onclick="window.location.href='themthuoc.php';">Thêm thuốc</button>
                                 <input type="submit" name="btnupdate" class="btn btn-success mx-2" value="Cập nhật"> 
                             </div>
                         </div>
